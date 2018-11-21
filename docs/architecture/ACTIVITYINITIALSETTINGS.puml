@@ -3,7 +3,7 @@
 if "" then
     --> [user not registered] "ACTIVITYREGISTER"
 else
-    --> [user registeres] "
+    --> [user email not verified] "resend"
     --> [user valid] "group allocation"
     If "user is worker" then
         --> [Yes] "worker or professor"
@@ -14,7 +14,6 @@ else
         --> "Request department"
         --> "server: db-validate again and save"
         --> "ACTIVITYSETTINGS"
-        --> "ACTIVITYMAIN"
         --> (*)
 If "input is verbose" then
 --> [Yes] "turn on verbosity"

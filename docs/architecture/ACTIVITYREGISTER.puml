@@ -1,48 +1,37 @@
 @startuml
-(*)  --> "request email"
---> Validate Email"
-If "" then
-    --> [valid] "request password"
-    --> "Validate password"
-    If "" then
-        --> [valid] "server: db-create user"
-        if "" then
-            --> [verified] "ACTIVITYMAIN"
-            --> (*)
-        else
-            --> [pending] "server: send email verification"
-            --> [pending] "Waiting for email verification notification"
-            --> "Want to resend verification"
-            if "" then
-                --> [Yes] "server: send email verification"
-            else
-                --> [abort] (*)
-        Endif
-    else
-        if "" then
-            --> [abort] (*)
-        else
-            --> [retry] "request password"
-        Endif
-    Endif
-else
+(*)  --> "window: request email"
+if "" then
+    --> [continue] "server: validate Email"
     if "" then
-        --> [already registered] "Reset password request"
+        --> [valid] "window: request password"
+        --> "server: validate password"
         if "" then
-            --> "ACTIVITYCHANGEPASSWORD"
+            --> [valid] "server: db-create user"
+            --> [pending] "ACTIVITYEMAILVERIFICATION"
             --> (*)
         else
+            --> [invalid] "retry-popup: retry password input"
             if "" then
-                --> [abort] (*)
+                --> [abort] "window: request email"
             else
-                --> [retry] "request email"
+                --> [retry] "window: request password"
             Endif
         Endif
     else
+        --> [already registered] "yes-no-popup: reset password request"
         if "" then
-            --> [abort] (*)
+            --> [Yes] "ACTIVITYCHANGEPASSWORD"
+            --> "window: request password"
         else
-            --> [retry] "request email"
+            --> [No] "retry-popup: retry registration"
+            if "" then
+                --> [abort] "ACTIVITYLOGIN"
+            else
+                --> [retry] "window: request email"
+            Endif
         Endif
+    Endif
+else
+    --> [cancel] "ACTIVITYLOGIN"
 Endif
 @enduml

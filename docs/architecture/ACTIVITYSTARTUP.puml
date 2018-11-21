@@ -1,23 +1,24 @@
 @startuml
 (*) --> "server: db-read user by id (cookie on phone)"
---> "server: validate user registration"
-If "user is valid" then
-    If "" then
-    --> [normal user] "ACTIVITYMAIN"
+--> "server: validate user registration and cookie"
+if "" then
+    --> [valid] "server: db-read is admin user"
+    if "" then
+        --> [normal user] "ACTIVITYMAIN"
     else
-        If "login as admin" then
-            --> [Yes] "ACTIVITYADMIN"
+        --> [admin user] "choose-popup: Login as admin or normal user"
+        if "" then
+            --> [yes] "ACTIVITYADMIN"
         else
-            --> [No] "ACTIVITYMAIN"
+            --> [no] "ACTIVITYMAIN"
         Endif
     Endif
 else
-    --> [No] "Login or Register"
+    --> [invalid] "choose-popup: login or register"
     If "" then
         --> [login] "ACTIVITYLOGIN"
     else
         --> [register] "ACTIVITYREGISTER"
     Endif
 Endif
---> (*)
 @enduml

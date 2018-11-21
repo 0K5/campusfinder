@@ -1,0 +1,9 @@
+@startuml
+(*)  --> "info-popup: user interaction blocked for x *time*"
+--> "server: request block time"
+if "" then
+    --> [time <= 0] (*)
+else
+    --> [timer > 0] "info-popup: user interaction blocked for x *time*"
+Endif
+@enduml

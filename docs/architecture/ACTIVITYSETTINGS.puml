@@ -1,30 +1,56 @@
 @startuml
 (*)  --> "server: db_get user settings"
-if "already has settings" then
-    --> [Yes] "settings menu"
-    if "change app" then
-        --> "server: db-read user app settings"
-
-        --> "change notifications\n change tracking\n change privacy\n change map\n change personal"
-        --> "ACTIVITYSINGLESETTING"
+--> "server: db_get user logged in"
+if "" then
+    --> [logged in] "window: settings menu"
+    if "" then
+        --> [cancel] "ACTIVITYMAIN"
     else
-        --> [personal settings] "server: db-read user personal settings"
-        if "user is worker"
-            --> [Yes] "name\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
-            --> "ACTIVITYSINGLESETTING"
+        --> [continue] "server: db-read user already has settings"
+        if "" then
+            --> [Yes] "window: settings menu"
+            if "" then
+                --> [show info] "server: db-read and summarise info"
+                --> "OK-close-popup:\n all info about personal and app settings"
+                --> [OK] "window: settings menu"
+            else
+                if "change app" then
+                    --> "server: db-read user app settings"
+                    --> "choose-window:\n notifications\n tracking\n privacy\n map"
+                    --> "ACTIVITYAPPSETTINGS"
+                    --> "choose-window:\n notifications\n tracking\n privacy\n map"
+                    --> [save button] "save-cancel-popup: confirm save settings"
+                else
+                    --> [personal settings] "server: db-read user personal settings"
+                    if "user is worker"
+                        --> [Yes] "choose-window:\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
+                        --> "ACTIVITYPERSONALSETTINGS"
+                        --> "choose-window:\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
+                        --> [save button] "save-cancel-popup: confirm save settings"
+                    else
+                        --> [No] "choose-window:\n email(s)\n password\n faculty"
+                        --> "ACTIVITYPERSONALSETTINGS"
+                        --> "choose-window:\n email(s)\n password\n faculty"
+                    Endif
+                Endif
+            Endif
+            --> [save button] "save-cancel-popup: confirm save settings"
+            if "" then
+                --> [save] "server: db-update user settings"
+                --> (*)
+            else
+                --> [cancel] "window: settings menu"
+            Endif
         else
-            --> [No] "name\n email(s)\n password\n phone(s)\n department(s)"
-            --> "ACTIVITYSINGLESETTING"
+            --> [No] "popup: db-error notification"
+            if "" then
+                --> [set initial settings] "ACTIVITIYINITIALSETTINGS"
+            else
+                --> [abort] "ACTIVITYSTARTUP"
+            Endif
         Endif
     Endif
-    --> "ACTIVITYMAIN"
 else
-    --> [No] "Error Notification"
-    if "" then
-        --> [set settings] "ACTIVITIYINITIALSETTINGS"
-    else
-        --> [abort] "ACTIVITYMAIN"
-    Endif
+    --> [not logged in] "ACTIVITYSTARTUP"
 Endif
--->(*)
 @enduml
