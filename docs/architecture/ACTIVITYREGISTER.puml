@@ -1,0 +1,48 @@
+@startuml
+(*)  --> "request email"
+--> Validate Email"
+If "" then
+    --> [valid] "request password"
+    --> "Validate password"
+    If "" then
+        --> [valid] "server: db-create user"
+        if "" then
+            --> [verified] "ACTIVITYMAIN"
+            --> (*)
+        else
+            --> [pending] "server: send email verification"
+            --> [pending] "Waiting for email verification notification"
+            --> "Want to resend verification"
+            if "" then
+                --> [Yes] "server: send email verification"
+            else
+                --> [abort] (*)
+        Endif
+    else
+        if "" then
+            --> [abort] (*)
+        else
+            --> [retry] "request password"
+        Endif
+    Endif
+else
+    if "" then
+        --> [already registered] "Reset password request"
+        if "" then
+            --> "ACTIVITYCHANGEPASSWORD"
+            --> (*)
+        else
+            if "" then
+                --> [abort] (*)
+            else
+                --> [retry] "request email"
+            Endif
+        Endif
+    else
+        if "" then
+            --> [abort] (*)
+        else
+            --> [retry] "request email"
+        Endif
+Endif
+@enduml

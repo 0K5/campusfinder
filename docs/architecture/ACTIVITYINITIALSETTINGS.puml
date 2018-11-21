@@ -1,0 +1,26 @@
+@startuml
+(*)  --> "db_read user"
+if "" then
+    --> [user not registered] "ACTIVITYREGISTER"
+else
+    --> [user registeres] "
+    --> [user valid] "group allocation"
+    If "user is worker" then
+        --> [Yes] "worker or professor"
+        --> "Request workplace"
+        --> "Request department"
+    else
+        --> [No] "user is student"
+        --> "Request department"
+        --> "server: db-validate again and save"
+        --> "ACTIVITYSETTINGS"
+        --> "ACTIVITYMAIN"
+        --> (*)
+If "input is verbose" then
+--> [Yes] "turn on verbosity"
+--> "run command"
+else
+--> "run command"
+Endif
+-->(*)
+@enduml

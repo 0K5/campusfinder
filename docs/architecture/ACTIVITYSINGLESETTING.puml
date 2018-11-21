@@ -1,0 +1,23 @@
+@startuml
+(*)  --> "server: db-read user setting"
+if "" then
+    --> [personal setting] "request change\n (request visible for which group/department)\n"
+    --> "change setting"
+else
+    --> [app setting] "request change\n"
+Endif
+--> "change setting"
+if "" then
+    --> [save] "server: db-update user setting"
+    --> "settings menu"
+else
+    --> [cancel] "request disregard changes"
+    if "" then
+        --> [disregard] "settings menu"
+        --> (*)
+    else
+        --> [back] "change setting"
+    Endif
+Endif
+-->(*)
+@enduml

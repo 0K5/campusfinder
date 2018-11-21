@@ -1,0 +1,30 @@
+@startuml
+(*)  --> "server: db_get user settings"
+if "already has settings" then
+    --> [Yes] "settings menu"
+    if "change app" then
+        --> "server: db-read user app settings"
+
+        --> "change notifications\n change tracking\n change privacy\n change map\n change personal"
+        --> "ACTIVITYSINGLESETTING"
+    else
+        --> [personal settings] "server: db-read user personal settings"
+        if "user is worker"
+            --> [Yes] "name\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
+            --> "ACTIVITYSINGLESETTING"
+        else
+            --> [No] "name\n email(s)\n password\n phone(s)\n department(s)"
+            --> "ACTIVITYSINGLESETTING"
+        Endif
+    Endif
+    --> "ACTIVITYMAIN"
+else
+    --> [No] "Error Notification"
+    if "" then
+        --> [set settings] "ACTIVITIYINITIALSETTINGS"
+    else
+        --> [abort] "ACTIVITYMAIN"
+    Endif
+Endif
+-->(*)
+@enduml

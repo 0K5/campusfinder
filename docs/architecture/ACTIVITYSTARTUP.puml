@@ -1,0 +1,23 @@
+@startuml
+(*) --> "server: db-read user by id (cookie on phone)"
+--> "server: validate user registration"
+If "user is valid" then
+    If "" then
+    --> [normal user] "ACTIVITYMAIN"
+    else
+        If "login as admin" then
+            --> [Yes] "ACTIVITYADMIN"
+        else
+            --> [No] "ACTIVITYMAIN"
+        Endif
+    Endif
+else
+    --> [No] "Login or Register"
+    If "" then
+        --> [login] "ACTIVITYLOGIN"
+    else
+        --> [register] "ACTIVITYREGISTER"
+    Endif
+Endif
+--> (*)
+@enduml

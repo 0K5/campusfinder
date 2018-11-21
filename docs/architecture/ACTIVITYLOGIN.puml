@@ -1,0 +1,17 @@
+@startuml
+(*)  --> "request email and password"
+--> "server: db-get mail and password and validate password with slow hash"
+if "" then
+    --> [valid] "ACTIVITYMAIN"
+    --> (*)
+else
+    --> [invalid] "Wrong email or password notification"
+    --> "wait for x seconds counter (exponential increase per try)"
+    if "" then
+        --> [5 tries in one hour] "server: Login for this device blocked notification"
+        --> [After one hour] "request email and password"
+    else
+        --> [after x seconds] "request email and password"
+    Endif
+Endif
+@enduml
