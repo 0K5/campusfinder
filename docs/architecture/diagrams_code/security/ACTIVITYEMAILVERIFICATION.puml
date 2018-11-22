@@ -1,0 +1,26 @@
+    @startuml
+(*)  --> "resend-cancel-popup: email verification notification"
+if "" then
+    --> [cancel] (*)
+else
+    --> [continue] "server: user and email verified"
+    if "" then
+        --> [not verified] "Want to resend verification"
+        if "" then
+            --> [Yes] "server: send email verification"
+            if "" then
+                --> [valid request] "server: send email verification link"
+                --> "notification: email sent"
+                --> [pending] "resend-cancel-popup: email verification notification"
+            else
+                --> [more than 5 requests in last hour] "server: ACTIVITYBLOCKTIMER"
+                --> [10 minutes later] "resend-cancel-popup: email verification notification"
+            Endif
+        else
+            --> [abort] "ACTIVITYREGISTER"
+        Endif
+    else
+        --> [verified] (*)
+    Endif
+Endif
+@enduml

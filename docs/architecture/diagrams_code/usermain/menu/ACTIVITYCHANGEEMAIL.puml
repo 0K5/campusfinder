@@ -1,0 +1,12 @@
+    @startuml
+(*)  --> "window: input password"
+if "" then
+    --> [cancel] (*)
+else
+    --> -
+    if "" then
+        --> [not valid] (*)
+
+Endif
+-->(*)
+@enduml

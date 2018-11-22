@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2d7d8806-eb70-49b5-9e4c-75bbc273b33c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYPERSONALSETTINGS.puml" afterDir="false" />
+    <list default="true" id="2d7d8806-eb70-49b5-9e4c-75bbc273b33c" name="Default Changelist" comment="kkkkkkkk">
+      <change afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEEMAIL.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEMOBILE.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEPASSWORD.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYPERSONALSETTINGS.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/ACTIVITYINITIALSETTINGS.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYINITIALSETTINGS.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/ACTIVITYLOGIN.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYLOGIN.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/ACTIVITYREGISTER.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYREGISTER.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/ACTIVITYSINGLESETTING.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYBLOCKTIMER.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYBLOCKTIMER.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYCHANGEPASSWORD.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYAPPSETTINGS.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYEMAILVERIFICATION.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYLOGIN.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYPERSONALSETTINGS.puml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYREGISTER.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYSETTINGS.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYSETTINGS.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/MainClassUml.puml" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,81 +28,89 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEPASSWORD.puml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYPERSONALSETTINGS.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+            <state relative-caret-position="816">
+              <caret line="61" column="6" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.png">
-          <provider selected="true" editor-type-id="images" />
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEMOBILE.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYAPPSETTINGS.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYSETTINGS.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYREGISTER.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYINITIALSETTINGS.puml">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEEMAIL.puml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.puml">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="25" column="91" lean-forward="true" selection-start-line="25" selection-start-column="91" selection-end-line="25" selection-end-column="91" />
+            <state relative-caret-position="238">
+              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYPERSONALSETTINGS.puml">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+            <state relative-caret-position="442">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.png">
-          <provider selected="true" editor-type-id="images" />
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYBLOCKTIMER.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -129,6 +140,16 @@
         <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYREGISTER.puml" />
         <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.puml" />
         <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/COMPLETE.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYPERSONALSETTINGS.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYPERSONALSETTINGS.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYCHANGEEMAIL.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYUSERPASSVAL.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYAPPSETTINGS.puml" />
+        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYPERSONALSETTINGS.puml" />
       </list>
     </option>
   </component>
@@ -160,6 +181,38 @@
               <item name="docs" type="462c0819:PsiDirectoryNode" />
               <item name="architecture" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+              <item name="architecture" type="462c0819:PsiDirectoryNode" />
+              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+              <item name="architecture" type="462c0819:PsiDirectoryNode" />
+              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
+              <item name="security" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+              <item name="architecture" type="462c0819:PsiDirectoryNode" />
+              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
+              <item name="usermain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+              <item name="architecture" type="462c0819:PsiDirectoryNode" />
+              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
+              <item name="usermain" type="462c0819:PsiDirectoryNode" />
+              <item name="menu" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -172,6 +225,14 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/architecture" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\usermain" />
+      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\settings" />
+      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\uservalidation" />
+      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\main" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -197,15 +258,16 @@
       <updated>1542731047051</updated>
       <workItem from="1542731048170" duration="271000" />
       <workItem from="1542731333441" duration="3571000" />
-      <workItem from="1542786138762" duration="16739000" />
+      <workItem from="1542786138762" duration="25579000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20581000" />
+    <option name="totallyTimeSpent" value="29421000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12480127" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -225,7 +287,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="PlantUML" order="3" weight="0.52225757" />
+      <window_info anchor="right" id="PlantUML" order="3" visible="true" weight="0.47615263" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,6 +356,12 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -301,11 +369,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/COMPLETE.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="68" />
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYSTARTUP.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="22" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYINITIALSETTINGS.puml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/MainClassUml.puml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYBLOCKTIMER.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYUSERPASSVAL.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYSETTINGS.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEPASSWORD.puml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYAPPSETTINGS.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEMOBILE.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYPERSONALSETTINGS.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="61" column="6" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYCHANGEEMAIL.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

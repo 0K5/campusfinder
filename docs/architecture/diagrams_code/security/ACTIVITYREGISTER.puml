@@ -1,0 +1,32 @@
+@startuml
+(*)  --> "window: request email and password"
+if "" then
+    --> [cancel] "ACTIVITYLOGIN"
+    --> [success] (*)
+else
+    --> [continue] "server: validate Email"
+    --> "server: validate password with slow hash"
+    if "" then
+        --> [valid] "server: db-create user"
+        --> [pending] "ACTIVITYEMAILVERIFICATION"
+        --> "notification: email sent"
+        --> "window: request email and password"
+    else
+        --> [invalid] "retry-popup: retry email and password input"
+        if "" then
+            --> [abort] "ACTIVITYLOGIN"
+        else
+            --> [retry] "window: request email and password"
+        Endif
+    else
+        --> [already registered] "yes-no-popup: reset password request"
+        if "" then
+            --> [change pw] "ACTIVITYCHANGEPASSWORD"
+            --> "notification: email sent"
+            --> "window: request email and password"
+        else
+            --> [abort] "window: request email and password"
+        Endif
+    Endif
+Endif
+@enduml
