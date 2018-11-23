@@ -1,5 +1,5 @@
 @startuml
-(*) --> "window: change app setting"
+(*) --> "window: change personal setting"
 if "" then
     --> [cancel] (*)
 else
@@ -7,13 +7,13 @@ else
     if "" then
         --> [worker] "worker"
         if "" then
-            --> [email] "ACTIVITYCHANGEEMAIL"
+            --> [email] "**ACTIVITYCHANGEEMAIL**"
         else
             if "" then
-                --> [password] "ACTIVITYCHANGEPASSWORD"
+                --> [password] "**ACTIVITYCHANGEPASSWORD**"
             else
                 if "" then
-                    --> [mobilephone] "ACTIVITYCHANGEMOBILE"
+                    --> [mobilephone] "**ACTIVITYCHANGEMOBILE**"
                 else
                     if "" then
                         --> [faculty] "select-window:\n faculty-chooser\n request is faculty visible for which group/department/faculty"
@@ -22,7 +22,7 @@ else
                             --> [save] "server: db-update saved user setting"
                             --> [updated] (*)
                         else
-                            --> [cancel] "window: change app setting"
+                            --> [cancel] "window: change personal setting"
                         Endif
                     else
                         if "" then
@@ -44,13 +44,13 @@ else
     else
         --> [student] "student"
         if "" then
-            --> [email] "ACTIVITYCHANGEEMAIL"
+            --> [email] "**ACTIVITYCHANGEEMAIL**"
         else
             if "" then
-                --> [password] "ACTIVITYCHANGEPASSWORD"
+                --> [password] "**ACTIVITYCHANGEPASSWORD**"
             else
                 if "" then
-                    --> [mobilephone] "ACTIVITYCHANGEMOBILE"
+                    --> [mobilephone] "**ACTIVITYCHANGEMOBILE**"
                 else
                     --> [faculty] "select-window:\n faculty-chooser\n"
                     --> "save-cancel-action"

@@ -4,21 +4,25 @@
 if "" then
     --> [valid] "server: db-read is admin user"
     if "" then
-        --> [normal user] "ACTIVITYMAIN"
+        --> [normal user] "**ACTIVITYMAIN**"
+        --> (*)
     else
-        --> [admin user] "choose-popup: Login as admin or normal user"
+        --> [admin user] "//choose-popup: Login as admin or normal user//"
         if "" then
-            --> [yes] "ACTIVITYADMIN"
+            --> [yes] "//**ACTIVITYADMIN**//"
+            --> (*)
         else
-            --> [no] "ACTIVITYMAIN"
+            --> [no] "**ACTIVITYMAIN**"
         Endif
     Endif
 else
     --> [invalid] "choose-popup: login or register"
     If "" then
-        --> [login] "ACTIVITYLOGIN"
+        --> [login] "**ACTIVITYLOGIN**"
+        --> (*)
     else
-        --> [register] "ACTIVITYREGISTER"
+        --> [register] "**ACTIVITYREGISTER**"
+        --> (*)
     Endif
 Endif
 @enduml

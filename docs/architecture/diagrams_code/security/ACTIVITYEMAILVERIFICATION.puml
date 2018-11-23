@@ -13,11 +13,11 @@ else
                 --> "notification: email sent"
                 --> [pending] "resend-cancel-popup: email verification notification"
             else
-                --> [more than 5 requests in last hour] "server: ACTIVITYBLOCKTIMER"
+                --> [more than 5 requests in last hour] "server: **ACTIVITYBLOCKTIMER**"
                 --> [10 minutes later] "resend-cancel-popup: email verification notification"
             Endif
         else
-            --> [abort] "ACTIVITYREGISTER"
+            --> [abort] "**ACTIVITYREGISTER**"
         Endif
     else
         --> [verified] (*)

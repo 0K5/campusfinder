@@ -1,0 +1,37 @@
+@startuml
+(*)  --> "server: validate user"
+if "" then
+    --> [invalid] "**ACTIVITYLOGIN**"
+    --> [invalid user] (*)
+else
+    --> [valid] "server: db-read user map"
+    --> "window: show campus map"
+    if "" then
+        --> [finger scroll] "window: move map vertical and horizontal"
+    else
+        if "" then
+            --> [zoom or tap] "window: zoom in building"
+            if "" then
+                --> [zoom in building] "**ACTIVITYMAPBUILDING**"
+                --> [building] (*)
+            else
+                --> [zoom on parking spot] "**ACTIVITYMAPPARKING**"
+                --> [parking] (*)
+            Endif
+        else
+            --> [click] "window: click appears"
+            if "" then
+                --> [click in menu] "**ACTIVITYSETTINGS**"
+                if "" then
+                    --> [changed window] (*)
+                else
+                    --> [close menu] "window: show campus map"
+                Endif
+            else
+                --> [click on search] "**ACTIVITYSEARCH**"
+                --> [search] "server: db-read user map"
+            Endif
+        Endif
+    Endif
+Endif
+@enduml

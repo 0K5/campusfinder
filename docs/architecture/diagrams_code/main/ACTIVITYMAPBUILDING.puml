@@ -1,0 +1,42 @@
+        @startuml
+(*)  --> "server: validate user"
+if "" then
+    --> [invalid] "**ACTIVITYLOGIN**"
+    --> [invalid user] (*)
+else
+    --> [valid] "server: db-read user map"
+    --> "window: show building floor x map"
+    if "" then
+        --> [cancel] "**ACTIVITYMAINMAP**"
+        --> (*)
+    else
+        if "" then
+            --> [switch floor] "Zoom finger or button"
+            if "" then
+                --> [zoom out on top floor] "**ACTIVITYMAINMAP**"
+            else
+                --> [zoom/click in building] "floor switch"
+                if "" then
+                    --> [floor above] "window: show building floor x map"
+                else
+                    --> [floor beneath] "window: show building floor x map"
+                Endif
+            Endif
+        else
+            --> [click] "window: click appears"
+            if "" then
+                --> [room info] "server: db-read room information"
+                --> "info-popup: show information about room"
+            else
+                if "" then
+                    --> [menu] "**ACTIVITYMENU**"
+                    --> [menu] "server: validate user"
+                else
+                    --> [search] "**ACTIVITYSEARCH**"
+                    --> [search] "server: db-read user map"
+                Endif
+            Endif
+        Endif
+    Endif
+Endif
+@enduml

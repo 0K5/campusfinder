@@ -1,0 +1,53 @@
+                    @startuml
+(*)  --> "server: validate user"
+if "" then
+    --> [invalid] "**ACTIVITYLOGIN**"
+    --> [invalid user] (*)
+else
+    --> [valid] "server: db-read user map"
+    --> "window: show parking heat map"
+    if "" then
+        --> [cancel] "**ACTIVITYMAINMAP**"
+        --> (*)
+    else
+        if "" then
+            --> [click] "window: click appears"
+            if "" then
+                --> [menu] "**ACTIVITYMENU**"
+                --> [menu] "server: validate user"
+            else
+                if "" then
+                    --> [search] "**ACTIVITYSEARCH**"
+                    --> [search] "server: db-read user map"
+                else
+                    if "" then
+                        --> [room info] "server: db-read room information"
+                        --> "info-popup: show information about room"
+                        --> [room info] "window: show parking heat map"
+                    else
+                        --> [find car] "server: db-read last location of car"
+                        --> "window: show car spot and slow continous zoom in"
+                        if "" then
+                            --> [reached car] "window: disable car spot"
+                            --> [reached car] "window: show parking heat map"
+                        else
+                            if "" then
+                                --> [over 20 minutes] "window: disable car spot"
+                            else
+                                --> [moves other direction] "window: disable car spot"
+                            Endif
+                        Endif
+                    Endif
+                Endif
+            Endif
+        else
+            --> [zoom] "Zoom action"
+            if "" then
+                --> [zoom out] "**ACTIVITYMAINMAP**"
+            else
+                --> [zoom in]  "window: show parking hear map"
+            Endif
+        Endif
+    Endif
+Endif
+@enduml

@@ -1,7 +1,7 @@
                 @startuml
 (*)  --> "window: request email"
 if "" then
-    --> [cancel] "ACTIVITYREGISTER"
+    --> [cancel] "**ACTIVITYREGISTER**"
     --> (*)
 else
     --> [continue] "server: validate mail"
@@ -11,9 +11,9 @@ else
             --> [valid] "server: db-update user logged in"
             --> (*)
         else
-            --> [wait x seconds] "server: short ACTIVITYBLOCKTIMER"
+            --> [wait x seconds] "server: short **ACTIVITYBLOCKTIMER**"
             if "" then
-                --> [5 tries in one hour] "server: long ACTIVITYBLOCKTIMER"
+                --> [5 tries in one hour] "server: long **ACTIVITYBLOCKTIMER**"
                 --> [after one hour] "server: validate password with slow hash"
             else
                 --> [after x seconds] "server: validate password with slow hash"
@@ -21,12 +21,12 @@ else
         Endif
     else
         if "" then
-            --> [email not verified] "ACTIVITYEMAILVERIFICATION"
+            --> [email not verified] "**ACTIVITYEMAILVERIFICATION**"
             --> "window: request email"
         else
             --> [email not registered] "register-cancel-popup: email not registered"
             if "" then
-                --> [register] "ACTIVITYREGISTER"
+                --> [register] "**ACTIVITYREGISTER**"
             else
                 --> [cancel] "window: request email"
             Endif
