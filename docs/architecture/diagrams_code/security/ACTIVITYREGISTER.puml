@@ -28,7 +28,7 @@ else
             Endif
         else
             --> [internal user] "server: validate employee or student email"
-            if "" then
+            if "" thenq
                 --> [student] "server: db-create student user"
                 --> [student] "**ACTIVITYEMAILVERIFICATION**"
             else

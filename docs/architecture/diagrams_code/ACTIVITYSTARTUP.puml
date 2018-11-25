@@ -1,5 +1,6 @@
 @startuml
 (*) --> "server: db-read user by id (cookie on phone)"
+--> "get locale from phone and set language"
 --> "server: validate user registration and cookie"
 if "" then
     --> [valid] "server: db-read is admin user"

@@ -1,10 +1,18 @@
-@startuml
-(*)  --> "check input"
-If "input is verbose" then
---> [Yes] "turn on verbosity"
---> "run command"
+    @startuml
+(*)  --> "slider-window: set tracking allowed by"
+if "" then
+    --> [cancel] (*)
 else
---> "run command"
-Endif
--->(*)
+    if "" then
+        --> [people] "set on-or off tracking by:\nstudents\nemployees\ncolleagues"
+    else
+        --> "server: is worker or student"
+        if "" then
+            --> [student] "trackable by faculty members or whole campus"
+            --> [updated] "slider-window: set tracking allowed by"
+        else
+            --> [worker] "trackable by office members, department members, faculty members or whole campus"
+            --> [updated] "slider-window: set tracking allowed by"
+        Endif
+
 @enduml

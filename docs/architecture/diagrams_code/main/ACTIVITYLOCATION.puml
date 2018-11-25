@@ -1,0 +1,29 @@
+@startuml
+(*) --> "server: db-read location info"
+if "" then
+    --> [building/office] "server: db-read location information"
+    --> "window: display location on mainmap"
+    --> [display location] "**ACTIVITYMAINMAP**"
+    --> [location displayed] (*)
+else
+    if "" then
+        --> [event] "server: db-read location information"
+    else
+        if "" then
+            --> [person] "server: db-read is allowed"
+            if "" then
+                --> [not allowed] "notification-popup: tracking not allowed"
+            else
+                --> [allowed] "notification-popup: waiting for confirmation for tracking"
+                --> [allowed] "server: send tracking confirmation request"
+                if "" then
+                    --> [confirmed] "display location on mainmap"
+                else
+                    --> "notification-popup: tracking aborted"
+                    --> [aborted] (*)
+                Endif
+            Endif
+        Endif
+    Endif
+Endif
+@enduml

@@ -1,10 +1,54 @@
-@startuml
-(*)  --> "check input"
-If "input is verbose" then
---> [Yes] "turn on verbosity"
---> "run command"
+            @startuml
+(*)  --> "search-field: check input"
+if "" then
+    --> [field empty] "**ACTIVITYMAINMAP**"
+    --> [exit search] (*)
 else
---> "run command"
+    --> [user is typing] "server: incremental search send results"
+    --> "dropdown-popup: show clickable results with icons (person, office/building, parking, events)"
+    if "" then
+        --> [tap] "dropdown-item: tap event"
+        if "" then
+            --> [person] "server: db-read is tracking allowed"
+            if "" then
+                --> [info] "server: db-read get user info"
+                --> [received info] "notification-popup: display informations"
+                --> [info notification] (*)
+            else
+                --> [tracking allowed] "choose-popup: pick tracking or info"
+                if "" then
+                    --> [track person] "**ACTIVITYLOCATION**"
+                    --> [location] (*)
+                else
+                    --> [info] "server: db-read get user info"
+                    --> [received info] "notification-popup: display informations"
+                    --> [info notification] (*)
+                Endif
+            Endif
+        else
+            if "" then
+                --> [office/building] "server: db-read get office/building"
+                --> "choose-popup: pick location or info"
+                if "" then
+                    --> [office/building] "**ACTIVITYLOCATION**"
+                else
+                    --> [info] "notification-popup: display informations"
+                Endif
+            else
+                if "" then
+                    --> [parking] "**ACTIVITYMAPPARKING**"
+                    --> [parking] (*)
+                else
+                    --> [event] "notification-popup: display informations"
+                Endif
+            Endif
+        Endif
+    else
+        --> [tap outside search forms] "**ACTIVITYMAINMAP**"
+    Endif
 Endif
--->(*)
+
+
+
+
 @enduml

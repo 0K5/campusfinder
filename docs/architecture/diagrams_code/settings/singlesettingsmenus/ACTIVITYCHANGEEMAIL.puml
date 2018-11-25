@@ -1,12 +1,51 @@
-    @startuml
+                @startuml
 (*)  --> "window: input password"
 if "" then
     --> [cancel] (*)
 else
-    --> -
+    --> "server: db-read validate password with slow hash"
     if "" then
         --> [not valid] (*)
-
+    else
+        --> [input email] "input-window: type in new email and confirmation"
+        if "" then
+            --> [change privacy settings] "slider: private options"
+            if "" then
+                --> [show] "other people can see my email"
+                --> "server: db-read is worker or student"
+                if "" then
+                    --> [worker] "slider-popup: other offices, other departments, other faculties"
+                    --> "slider: other people can search for email"
+                    --> "server: validate new email"
+                else
+                    --> [student] "slider: other people can search for email"
+                    --> "slider: other people can search for email"
+                Endif
+            else
+                --> [search] "other people can search for email"
+                --> "server: db-read is worker or student"
+            Endif
+        else
+            --> [save action] "server: validate new email"
+            if "" then
+                --> [guest email] "ok-cancel-popup:\n show info about restricted information for quests\n you will be logged out info"
+                if "" then
+                    --> [email changed] "server: db-update user"
+                    --> "server: logout user"
+                    --> "**ACTIVITYSTARTUP**"
+                    --> (*)
+                else
+                    --> [cancel] "input-window: type in new email and confirmation"
+                Endif
+            else
+                --> [student email] "ok-cancel-popup: you will be logged out info"
+                if "" then
+                    --> [email changed] "server: db-update user"
+                else
+                    --> [cancel] "input-window: type in new email and confirmation"
+                Endif
+            Endif
+        Endif
+    Endif
 Endif
--->(*)
 @enduml

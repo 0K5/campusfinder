@@ -5,42 +5,23 @@ if "" then
 else
     --> [continue] "server: db-get user or worker"
     if "" then
-        --> [worker] "worker"
+        --> [notifications] "get redirect to settings or manual"
         if "" then
-            --> [notifications] "**ACTIVITYNOTIFACTIONS**"
+            --> [manual] "server: db-read device notification manual"
+            --> "close-popup: show notification manual"
+            --> [close] "window: change app setting"
         else
-            if "" then
-                --> [tracking] "**ACTIVITYTRACKING**"
-            else
-                if "" then
-                    --> [privacy] "**ACTIVITYPRIVACY**"
-                else
-                    --> [performance] "**ACTIVITYPERFORMANCE**"
-                    --> "save-cancel-action"
-                    if "" then
-                        --> [save] "server: db-update saved user setting"
-                        --> [updated] (*)
-                    else
-                        --> [cancel] "window: change app setting"
-                    Endif
-                Endif
-            Endif
+            --> [settings] "redirect to device notification settings"
+            --> [notification settings] "window: change app setting"
         Endif
     else
-        --> [student] "student"
+        --> [tracking] "**ACTIVITYTRACKING**"
+        --> "save-cancel-action"
         if "" then
-            --> [notifications] "**ACTIVITYNOTIFACTIONS**"
+            --> [save] "server: db-update saved user setting"
+            --> [updated] "window: change app setting"
         else
-            if "" then
-                --> [tracking] "**ACTIVITYTRACKING**"
-            else
-                if "" then
-                    --> [privacy] "**ACTIVITYPRIVACY**"
-                else
-                    --> [performance] "**ACTIVITYPERFORMANCE**"
-                    --> "save-cancel-action"
-                Endif
-            Endif
+            --> [cancel] "window: change app setting"
         Endif
     Endif
 Endif

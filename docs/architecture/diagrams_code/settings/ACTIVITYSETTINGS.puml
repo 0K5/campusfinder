@@ -1,4 +1,4 @@
-                    @startuml
+                        @startuml
 (*)  --> "server: db_get user settings"
 --> "server: db_get user logged in"
 if "" then
@@ -10,63 +10,67 @@ if "" then
         if "" then
             --> [Yes] "overlay: settings menu"
             if "" then
-                --> [personal settings] "server: db-read user personal settings"
-                --> "server: is student or worker"
-                if "" then
-                    --> [worker] "choose-window:\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
-                    --> "**ACTIVITYPERSONALSETTINGS**"
-                    --> "choose-window:\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
-                    --> [save button] "save-cancel-popup: confirm save settings"
-                else
-                    --> [student] "choose-window:\n email(s)\n password\n faculty"
-                    --> "**ACTIVITYPERSONALSETTINGS**"
-                    --> "choose-window:\n email(s)\n password\n faculty"
-                Endif
+                --> [add event] "**ACTIVITYADDEVENT**"
             else
                 if "" then
-                    --> [change password] "**ACTIVITYCHANGEPASSWORD**"
-                else
+                    --> [personal settings] "server: db-read user personal settings"
+                    --> "server: is student or worker"
                     if "" then
-                        --> [app settings] "server: db-read user app settings"
-                        --> "choose-window:\n notifications\n tracking\n privacy\n map"
-                        --> "**ACTIVITYAPPSETTINGS**"
-                        --> "choose-window:\n notifications\n tracking\n privacy\n map"
+                        --> [worker] "choose-window:\n profilepicture\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
+                        --> "**ACTIVITYPERSONALSETTINGS**"
+                        --> "choose-window:\n profilepicture\n email(s)\n password\n phone(s)\n department(s)\n office(s)"
                         --> [save button] "save-cancel-popup: confirm save settings"
                     else
+                        --> [student] "choose-window:\n profilepicture\n email(s)\n password\n faculty"
+                        --> "**ACTIVITYPERSONALSETTINGS**"
+                        --> "choose-window:\n profilepicture\n email(s)\n password\n faculty"
+                    Endif
+                else
+                    if "" then
+                        --> [change password] "**ACTIVITYCHANGEPASSWORD**"
+                    else
                         if "" then
-                            --> [show info] "server: db-read and summarise info"
-                            --> "ok-close-popup:\n all info about personal and app settings"
-                            --> [ok] "overlay: settings menu"
+                            --> [app settings] "server: db-read user app settings"
+                            --> "choose-window:\n notifications\n tracking\n privacy\n map"
+                            --> "**ACTIVITYAPPSETTINGS**"
+                            --> "choose-window:\n notifications\n tracking\n privacy\n map"
+                            --> [save button] "save-cancel-popup: confirm save settings"
                         else
                             if "" then
-                                --> [logout] "ok-cancel-popup: confirm logout user"
-                                if "" then
-                                    --> [ok] "server: logout user"
-                                    --> "**ACTIVITYLOGIN**"
-                                    --> [logged out] (*)
-                                else
-                                    --> [cancel] "overlay: settings menu"
-                                Endif
+                                --> [show info] "server: db-read and summarise info"
+                                --> "ok-close-popup:\n all info about personal and app settings"
+                                --> [ok] "overlay: settings menu"
                             else
-                                --> [delete account] "ok-cancel-popup: confirm account deletion"
                                 if "" then
-                                    --> [ok] "server: logout and delete user"
-                                    --> "**ACTIVITYREGISTER**"
-                                    --> [deleted account] (*)
+                                    --> [logout] "ok-cancel-popup: confirm logout user"
+                                    if "" then
+                                        --> [ok] "server: logout user"
+                                        --> "**ACTIVITYLOGIN**"
+                                        --> [logged out] (*)
+                                    else
+                                        --> [cancel] "overlay: settings menu"
+                                    Endif
                                 else
-                                    --> [cancel] "window: settings menu"
+                                    --> [delete account] "ok-cancel-popup: confirm account deletion"
+                                    if "" then
+                                        --> [ok] "server: logout and delete user"
+                                        --> "**ACTIVITYREGISTER**"
+                                        --> [deleted account] (*)
+                                    else
+                                        --> [cancel] "window: settings menu"
+                                    Endif
                                 Endif
                             Endif
                         Endif
                     Endif
                 Endif
-            Endif
-            --> [save button] "save-cancel-popup: confirm save settings"
-            if "" then
-                --> [save] "server: db-update user settings"
-                --> [saved settings] (*)
-            else
-                --> [cancel] "overlay: settings menu"
+                --> [save button] "save-cancel-popup: confirm save settings"
+                if "" then
+                    --> [save] "server: db-update user settings"
+                    --> [saved settings] (*)
+                else
+                    --> [cancel] "overlay: settings menu"
+                Endif
             Endif
         else
             --> [No] "popup: db-error notification"

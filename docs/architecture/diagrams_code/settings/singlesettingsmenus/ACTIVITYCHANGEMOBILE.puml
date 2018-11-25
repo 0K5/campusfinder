@@ -1,10 +1,49 @@
-@startuml
-(*)  --> "check input"
-If "input is verbose" then
---> [Yes] "turn on verbosity"
---> "run command"
-else
---> "run command"
+                @startuml
+(*)  --> "window: input mobile phone"
+if "" then
+    --> [cancel] (*)
+    if "" then
+        --> [delete] "ok-cancel-window: information insecurity no 2FA"
+        if "" then
+            --> [delete number] "server: db-update user"
+            --> "**ACTIVITYSETTINGS**"
+            --> (*)
+        else
+            --> [continue] "input-field: number input"
+            if "" then
+                --> [change privacy settings] "slider: private options"
+                if "" then
+                    --> [show] "other people can see my mobile"
+                    --> "server: db-read is worker or student"
+                    if "" then
+                        --> [worker] "slider-popup: other offices, other departments, other faculties"
+                        --> "slider: other people can search for mobile"
+                        --> "save-cancel-popup: notification that mobile number needs to be verified per sms"
+                    else
+                        --> [student] "slider: other people can search for email"
+                        --> "slider: other people can search for mobile"
+                    Endif
+                else
+                    --> [search] "other people can search for mobile"
+                    --> "server: db-read is worker or student"
+                Endif
+            else
+                --> "save-cancel-popup: notification that mobile number needs to be verified per sms"
+                if "" then
+                    --> [save number] "server: db-read validate mobile phone"
+                    --> "server: send verification sms"
+                    if "" then
+                        --> [verified] "Replace old phone number"
+                        --> [new number] "**ACTIVITYSETTINGS**"
+                    else
+                        --> [unverified] "Keep old phone number"
+                        --> [unverified] "**ACTIVITYSETTINGS**"
+                    Endif
+                else
+                    --> [cancel] "window: input mobile phone"
+                Endif
+            Endif
+        Endif
+    Endif
 Endif
--->(*)
 @enduml
