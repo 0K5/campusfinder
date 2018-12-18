@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2d7d8806-eb70-49b5-9e4c-75bbc273b33c" name="Default Changelist" comment="kkkkkkkk">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYSTARTUP.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYSTARTUP.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYNOTIFICATION.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYAPPSETTINGS.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYAPPSETTINGS.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYPERSONALSETTINGS.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYPERSONALSETTINGS.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYSETTINGS.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYSETTINGS.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEEMAIL.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEEMAIL.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEMOBILE.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEMOBILE.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGENOTIFICATIONS.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPASSWORD.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPASSWORD.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPRIVACY.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGETRACKING.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGETRACKING.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYPERFORMANCE.puml" beforeDir="false" />
-    </list>
+    <list default="true" id="2d7d8806-eb70-49b5-9e4c-75bbc273b33c" name="Default Changelist" comment="kkkkkkkk" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -31,12 +14,26 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYAPPSETTINGS.puml">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAINMAP.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="612">
+              <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPBUILDING.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -87,35 +84,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+            <state relative-caret-position="901">
+              <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEMOBILE.puml">
+        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYLOCATION.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="61" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPASSWORD.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGETRACKING.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="25" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+            <state relative-caret-position="289">
+              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -295,16 +274,15 @@
       <workItem from="1542786138762" duration="25748000" />
       <workItem from="1542959859879" duration="16841000" />
       <workItem from="1543064295105" duration="1564000" />
-      <workItem from="1543140483019" duration="14078000" />
+      <workItem from="1543140483019" duration="14221000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62073000" />
+    <option name="totallyTimeSpent" value="62216000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12718602" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -349,35 +327,11 @@
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYUSERPASSVAL.puml" />
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMENU.puml" />
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYINITIALSETTINGS.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPBUILDING.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAINMAP.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGENOTIFICATIONS.puml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYPERFORMANCE.puml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYLOCATION.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPRIVACY.puml">
       <provider selected="true" editor-type-id="text-editor">
@@ -470,10 +424,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYLOCATION.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAINMAP.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPBUILDING.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        <state relative-caret-position="901">
+          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
         </state>
       </provider>
     </entry>
