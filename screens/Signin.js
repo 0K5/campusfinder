@@ -1,3 +1,4 @@
+//init signin
 import React, { Component } from 'react';
 import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight } from 'react-native';
 
