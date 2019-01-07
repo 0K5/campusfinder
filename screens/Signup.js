@@ -1,3 +1,4 @@
+//init signup
 import React, { Component } from 'react';
 import { StyleSheet,Text,TouchableOpacity,TouchableHighlight, View,Image, TextInput} from 'react-native';
 import CheckBox from 'react-native-check-box';
