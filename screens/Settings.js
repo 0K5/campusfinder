@@ -1,3 +1,4 @@
+//init Settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
 import { StyleSheet,Text,View } from 'react-native';
