@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2d7d8806-eb70-49b5-9e4c-75bbc273b33c" name="Default Changelist" comment="kkkkkkkk" />
+    <list default="true" id="184f948f-9363-4737-9c35-346b2a77c205" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -10,152 +10,6 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAINMAP.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPBUILDING.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEEMAIL.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="86" selection-start-line="15" selection-start-column="86" selection-end-line="15" selection-end-column="86" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYBLOCKTIMER.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYLOCATION.puml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="UML Class" />
-        <option value="UML Activity" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/docs/architecture/main.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/InitialStartup.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYSENDEMAILVERIFICATION.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYINITIALSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYLOGIN.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYSINGLESETTING.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYREGISTER.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/COMPLETE.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYPERSONALSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYPERSONALSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYCHANGEEMAIL.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYUSERPASSVAL.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMAP.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYAPPSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMAPBUILDING.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMAPPARKING.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMENU.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMAINMAP.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/menu/ACTIVITYPERSONALSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYSTARTUP.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYTRACKING.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYLOCATION.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPASSWORD.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEEMAIL.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEMOBILE.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYPERSONALSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYAPPSETTINGS.puml" />
-        <option value="$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGETRACKING.puml" />
-      </list>
-    </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
@@ -171,59 +25,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="architecture" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="architecture" type="462c0819:PsiDirectoryNode" />
-              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="architecture" type="462c0819:PsiDirectoryNode" />
-              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="architecture" type="462c0819:PsiDirectoryNode" />
-              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
-              <item name="security" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="architecture" type="462c0819:PsiDirectoryNode" />
-              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="campusfinder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="campusfinder" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="architecture" type="462c0819:PsiDirectoryNode" />
-              <item name="diagrams_code" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-              <item name="singlesettingsmenus" type="462c0819:PsiDirectoryNode" />
+              <item name="GitHub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitHub" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -234,18 +37,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/architecture/activity_diagrams" />
+    <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code" />
-      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\usermain\menu\singlesettingsmenus" />
-      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\usermain\menu" />
-      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\usermain" />
-      <recent name="C:\Users\oks\Documents\GitHub\campusfinder\docs\architecture\diagrams_code\settings" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -259,201 +53,61 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Android" type="ReactNative" factoryName="React Native">
+      <working-dir value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <react-native value="$USER_HOME$/AppData/Roaming/npm/node_modules/react-native-cli" />
+      <platform value="ANDROID" />
+      <envs />
+      <only-packager />
+      <method v="2">
+        <option name="ReactNativePackager" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2d7d8806-eb70-49b5-9e4c-75bbc273b33c" name="Default Changelist" comment="" />
-      <created>1542731047051</created>
+      <changelist id="184f948f-9363-4737-9c35-346b2a77c205" name="Default Changelist" comment="" />
+      <created>1546894093553</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1542731047051</updated>
-      <workItem from="1542731048170" duration="271000" />
-      <workItem from="1542731333441" duration="3571000" />
-      <workItem from="1542786138762" duration="25748000" />
-      <workItem from="1542959859879" duration="16841000" />
-      <workItem from="1543064295105" duration="1564000" />
-      <workItem from="1543140483019" duration="14221000" />
+      <updated>1546894093553</updated>
+      <workItem from="1546894095027" duration="358000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62216000" />
+    <option name="totallyTimeSpent" value="358000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12718602" />
+      <window_info id="npm" side_tool="true" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32969603" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32735777" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection Results" order="11" visible="true" weight="0.32969603" />
+      <window_info anchor="right" id="PlantUML" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="PlantUML" order="3" visible="true" weight="0.43839428" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docs/architecture/MainClassUml.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYCHANGEPASSWORD.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYLOGIN.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYINITIALSETTINGS.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYPERSONALSETTINGS.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.png" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYREGISTER.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSETTINGS.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYEMAILVERIFICATION.png" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYBLOCKTIMER.png" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/ACTIVITYSTARTUP.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/COMPLETE.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/MainClassUml.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYUSERPASSVAL.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/usermain/map/ACTIVITYMENU.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYINITIALSETTINGS.puml" />
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGENOTIFICATIONS.puml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYPERFORMANCE.puml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPRIVACY.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/ACTIVITYSTARTUP.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYSETTINGS.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="29" column="62" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYPERSONALSETTINGS.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/ACTIVITYAPPSETTINGS.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGETRACKING.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="25" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEPASSWORD.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEMOBILE.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="61" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/settings/singlesettingsmenus/ACTIVITYCHANGEEMAIL.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYREGISTER.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYLOGIN.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYEMAILVERIFICATION.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="86" selection-start-line="15" selection-start-column="86" selection-end-line="15" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/security/ACTIVITYBLOCKTIMER.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYLOCATION.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAINMAP.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPBUILDING.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYMAPPARKING.puml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/architecture/diagrams_code/main/ACTIVITYSEARCH.puml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>
