@@ -9,7 +9,7 @@
       "android"
     ],
     "packagerOpts": {
-      "port": 81
+      "port": 3000
     },
     "version": "1.0.0",
     "orientation": "portrait",
