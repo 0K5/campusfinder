@@ -1,3 +1,4 @@
+//init signin
 import React, { Component } from 'react';
 import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight } from 'react-native';
 
@@ -65,27 +66,6 @@ const styles = StyleSheet.create({
 });
 
 export default class SignIn extends Component {
-
-  static navigationOptions = ({navigation})=>  {
-    return{
-    headerRight:
-          <TouchableHighlight onPress={() => navigation.navigate('settings')}>
-            <Image style={styles.headerImage} source={require('../img/settings.png')} />
-          </TouchableHighlight>
-      
-    
-  }}
-
-  /*
-       <Text style={styles.campfind}>CampusFinder</Text>
-        
-        <TouchableHighlight
-        onPress = {
-           () => this.handleclick
-        }>
-        <Image source={require('../img/settings.png')} style={styles.headerImage}></Image>
-        </TouchableHighlight>
-      */
   state = {
     email: '',
     password: ''
@@ -96,8 +76,44 @@ export default class SignIn extends Component {
  handlePassword = (text) => {
     this.setState({ password: text })
  }
+
+ signIn = () => {
+   if(this.state.email.length > 6 && this.state.password.length > 6 ){
+     fetch('https://zerokfive.de/rest-auth/login/', {
+     method: 'POST',
+     headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+     },
+     body: JSON.stringify({"email": this.state.email, "password" : this.state.password})
+     }).then(response => response.json())
+       .then(data => {
+         var msg ="";
+         console.log(data);
+         for (var key in data) {
+           if (data.hasOwnProperty(key)) {
+             if(data[key] == "Verification e-mail sent."){
+               msg = data[key];
+             } else{
+               for (var i = 0; i < data[key].length; i++) {
+                 msg = msg + data[key][i] + '\n'
+             }
+             }
+           }
+       }
+       msg = msg + " ";
+       alert(msg);
+       })
+       .catch(err => {
+         console.log(err);
+       })
+  } else{
+     //alert('Please check email and password')
+   }
+  this.props.navigation.navigate("map")
+}
+
   render() {
-    const {navigation} = this.props;
     return (
           
           <View style={styles.container}>
@@ -112,6 +128,7 @@ export default class SignIn extends Component {
                onChangeText = {this.handleEmail}/>
             
             <TextInput style = {styles.input}
+               secureTextEntry={true}
                underlineColorAndroid = "transparent"
                placeholder = "    Password"
                placeholderTextColor = "grey"
@@ -122,7 +139,7 @@ export default class SignIn extends Component {
                style = {styles.Button}
                onPress = {
                  
-                  () => this.login(this.state.email, this.state.password)
+                  () => this.signIn()
                }>
                <Text style = {styles.ButtonText}> Login </Text>
             </TouchableOpacity>

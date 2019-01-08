@@ -3,8 +3,8 @@ import signin from './screens/Signin';
 import signup from './screens/Signup';
 import settings from './screens/Settings';
 import termsAndConditions from './screens/TermsAndContidions';
-import React from 'react';
-import { Text,TouchableOpacity, View, Image} from 'react-native';
+import map from './screens/Map';
+
 
 
 const App = createStackNavigator({
@@ -15,6 +15,7 @@ const App = createStackNavigator({
   signup: {screen: signup,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
   settings: {screen: settings,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   termsAndConditions: {screen: termsAndConditions,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  map: {screen: map,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
 });
 
 export default App;
