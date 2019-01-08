@@ -78,7 +78,7 @@ export default class SignIn extends Component {
  }
 
  signIn = () => {
-   if(this.state.email.length > 6 && this.state.password.length > 6 ){
+   if(this.state.email.length > 5 && this.state.password.length > 5 ){
      fetch('https://zerokfive.de/rest-auth/login/', {
      method: 'POST',
      headers: {
@@ -110,7 +110,7 @@ export default class SignIn extends Component {
          alert("Connection to Server interrupted. Please check your internet connection");
        })
   } else{
-     alert('Please check the length of your email and password');
+     alert('Please check the length of your email and password (Size 6)');
    }
   
 }
