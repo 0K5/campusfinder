@@ -8,7 +8,7 @@ const styles= StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
-        top:90,
+        top:0,
         position: 'absolute'
     },
     headerImage:{
@@ -73,26 +73,13 @@ export default class Map extends Component {
                 region={this.state.region}
                 rotateEnabled={false}
                 mapType={"hybrid"}
-                 maxDelta={0.0035}
+                maxDelta={0.0035}
                 showsBuildings={true}
 
 
                 
             >
-                <Callout>
-                    <View style={styles.calloutView} >
-                        <TextInput style={styles.calloutSearch}
-                         placeholder={"Search"}
-                         />
-                    </View>
-                </Callout>
-
-                <Callout>
-                    <View style={styles.button}>
-                        <Button title='Go to Campus' onPress = {
-                                        () => console.log('khabs') }/>
-                    </View>
-                </Callout>
+                
       
             </MapView>
         )

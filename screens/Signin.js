@@ -103,15 +103,14 @@ export default class SignIn extends Component {
        }
        msg = msg + " ";
        alert(msg);
-       this.props.navigation.navigate("map")
        })
        .catch(err => {
          console.log(err);
        })
-   } else{
-     alert('Please check email and password')
+  } else{
+     //alert('Please check email and password')
    }
-  
+  this.props.navigation.navigate("map")
 }
 
   render() {
