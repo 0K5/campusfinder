@@ -92,25 +92,27 @@ export default class SignIn extends Component {
          console.log(data);
          for (var key in data) {
            if (data.hasOwnProperty(key)) {
-             if(data[key] == "Verification e-mail sent."){
+             if(key == 'key'){
                msg = data[key];
+               this.props.navigation.navigate('map');
              } else{
                for (var i = 0; i < data[key].length; i++) {
                  msg = msg + data[key][i] + '\n'
              }
+             msg = msg + " ";
+             alert(msg);
              }
            }
        }
-       msg = msg + " ";
-       alert(msg);
        })
        .catch(err => {
          console.log(err);
+         alert("Connection to Server interrupted. Please check your internet connection");
        })
   } else{
-     //alert('Please check email and password')
+     alert('Please check the length of your email and password');
    }
-  this.props.navigation.navigate("map")
+  
 }
 
   render() {
