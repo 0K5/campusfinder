@@ -82,19 +82,11 @@ const styles = StyleSheet.create({
 
 export default class SignUp extends Component {
   
-  static navigationOptions = ({navigation})=>  {
-    return{
-    headerRight:
-          <TouchableHighlight onPress={() => navigation.navigate('settings')}>
-            <Image style={styles.headerImage} source={require('../img/settings.png')} />
-          </TouchableHighlight>
-      
-    
-  }}
   state = {
     email: '',
     password: '',
-    name: ''
+    password2: '',
+    termscondition: false
  }
  handleEmail = (text) => {
     this.setState({ email: text })
@@ -102,11 +94,56 @@ export default class SignUp extends Component {
  handlePassword = (text) => {
     this.setState({ password: text })
  }
- handleName = (text) => {
-   this.setState({name: text}) 
+ handlePassword2 = (text) => {
+   this.setState({password2: text}) 
   }
+
+ signUp = () => {
+   if(!this.state.termscondition){
+     alert('Please read the Terms and Conditions and confirm the checkbox')
+   }else{
+    if(this.state.password == this.state.password2  && this.state.password-length > 5 && this.state.email.length > 5){
+      console.log(JSON.stringify({ "email": this.state.email, "password1" : this.state.password, "password2" : this.state.password2 }));
+      fetch('https://zerokfive.de/rest-auth/registration', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "email": this.state.email, "password1" : this.state.password, "password2" : this.state.password2 })
+      }).then(response => response.json())
+        .then(data => {
+          var msg ="";
+          console.log(data);
+          for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+              if(data[key] == "Verification e-mail sent."){
+                msg = data[key];
+              } else{
+                for (var i = 0; i < data[key].length; i++) {
+                  msg = msg + data[key][i] + '\n'
+              }
+              }
+              
+            }
+        }
+        msg = msg + " ";
+        alert(msg);
+        })
+        .catch(err => {
+          console.log(err)
+          alert("Connection to Server interrupted. Please check your internet connection")
+        })
+    } else{
+      alert("Please check your Email and type your Password again (Size 6)")
+    }
+   }
+   
+}
+
   render() {
-   const {navigation} = this.props;
+    
+  
     return (
           <View style={styles.container}>
             <Text style={styles.heading}>
@@ -114,32 +151,34 @@ export default class SignUp extends Component {
             </Text>
             <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
-               placeholder = "   Full Name"
-               placeholderTextColor = "grey"
-               autoCapitalize = "none"
-               onChangeText = {this.handleName}/>
-            
-            <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               placeholder = "    Email"
+               placeholder = "   Email"
                placeholderTextColor = "grey"
                autoCapitalize = "none"
                onChangeText = {this.handleEmail}/>
-
+            
             <TextInput style = {styles.input}
+               secureTextEntry={true}
                underlineColorAndroid = "transparent"
                placeholder = "    Password"
                placeholderTextColor = "grey"
                autoCapitalize = "none"
                onChangeText = {this.handlePassword}/>
 
+            <TextInput style = {styles.input}
+               secureTextEntry={true}
+               underlineColorAndroid = "transparent"
+               placeholder = "    Password confirmation"
+               placeholderTextColor = "grey"
+               autoCapitalize = "none"
+               onChangeText = {this.handlePassword2}/>
+
             
             
             <View style = {styles.Checkbox} >
             <CheckBox
-                onClick={() => this.setState({isChecked: !this.state.isChecked})}
+                onClick={() => this.setState({termscondition: !this.state.termscondition})}
                 rightText={"I accept the terms and conditions"}
-                isChecked={this.state.isChecked}
+                isChecked={this.state.termscondition}
               /></View>
               <TouchableOpacity
                style = {styles.ButtonTAC}
@@ -153,7 +192,7 @@ export default class SignUp extends Component {
             <TouchableOpacity
                style = {styles.Button}
                onPress = {
-                  () => this.signUp(this.state.name,this.state.email, this.state.password)
+                  () => this.signUp()
                }>
                <Text style = {styles.ButtonText}> Sign Up </Text>
             </TouchableOpacity>
