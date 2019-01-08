@@ -99,7 +99,7 @@ export default class SignUp extends Component {
   }
 
  signUp = () => {
-    if(this.state.password == this.state.password2  && this.state.password-length > 5 && this.state.email.length > 5){
+    if(this.state.password == this.state.password2  && this.state.password.length > 5 && this.state.email.length > 5){
       if(this.state.termscondition){
       console.log(JSON.stringify({ "email": this.state.email, "password1" : this.state.password, "password2" : this.state.password2 }));
       fetch('https://zerokfive.de/rest-auth/registration', {
