@@ -108,9 +108,9 @@ export default class SignIn extends Component {
          console.log(err);
        })
   } else{
-     //alert('Please check email and password')
+     alert('Please check email and password')
    }
-  this.props.navigation.navigate("map")
+  //this.props.navigation.navigate("map")
 }
 
   render() {
