@@ -1,7 +1,9 @@
+//init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View } from 'react-native';
+import { StyleSheet,Text,View,ScrollView } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
+
 
 
 const styles = StyleSheet.create({
@@ -35,6 +37,11 @@ const styles = StyleSheet.create({
   dropdown:{
     marginLeft: '10%',
     width:'75%',
+  },
+  dropdown2:{
+    marginLeft: '10%',
+    width:'75%',
+    marginBottom: 70,
   }
 });
 
@@ -73,6 +80,7 @@ export default class Settings extends Component {
 
     const {navigation} = this.props
     return (
+      <ScrollView>
       <View style= {styles.container}>
       <Text style={styles.heading}>
       Settings
@@ -121,7 +129,7 @@ export default class Settings extends Component {
           />
           </View> 
        <Text style={styles.text2 }>Your Department</Text>
-        <View style={styles.dropdown}>
+        <View style={styles.dropdown2}>
           <Dropdown
           data={Facu}
           value={'sdfas'} //.getUsers()
@@ -134,7 +142,7 @@ export default class Settings extends Component {
         
      </View>
       
-      
+    </ScrollView>
     )
     
   }
