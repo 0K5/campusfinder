@@ -6,7 +6,7 @@ User.schema = {
     name: 'User',
     primaryKey: 'email',
     properties: {
-        token: 'string',
+        key: 'string',
         email: 'string',
         lastLogin: {type: 'date', default: new Date()},
         hasNotification: {type: 'bool', default: true},
@@ -19,8 +19,9 @@ User.schema = {
 
 const realm = new Realm({schema: [User]});
 
+
 module.exports = {
-    "realm" : realm,
-    "User" : User
+    realm,
+    User
 }
 
