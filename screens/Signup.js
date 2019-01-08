@@ -102,7 +102,7 @@ export default class SignUp extends Component {
    if(!this.state.termscondition){
      alert('Please read the Terms and Conditions and confirm the checkbox')
    }else{
-    if(this.state.password == this.state.password2 ){
+    if(this.state.password == this.state.password2  && this.state.password-length > 5 && this.state.email.length > 5){
       console.log(JSON.stringify({ "email": this.state.email, "password1" : this.state.password, "password2" : this.state.password2 }));
       fetch('https://zerokfive.de/rest-auth/registration', {
       method: 'POST',
@@ -131,10 +131,11 @@ export default class SignUp extends Component {
         alert(msg);
         })
         .catch(err => {
-          console.log(err);
+          console.log(err)
+          alert("Connection to Server interrupted. Please check your internet connection")
         })
     } else{
-      alert("Email confirmation doesn't match Email")
+      alert("Please check your Email and type your Password again (Size 6)")
     }
    }
    
