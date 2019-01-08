@@ -10,5 +10,6 @@ export default {
     restLogout : "rest-auth/logout/",
     settings: "endpoints/profile/settings/",
     building: "endpoints/building/",
-    room: "endpoints/building/room/"
+    room: "endpoints/building/room/",
+    notificationRegister : "/endpoints/notification/register"
 }
