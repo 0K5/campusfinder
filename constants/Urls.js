@@ -6,4 +6,5 @@ export default {
     restLogin : "/rest-auth/login/",
     restRegistration : "/rest-auth/registration/",
     restLogout : "/rest-auth/logout/",
+    restPushToken : "/endpoints/user/push-token"
 }
