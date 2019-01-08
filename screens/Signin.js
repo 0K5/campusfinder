@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight } from 'react-native';
-
+import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight, Alert } from 'react-native';
+import Urls from '../constants/Urls';
 
 const styles = StyleSheet.create({
     campfind: {
@@ -97,6 +97,29 @@ export default class SignIn extends Component {
  handlePassword = (text) => {
     this.setState({ password: text })
  }
+
+login = async (email, password) => {
+    console.log(Urls.baseUrl + Urls.restLogin)
+  fetch(Urls.baseUrl + Urls.restLogin, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          "email": email,
+          "password": password
+      })
+
+})
+    .then((response) => response.json())
+    .then((responseJson) => {
+ Alert.alert("UserToken: " + responseJson.key);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
   render() {
     const {navigation} = this.props;
     return (
