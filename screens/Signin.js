@@ -66,27 +66,6 @@ const styles = StyleSheet.create({
 });
 
 export default class SignIn extends Component {
-
-  static navigationOptions = ({navigation})=>  {
-    return{
-    headerRight:
-          <TouchableHighlight onPress={() => navigation.navigate('settings')}>
-            <Image style={styles.headerImage} source={require('../img/settings.png')} />
-          </TouchableHighlight>
-      
-    
-  }}
-
-  /*
-       <Text style={styles.campfind}>CampusFinder</Text>
-        
-        <TouchableHighlight
-        onPress = {
-           () => this.handleclick
-        }>
-        <Image source={require('../img/settings.png')} style={styles.headerImage}></Image>
-        </TouchableHighlight>
-      */
   state = {
     email: '',
     password: ''
