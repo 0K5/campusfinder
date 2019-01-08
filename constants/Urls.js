@@ -11,6 +11,6 @@ export default {
     settings: "endpoints/profile/settings/",
     settingsoptions: "endpoints/profile/settings/options/",
     building: "endpoints/building/",
-    room: "endpoints/building/room/"
+    room: "endpoints/building/room/",
     notificationRegister : "/endpoints/notification/register"
 }
