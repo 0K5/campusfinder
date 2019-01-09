@@ -8,7 +8,7 @@ const styles= StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
-        top:0,
+        top:'5%',
         position: 'absolute'
     },
     headerImage:{
@@ -90,6 +90,14 @@ export default class Map extends Component {
                 //showsUserLocation={true}
                 
              >
+            <Callout>
+                <View style={styles.calloutView} >
+                <TextInput style={styles.calloutSearch}
+                            placeholder={"Search"}
+                />
+                </View>
+            </Callout>
+             
              <Polygon
                 coordinates={this.Building9}
                 strokeColor={"rgba(0,0,0,0.1)"}
@@ -122,6 +130,7 @@ export default class Map extends Component {
              >
                  
              </Polygon>
+             
             <Callout>
               <TouchableHighlight onPress={() => this.setRegion(MapView)}>
                 <Text style={styles.button}>Campus
@@ -132,7 +141,7 @@ export default class Map extends Component {
             </Callout>
             
              </MapView>
-            
+             
                 
               
       
