@@ -78,4 +78,3 @@ let foo = async (foo) => { \
      alert('Do Something better');
    }
 ```
-Test
