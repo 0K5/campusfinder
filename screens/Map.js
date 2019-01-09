@@ -1,7 +1,7 @@
 //init maps
 import React, { Component } from 'react';
-import MapView, { Callout } from 'react-native-maps';
-import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight, Image} from 'react-native';
+import MapView, {Callout, Polygon,LatLng } from 'react-native-maps';
+import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight, Image, Alert} from 'react-native';
 
 const styles= StyleSheet.create({
     map:{
@@ -34,23 +34,28 @@ const styles= StyleSheet.create({
         borderWidth: 0.0  
       },
       button:{
-        backgroundColor: '#58ACFA',
-        width: '30%',
-        marginLeft:'70%',
-        borderRadius: 10,
-        marginTop: 20,
+        
+        //backgroundColor: '#58ACFA',
+       // width: '30%',
+       // marginLeft:'68%',
+       // borderRadius: 10,
+        marginTop: '23%',
         height: 40,
-        justifyContent: 'center'
+       // justifyContent: 'center'
       },
 })
 
 export default class Map extends Component {
-
+    48.481881
 
     state = {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025}
     }
 
+    Building9=[{ latitude:48.482729,longitude:9.187737},{latitude:48.483038,longitude:9.186901},{latitude:48.483379,longitude:9.187196},{latitude:48.483067,longitude:9.188027}]
+    Mensa=[{latitude:48.481881,longitude:9.188568},{latitude:48.481959,longitude:9.188364},{latitude:48.482037,longitude:9.188402},{latitude:48.482091,longitude:9.188318},{latitude:48.482159,longitude:9.188375},{latitude:48.482235,longitude:9.188173},{latitude:48.482556,longitude:9.188441},{latitude:48.482524,longitude:9.188585},{latitude:48.482624,longitude:9.188696},{latitude:48.482451,longitude:9.189172}]
+
+   
 
     static navigationOptions = ({navigation})=>  {
         return{
@@ -61,13 +66,20 @@ export default class Map extends Component {
           
         
       }}
+      
 
     setRegion(){
-        console.log('hallo')
+        console.log("Tap")
+        
     }  
+
+    clickBuilding(){
+       
+    }
     
     render(){
         return(
+            <View style={styles.map}>
             <MapView
                 style={styles.map}
                 region={this.state.region}
@@ -75,13 +87,57 @@ export default class Map extends Component {
                 mapType={"hybrid"}
                 maxDelta={0.0035}
                 showsBuildings={true}
-
-
+                //showsUserLocation={true}
                 
-            >
+             >
+             <Polygon
+                coordinates={this.Building9}
+                strokeColor={"rgba(0,0,0,0.1)"}
+                tappable={true}
+                onPress={()=>  Alert.alert(
+                    'Gebäude 9 - Informatik',
+                    'Öffnungszeiten: ',
+                    [
+                        {text: 'Cancel', onPress:() => console.log("Cancel")},
+                        {text: 'Go In', onPress:() => console.log("Go In")}
+                    
+                    ]
+                    )}
+             >
+                 
+             </Polygon>
+             <Polygon
+                coordinates={this.Mensa}
+                strokeColor={"rgba(0,0,0,1)"}
+                tappable={true}
+                onPress={()=>  Alert.alert(
+                    'Gebäude 8 - Mensa',
+                    'Öffnungszeiten: ',
+                    [
+                        {text: 'Cancel', onPress:() => console.log("Cancel")},
+                        {text: 'Go In', onPress:() => console.log("Go In")}
+                    
+                    ]
+                    )}
+             >
+                 
+             </Polygon>
+            <Callout>
+              <TouchableHighlight onPress={() => this.setRegion(MapView)}>
+                <Text style={styles.button}>Campus
+            
+                </Text>
+              </TouchableHighlight>
                 
+            </Callout>
+            
+             </MapView>
+            
+                
+              
       
-            </MapView>
+            
+        </View>
         )
     }
 }
