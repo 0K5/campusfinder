@@ -1,7 +1,9 @@
 //init maps
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng } from 'react-native-maps';
-import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight, Image, Alert} from 'react-native';
+import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert} from 'react-native';
+import SwipeUpDown from 'react-native-swipe-up-down';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 const styles= StyleSheet.create({
     map:{
@@ -16,6 +18,18 @@ const styles= StyleSheet.create({
         width: 40,
         marginTop: 0,
         marginRight: 10
+      },
+      menuImage:{
+        height: 80,
+        width: 80,
+        marginTop: '30%',
+        marginLeft: '40%'
+      },
+      menuImage2:{
+        height: 80,
+        width: 80,
+        marginTop: '80%',
+        marginLeft: '40%'
       },
       calloutView: {
         flexDirection: "row",
@@ -34,7 +48,7 @@ const styles= StyleSheet.create({
       },
       button:{
         flexDirection: "row",
-        backgroundColor: '#58ACFA',
+        backgroundColor: 'lightblue',
         width: '35%',
         marginLeft:'63%',
         borderRadius: 10,
@@ -42,9 +56,24 @@ const styles= StyleSheet.create({
         height: 40,
         justifyContent: 'center',
       },
+      swipe:{ 
+        backgroundColor: 'lightblue',
+        height:80,
+     
+        marginTop:80,
+        
+    },
+    col:{
+        height:200, 
+        borderColor:'black',
+        borderWidth: 0.5,
+    }
 })
 
+
 export default class Map extends Component {
+    
+    
     state = {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
         uniqueValue:1    
@@ -66,11 +95,11 @@ export default class Map extends Component {
     Buidling8=[]
     Building7=[{latitude:48.481881,longitude:9.188568},{latitude:48.481959,longitude:9.188364},{latitude:48.482037,longitude:9.188402},{latitude:48.482091,longitude:9.188318},{latitude:48.482159,longitude:9.188375},{latitude:48.482235,longitude:9.188173},{latitude:48.482556,longitude:9.188441},{latitude:48.482524,longitude:9.188585},{latitude:48.482624,longitude:9.188696},{latitude:48.482451,longitude:9.189172}]
     Building6=[]
-    Building5=[]
-    Building4=[{ latitude:48.482166,longitude:9.186438},{latitude:48.482307,longitude:9.186560},{latitude:48.482205,longitude:9.186849},{latitude:48.482239,longitude:9.186891},{latitude:48.482188, longitude:9.187019},{latitude:48.482018, longitude:9.186880},{latitude:48.481905, longitude:9.187170},{latitude:48.481761, longitude:9.187023},{latitude:48.481859, longitude:9.186737},{latitude:48.481834, longitude:9.186700},{latitude:48.481878, longitude:9.186571}]
-   // Building3=[{ latitude:,longitude:},{ latitude:,longitude:},{ latitude:,longitude:},{ latitude:,longitude:},{ latitude:,longitude:},{ latitude:,longitude:},{ latitude:,longitude:},{ latitude:,longitude:}]
-    Building2=[]
-    Building1=[{latitude:48.480741,longitude:9.184611},{latitude:48.480890,longitude:9.184191},{latitude:48.481040,longitude:9.184325},{latitude:48.481086,longitude:9.184217},{latitude:48.481338,longitude:9.184442},{latitude:48.481829,longitude:9.184999},{latitude:48.481680,longitude:9.185418},{latitude:48.481619,longitude:9.185370},{latitude:48.481473,longitude:9.185740},{latitude:48.481335,longitude:9.185649},{latitude:48.481296,longitude:9.185745},{latitude:48.481182,longitude:9.185514},{latitude:48.480940,longitude:9.185289},{latitude:48.480968,longitude:9.185203},{latitude:48.480840,longitude:9.185069
+    Building5=[{ latitude:48.482695,longitude:9.185688},{latitude:48.482849,longitude:9.185825},{latitude:48.482825,longitude:9.186321},{latitude:48.482661,longitude:9.186759},{latitude:48.482515, longitude:9.186638},{latitude:48.482507, longitude:9.186238}]
+    Building4=[{ latitude:48.481727,longitude:9.187106},{latitude:48.481874,longitude:9.187232},{latitude:48.481719,longitude:9.187659},{latitude:48.481471,longitude:9.187844},{latitude:48.481326, longitude:9.187710},{latitude:48.481471, longitude:9.187267}]
+    Building3=[{ latitude:48.482166,longitude:9.186438},{latitude:48.482307,longitude:9.186560},{latitude:48.482205,longitude:9.186849},{latitude:48.482239,longitude:9.186891},{latitude:48.482188, longitude:9.187019},{latitude:48.482018, longitude:9.186880},{latitude:48.481905, longitude:9.187170},{latitude:48.481761, longitude:9.187023},{latitude:48.481859, longitude:9.186737},{latitude:48.481834, longitude:9.186700},{latitude:48.481878, longitude:9.186571}]
+    Building2=[{ latitude:48.482325,longitude:9.185384},{latitude:48.482518,longitude:9.185527},{latitude:48.482499,longitude:9.186062},{latitude:48.482339,longitude:9.186492},{latitude:48.482193, longitude:9.186353},{latitude:48.482114, longitude:9.185919}]
+    Building1=[{latitude:48.480741,longitude:9.184611},{latitude:48.480890,longitude:9.184191},{latitude:48.481040,longitude:9.184325},{latitude:48.481086,longitude:9.184217},{latitude:48.481338,longitude:9.184442},{latitude:48.481404, longitude:9.184330},{latitude:48.481678, longitude:9.184569},{latitude:48.481607,longitude:9.184767},{latitude:48.481829,longitude:9.184999},{latitude:48.481680,longitude:9.185418},{latitude:48.481619,longitude:9.185370},{latitude:48.481473,longitude:9.185740},{latitude:48.481335,longitude:9.185649},{latitude:48.481296,longitude:9.185745},{latitude:48.481182,longitude:9.185514},{latitude:48.480940,longitude:9.185289},{latitude:48.480968,longitude:9.185203},{latitude:48.480840,longitude:9.185069
         },{latitude:48.480940,longitude:9.184796},{latitude:48.480741,longitude:9.184615}]
 
     static navigationOptions = ({navigation})=>  {
@@ -82,7 +111,11 @@ export default class Map extends Component {
           
         
       }}
+
       
+    iconClicked = () =>{
+        this.props.navigation.navigate('Signin')
+    }
 
     screenreloading = () =>{
         this.setState(({uniqueValue}) => ({
@@ -97,56 +130,55 @@ export default class Map extends Component {
       switch(number){
         
         case 1:
-        text = "Gebäude 1 - Textil&Design - Maschinenhalle",
-        message = 'Öffnungszeiten:'
+        text = "Gebäude 1 - Textil & Design - Maschinenhalle",
+        message = "TEXTIL & DESIGN\nSCHOOL OF TEXTILES & DESIGN\nBETRIEBSHALLE\nZENTRALWERKSTATT\nMASCHINENLABORE TECHNIK\nLEHR- UND FORSCHUNGSZENTRUM\nINTERAKTIVE MATERIALIEN"
         building = 'Building1'
         break;
         
         case 2:
-        text = "Gebäude 2 - Informatik",
-        message = 'Öffnungszeiten:'
+        text = "Gebäude 2 - ANGEWANDTE CHEMIE / DEKANAT",
+        message = 'SCHOOL OF APPLIED CHEMISTRY\nREUTLINGEN RESEARCH INSTITUTE'
         building = 'Building2'
         break;
         
         case 3:
         text = 'Gebäude 3 - Bibliothek',
-        message = 'Öffnungszeiten:'
+        message = 'PRÄSIDIUM / VERWALTUNG \n STUDIENSERVICECENTER\nINTERNATIONAL OFFICE\nLERNZENTRUM'
         building = 'Building3'
         break;
         
         case 4:
-        text = 'Gebäude 4 - ??',
-        message = 'Öffnungszeiten:'
+        text = 'Gebäude 4 - TECHNIK / DEKANAT',
+        message = 'SCHOOL OF ENGINEERING'
         building = 'Building4'
         break;
 
         case 5:
-        text = "Gebäude 5 - Informatik",
-        message = 'Öffnungszeiten:'
+        text = "Gebäude 5 - ESB BUSINESS SCHOOL",
+        message = 'REUTLINGEN RESEARCH INSTITUTE \n STEINBEIS TRANSFER GMBH'
         building = 'Building5'
         
         break;
         case 6:
         text = 'Gebäude 6 - Aula',
-        message = 'Öffnungszeiten:'
         building = 'Building6'
         
         break;
         case 7:
         text = 'Gebäude 7 - Mensa',
-        message = 'Öffnungszeiten:'
+        message = 'SEMINAR FÜR DIDAKTIK UND LEHRERBILDUNG'
         building = 'Building7'
         break;
 
         case 8:
-        text = "Gebäude 8 - Informatik",
-        message = 'Öffnungszeiten:'
+        text = "Gebäude 8",
+        message = 'Rechen und Medienzentrum'
         building = 'Building8'
         break;
 
         case 9:
         text = "Gebäude 9 - Informatik",
-        message = 'Öffnungszeiten:'
+        message = 'SCHOOL OF INFORMATICS'
         building = 'Building9'
         break;
 
@@ -196,7 +228,7 @@ export default class Map extends Component {
                 rotateEnabled={false}
                 mapType={"hybrid"}
                 maxDelta={0.0035}
-                showsBuildings={true}
+                //showsBuildings={true}
                 //showsUserLocation={true}
                 
              >
@@ -208,41 +240,52 @@ export default class Map extends Component {
                 </View>
             </Callout>
             <Polygon
-                
                 coordinates={this.Building1}
-                strokeColor={"rgba(0,0,0,1.0)"}
+                strokeColor={"rgba(0,0,0,0.01)"}
                 tappable={true}
                 onPress={(number)=>  this.clickBuilding(1)}
-             >
-            
-             </Polygon>
+             ></Polygon>
+             <Polygon
+                coordinates={this.Building2}
+                strokeColor={"rgba(0,0,0,0.01)"}
+                tappable={true}
+                onPress={(number)=>  this.clickBuilding(2)}
+             ></Polygon>
+             <Polygon
+                coordinates={this.Building3}
+                strokeColor={"rgba(0,0,0,0.01)"}
+                tappable={true}
+                onPress={(number)=>  this.clickBuilding(3)}
+             ></Polygon>
+            <Polygon
+                coordinates={this.Building4}
+                strokeColor={"rgba(0,0,0,0.01)"}
+                tappable={true}
+                onPress={(number)=>  this.clickBuilding(4)}
+             ></Polygon>
+             <Polygon
+                coordinates={this.Building5}
+                strokeColor={"rgba(0,0,0,0.01)"}
+                tappable={true}
+                onPress={(number)=>  this.clickBuilding(5)}
+             ></Polygon>
+            <Polygon
+                coordinates={this.Building7}
+                strokeColor={"rgba(0,0,0,0.01)"}
+                tappable={true}
+                onPress={(number)=>  this.clickBuilding(7)}
+             ></Polygon>
             <Polygon
                 
                 coordinates={this.Building9}
-                strokeColor={"rgba(0,0,0,0.1)"}
+                strokeColor={"rgba(0,0,0,0.01)"}
                 tappable={true}
                 onPress={(number)=>  this.clickBuilding(9)}
              >
             
              </Polygon>
           
-             <Polygon
-                coordinates={this.Building7}
-                strokeColor={"rgba(0,0,0,0.1)"}
-                tappable={true}
-                onPress={(number)=>  this.clickBuilding(7)}
-             >
-                 
-             </Polygon>
              
-             <Polygon
-                coordinates={this.Building4}
-                strokeColor={"rgba(0,0,0,0.1)"}
-                tappable={true}
-                onPress={(number)=>  this.clickBuilding(4)}
-             >
-                 
-             </Polygon>
 
 
             <Callout>
@@ -250,6 +293,55 @@ export default class Map extends Component {
               <Button  title={"Go To Campus"} onPress={this.screenreloading}/>
                 </View>
             </Callout>
+
+            <SwipeUpDown
+                
+                itemMini={
+                    <Text style={{marginLeft:'28%',fontSize:18}}>Swipe Up to see the Menu</Text>
+                  }
+                  itemFull={
+                    <View>                    
+                    <Grid style={{marginTop:'10%'}}>
+                    <Col >
+                    
+                    <Row style={styles.col} >
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('signin')}>
+                        <Image style={styles.menuImage} source={require('../img/settings.png')} />
+                        </TouchableOpacity>
+                    </Row>
+              
+        <Row style={styles.col}>
+        <TouchableOpacity onPress={() => this.iconClicked}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+        </Row>
+    </Col>
+
+    <Col>
+    <Row style={styles.col}>
+    <TouchableOpacity onPress={() => console.log("settings clicked")}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+              </Row>
+        
+        <Row style={styles.col}>
+        <TouchableOpacity onPress={() => console.log("settings clicked")}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+              
+        </Row>
+    </Col>
+</Grid>
+                    </View>
+                    }
+                swipeHeight={240}
+                disablePressToShow={false} // Press item mini to show full
+                style={styles.swipe} // style for swipe
+                onPress={() => console.log('swipe')}
+                
+            />
+
+          
             
              </MapView>
              
