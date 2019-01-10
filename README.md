@@ -84,11 +84,12 @@ let foo = async (foo) => { \
 ```
 Profile Create and Update:\
 Method: POST\
-Endpoint: https://zerokfive.de/endpoints/profile/create/ \
+Endpoint: https://zerokfive.de/endpoints/profile/ \
 Payload: application/json\ 
 {\
 	"firstname": String,\ 
-	"lastname": String, "pushToken": ""\
+	"lastname": String,\
+	"pushToken": ""\
 }\
 Comments:\
 firstname and lastname can be empty.\
