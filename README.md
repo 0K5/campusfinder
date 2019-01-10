@@ -78,3 +78,37 @@ let foo = async (foo) => { \
      alert('Do Something better');
    }
 ```
+
+------------------------ ENDPOINT PROFILE -----------------------------
+
+```
+Profile Create and Update:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/profile/create/ \
+Payload: application/json\ 
+{\
+	"firstname": String,\ 
+	"lastname": String, "pushToken": ""\
+}\
+Comments:\
+firstname and lastname can be empty.\
+pushToken can be empty if user won't allow push notifications\
+```
+
+```
+Settings Create and Update:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/profile/settings/ \
+Payload: application/json\
+{
+	"isTracking": Boolean,\
+	"isNotification": Boolean,\
+	"visibility" : String ("all","faculty","department","nobody")\ 
+	"faculty": String ("inf","ac","esb","tec","td","all")\
+	"department": String ("teching","facleader","assistant","facservice","library","studservice"}\
+}
+Comments:\
+isTracking: set to False or True\
+isNotification: set to False or True\
+visibility, faculty and department are database entries, so use one of the names above or request a new entry\
+```
