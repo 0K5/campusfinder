@@ -88,6 +88,7 @@ let foo = async (foo) => { \
 ```
 
 ------------------------ ENDPOINT PROFILE -----------------------------
+
 To simply get profile or settings send an empty JSON.\
 
 Like so:
