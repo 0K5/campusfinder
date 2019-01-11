@@ -211,5 +211,5 @@ Errorcodes:\
 224: Building does not exist\
 225: Room does not exist\
 Comments:\
-Returns all rooms when "rooms" field in json is not existent or not empty.\
+Returns all rooms when "rooms" field in json is not existent or empty.\
 ```
