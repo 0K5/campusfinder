@@ -169,3 +169,47 @@ Comments:\
 isTracking: set to False or True\
 isNotification: set to False or True\
 visibility, faculty and department are database entries, so use one of the names above or request a new entry\
+```
+
+------------------------ ENDPOINT BUILDING -----------------------------
+
+To get all or one specific building(s).\
+
+```
+Get all or one building:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/building/\
+Payload: application/json\
+{\
+    "building": Name of the building\
+}\
+Errorcodes:\
+211: User does not exist\
+212: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+213: Building does not exist\
+Comments:\
+Returns all buildings when json is empty or "building" field is empty.\
+```
+
+------------------------ ENDPOINT ROOM -----------------------------
+
+To get all or one specific room(s).\
+
+```
+Get one building or room:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/building/room/\
+Payload: application/json\
+{\
+    "building": Name of the building,\
+    "room": Name of the room\
+}\
+Errorcodes:\
+221: User does not exist\
+222: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+223: Building not set (set "building" in the JSON request)\
+224: Building does not exist\
+225: Room does not exist\
+Comments:\
+Returns all rooms when "rooms" field in json is not existent or not empty.\
+```
