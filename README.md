@@ -89,17 +89,29 @@ Payload: application/json\
 {\
 	"firstname": String,\ 
 	"lastname": String,\
-	"pushToken": ""\
+    "pushToken": ""\
 }\
 Comments:\
 firstname and lastname can be empty.\
 pushToken can be empty if user won't allow push notifications\
+role is automatically added in the backend. Roles are "guest","student" and "worker".
+```
+
+```
+User and Profile Deletion:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/profile/delete/ \
+Payload: application/json\ 
+{\
+}\
+Comments:\
+Profile, user and settings of the profile are all deleted\
 ```
 
 ```
 Settings Create and Update:\
 Method: POST\
-Endpoint: https://zerokfive.de/endpoints/profile/settings/ \
+Endpoint: https://zerokfive.de/endpoints/profile/ \
 Payload: application/json\
 {
 	"isTracking": Boolean,\
@@ -113,3 +125,4 @@ isTracking: set to False or True\
 isNotification: set to False or True\
 visibility, faculty and department are database entries, so use one of the names above or request a new entry\
 ```
+
