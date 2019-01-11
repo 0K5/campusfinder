@@ -9,6 +9,14 @@ To Start:\
 
 Checkout checkout the master branch and then create your own branch. As soon as the feature of your branch is implemented request a merge with the master. The Merge will be reviewed from me because of security relevance and I'm responsible for everything on that server. Cheers
 
+------------------------- BASIC INFORMATION ABOUT THE API ----------------------------
+
+All requests need to be POST. 
+So NEVER forget to put the '/' on the end of your URL.\
+Means:\
+https://zerokfive.de/endpoints/profile will return an error, because it's a GET-request.\
+https://zerokfive.de/endpoints/profile/ is a POST-request.\
+
 ------------------------ AUTHENTICATION STUFF -----------------------------
 ```
 User Registration: \
@@ -80,16 +88,40 @@ let foo = async (foo) => { \
 ```
 
 ------------------------ ENDPOINT PROFILE -----------------------------
+To simply get profile or settings send an empty JSON.\
+
+Like so:
+```
+Profile and Settings Get:
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/profile/
+Payload: application/json\
+{\
+}\
+Comments:\
+Returns the Profile of the user
+```
 
 ```
-Profile Create and Update:\
+User Deletion:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/profile/delete/ \
+Payload: application/json\ 
+{\
+}\
+Comments:\
+User with all corresponding data (profile, settings, ...) will be deleted\
+```
+
+```
+Profile Create, Update and Get:\
 Method: POST\
 Endpoint: https://zerokfive.de/endpoints/profile/ \
 Payload: application/json\ 
 {\
 	"firstname": String,\ 
 	"lastname": String,\
-    "pushToken": ""\
+    	"pushToken": String\
 }\
 Comments:\
 firstname and lastname can be empty.\
@@ -98,18 +130,7 @@ role is automatically added in the backend. Roles are "guest","student" and "wor
 ```
 
 ```
-User and Profile Deletion:\
-Method: POST\
-Endpoint: https://zerokfive.de/endpoints/profile/delete/ \
-Payload: application/json\ 
-{\
-}\
-Comments:\
-Profile, user and settings of the profile are all deleted\
-```
-
-```
-Settings Create and Update:\
+Settings Create, Update and Get:\
 Method: POST\
 Endpoint: https://zerokfive.de/endpoints/profile/ \
 Payload: application/json\
