@@ -1,23 +1,28 @@
 const Realm = require('realm');
 
-class User {}
+class Profile {}
 
-User.schema = {
-    name: 'User',
+Profile.schema = {
+    name: 'Profile',
     primaryKey: 'email',
     properties: {
         key: 'string',
         email: 'string',
-        lastLogin: {type: 'date', default: new Date()},
-        hasNotification: {type: 'bool', default: true},
-        hasTracking: {type: 'bool', default: true},
-        isSeenBy: {type: 'string', default: 'everyone'},
-        faculty: {type: 'string', optional: true},
-        department: {type: 'string', optional: true}
+        username: 'string',
+        firstname: 'string',
+        lastname: 'string',
+        role: 'string'
     },
 };
 
-const realm = new Realm({schema: [User]});
+Settings.schema = {
+    isNotification: {type: 'bool', default: true},
+    isTracking: {type: 'bool', default: true},
+    visibility: {type: 'string', default: 'everyone'},
+    faculty: {type: 'string', optional: true},
+    department: {type: 'string', optional: true}
+}
+const realm = new Realm({schema: [Profile]});
 
 
 module.exports = {

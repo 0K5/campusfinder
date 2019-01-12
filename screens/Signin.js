@@ -1,6 +1,10 @@
 //init signin
 import React, { Component } from 'react';
 import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight } from 'react-native';
+import prevAuthCall from '../constants/Rest';
+import endpointCall from '../constants/Rest';
+import realm from '../constants/Storage';
+import User from '../constants/Storage';
 
 const styles = StyleSheet.create({
     campfind: {
@@ -78,41 +82,40 @@ export default class SignIn extends Component {
  }
 
  signIn = () => {
-   if(this.state.email.length > 5 && this.state.password.length > 5 ){
-     fetch('https://zerokfive.de/rest-auth/login/', {
-     method: 'POST',
-     headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify({"email": this.state.email, "password" : this.state.password})
-     }).then(response => response.json())
-       .then(data => {
-         var msg ="";
-         console.log(data);
-         for (var key in data) {
-           if (data.hasOwnProperty(key)) {
-             if(key == 'key'){
-               msg = data[key];
-               this.props.navigation.navigate('map');
-             } else{
-               for (var i = 0; i < data[key].length; i++) {
-                 msg = msg + data[key][i] + '\n'
-             }
-             msg = msg + " ";
-             alert(msg);
-             }
-           }
-       }
-       })
-       .catch(err => {
-         console.log(err);
-         alert("Connection to Server interrupted. Please check your internet connection");
-       })
-  } else{
-     alert('Please check the length of your email and password (Size 6)');
-   }
-  
+    saveProfileToRealm = (response) => {
+        if (response.hasOwnProperty('profile')) {
+            realm.write(() => {
+                let users = realm.objects('User');
+                let user = items.filtered('email = '+response.profile.email)[0];
+                for(key in response.profile){
+                    user[key] = response.profile[key]
+                }
+                this.props.navigation.navigate('map');
+             });
+        }else if(response.hasOwnProperty('email'){
+             alert("Account not known. Please register first");
+        }else if(response.hasOwnProperty('non_field_errors')){
+            alert("Wrong password or email.");
+        }
+        this.props.navigation.navigate('map');
+    }
+    createProfile = (email, response) => {
+        if (response.hasOwnProperty('key')) {
+             realm.write(() => {
+                realm.create('User', { email: email, key: response.key})
+             });
+             endpointCall(saveProfileToRealm,
+                         'rest-auth/profile/',
+                         '');
+        }else if(response.hasOwnProperty('email'){
+             alert("Account not known. Please register first");
+        }else if(response.hasOwnProperty('non_field_errors')){
+            alert("Wrong password or email.");
+        }
+    }
+    prevAuthCall(createProfile,
+        'rest-auth/login/',
+        {"email": this.state.email, "password" : this.state.password})
 }
 
   render() {
