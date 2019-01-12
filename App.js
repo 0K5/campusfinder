@@ -10,6 +10,9 @@ import building9entrance from './screens/Building9entrance';
 import termsAndConditions from './screens/TermsAndContidions';
 import map from './screens/Map';
 
+
+
+
 const App = createStackNavigator({
     home: {screen: startup,navigationOptions: () => ({
         title:'CampusFinder',
@@ -25,6 +28,7 @@ const App = createStackNavigator({
   building9a: {screen: building9a,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9b: {screen: building9b,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9c: {screen: building9c,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  building: {screen: building,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   termsAndConditions: {screen: termsAndConditions,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   map: {screen: map,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
 });
