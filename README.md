@@ -7,6 +7,10 @@ Example: https://zerokfive.de/endpoints/example (403 if you're not logged in as 
 
 To Start:\
 
+Register a user under:
+
+https://zerokfive.de/accounts/signup/
+
 Checkout checkout the master branch and then create your own branch. As soon as the feature of your branch is implemented request a merge with the master. The Merge will be reviewed from me because of security relevance and I'm responsible for everything on that server. Cheers
 
 ------------------------- BASIC INFORMATION ABOUT THE API ----------------------------
