@@ -10,6 +10,9 @@ import building9entrance from './screens/Building9entrance';
 import termsAndConditions from './screens/TermsAndContidions';
 import map from './screens/Map';
 
+
+
+
 const App = createStackNavigator({
     home: {screen: startup,navigationOptions: () => ({
         title:'CampusFinder',
