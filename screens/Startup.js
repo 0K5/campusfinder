@@ -62,7 +62,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <SignIn {...this.props}/>
+                    <Map {...this.props}/>
                 );
             }
         }
