@@ -11,7 +11,6 @@ const App = createStackNavigator({
         title:'CampusFinder',
         headerBackTitle:'Back',
    })},
-    })},
    signin: {screen: signin,navigationOptions: () => ({
      title:'CampusFinder', 
      headerBackTitle:'Back',
