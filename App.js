@@ -28,7 +28,10 @@ const App = createStackNavigator({
   building9a: {screen: building9a,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9b: {screen: building9b,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9c: {screen: building9c,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+<<<<<<< HEAD
   building: {screen: building,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+=======
+>>>>>>> Include floors for building 9 with floormaps, no link between them
   termsAndConditions: {screen: termsAndConditions,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   map: {screen: map,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
 });
