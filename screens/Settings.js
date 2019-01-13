@@ -61,7 +61,7 @@ export default class Settings extends Component {
 
   }
   render() {
-    let HCSM = [{
+    let hcms = [{
       value: 'Everyone',
     },{
       value: 'Friends',
@@ -70,32 +70,124 @@ export default class Settings extends Component {
     },{
       value: '#other'
     }]
-    let Facu = [{
-      value: 'Informatics',
+    let facu = [{
+      value: 'Informatik',
     },{
-      value: 'Applied Chemistry',
+      value: 'Angewandte Chemie',
     },{
       value: 'ESB Business School',
     },{
-      value: 'Engineering'
+      value: 'Technik'
     },{
-      value: 'Textiles & Design'
+      value: 'Textil & Design'
     }]
 
-    let Informatics = [{
-      value: 'Medien- und Kommunikationsinformatik',
+    let inf = [{
+      value: 'Medien- und Kommunikationsinformatik / Bachelor',
     },{
-      value: 'Wirtschaftsinformatik',
+      value: 'Wirtschaftsinformatik / Bachelor',
     },{
-      value: 'Medizintechnische Informatik',
-    }]
-    
-    let detail;
+      value: 'Medizintechnische Informatik / Bachelor',
+    },{
+      value: 'Service Computing / Master',
+    },{
+      value: 'Human-Centered Computing / Master',
+    },{
+      value: 'Wirtschaftsinformatik / Master',
+    }
+  ]
+
+    let ac = [{
+      value: 'Angewandte Chemie / Bachelor',
+    },{
+      value: 'Biomedizinische Wissenschaft / Bachelor',
+    },{
+      value: 'Angewandte Chemie / Master',
+    },{
+      value: 'Biomedical Sciences / Master',
+    },{
+      value: 'Process Analysis & Technology-Management / Master',
+    },{
+      value: 'Umweltschutz / Master',
+    }
+  ]
+
+    let esb = [{
+      value: 'International Business / Bachelor',
+    },{
+      value: 'International Operations and Logistics Management / Bachelor',
+    },{
+      value: 'International Management Double Degree / Bachelor',
+    },{
+      value: 'Production Management / Bachelor',
+    },{
+      value: 'Digital Industrial Management and Engineering / Master',
+    },{
+      value: 'European Management Studies / Master',
+    },{
+      value: 'International Accounting, Controlling and Taxation / Master',
+    },{
+      value: 'International Business Development / Master',
+    },{
+      value: 'International Retail Management / Master',
+    },{
+      value: 'Strategic Sales Management / Master',
+    },{
+      value: 'International Purchasing Management / Master',
+    },{
+      value: 'Consulting & Business Analytics / Master',
+    },{
+      value: 'International Management / Master',
+    },{
+      value: 'Operations Management / Master',
+    }
+  ]
+
+    let tec = [{
+      value: 'Maschinenbau / Bachelor',
+    },{
+      value: 'Mechatronik / Bachelor',
+    },{
+      value: 'International Project Engineering / Bachelor',
+    },{
+      value: 'Maschinenbau / Master',
+    },{
+      value: 'Mechatronik / Master',
+    },{
+      value: 'Leistungs- und Mikroelektronik / Master',
+    },{
+      value: 'Dezentrale Energiesysteme und Energieeffizienz / Master',
+    },{
+      value: 'Technology Management / Master',
+    }
+  ]
+
+    let td = [{
+      value: 'International Fashion Retail / Bachelor',
+    },{
+      value: 'Textildesign - Modedesign / Bachelor',
+    },{
+      value: 'Textiltechnologie - Textilmanagement / Bachelor',
+    },{
+      value: 'Transportation Interior Design / Bachelor',
+    },{
+      value: 'Interdisziplinäre Produktentwicklung / Master',
+    },{
+      value: 'Design / Master',
+    },{
+      value: 'Textile Chain Research / Master',
+    }
+  ]
 
     handleFaculty = (event) => {
-      alert(event);
       this.setState({faculty: event});
-      this.setState({faculty2: Informatics});
+      switch (event){
+        case 'Informatik': this.setState({faculty2: inf}); break;
+        case 'Angewandte Chemie': this.setState({faculty2: ac}); break;
+        case 'ESB Business School': this.setState({faculty2: esb}); break;
+        case 'Technik': this.setState({faculty2: tec}); break;
+        case 'Textil & Design': this.setState({faculty2: td}); break;
+      }
   }
   
 
@@ -135,14 +227,14 @@ export default class Settings extends Component {
       <Text style={styles.text2 }>Who can see me?</Text>
       <View style={styles.dropdown}>
           <Dropdown
-          data={HCSM}
+          data={hcms}
           value={'Everyone'} //.getUsersHCSM()
           />
           </View>
       <Text style={styles.text2 }>Your Faculty</Text>
       <View style={styles.dropdown}>
           <Dropdown
-          data={Facu}
+          data={facu}
           value={this.state.faculty} //.getUsersFAcu()
           onChangeText= {(value, index, data) => handleFaculty(value)}
           />
