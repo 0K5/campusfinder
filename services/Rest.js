@@ -20,15 +20,15 @@ export const endpointCall = async function(cb, restUrl, data){
                 return cb(responseJson)
             })
             .catch((error) => {
-                return cb({'errorcode':'112',
+                return cb({'errorcode':'1112',
                     'error': "500 Server Error. Please contact an admin of the app",
                     'errorMessage':error.message});
             })
         }else{
-            return cb({'errorcode':'113', 'error': "Please register first"});
+            return cb({'errorcode':'1113', 'error': "Please register first"});
         }
     }).catch((error) => {
-        cb({'errorcode':'114',
+        cb({'errorcode':'1114',
             'error': "Rest.js : Endpoint call : Async Storage getItem error",
             'errorMessage':error.message});
     })
@@ -50,7 +50,7 @@ export const prevAuthCall = async function(cb, restUrl, data){
         return cb(responseJson, data)
     })
     .catch((error) => {
-        return cb({'errorcode':'121',
+        return cb({'errorcode':'1121',
             'error':"500 Server Error. Please contact an admin of the app",
             'errorMessage': error.message});
     })

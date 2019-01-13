@@ -87,6 +87,7 @@ signIn = function(){
             then(profile => {
                 profile = profile == null ? {} : JSON.parse(profile)
                 profile['email'] = response.email;
+                profile['key'] = data.key;
                 profile['firstname'] = response.firstname ? response.firstname : "";
                 profile['lastname'] = response.lastname ? response.firstname : "";
                 AsyncStorage.setItem('profile', JSON.stringify(profile))
@@ -99,7 +100,7 @@ signIn = function(){
         }else if (response){
             alert(JSON.stringify(response));
         }else{
-            alert("'errorcode':'221' 'error':'500 Server Error. Please contact an admin of the app'");
+            alert("'errorcode':'2221' 'error':'500 Server Error. Please contact an admin of the app'");
         }
     }
     let createProfile = function(response, data){
@@ -111,7 +112,6 @@ signIn = function(){
                 profile['key'] = response.key;
                 AsyncStorage.setItem('profile', JSON.stringify(profile))
                 .then(() => {
-                    console.log('endpointCall')
                     return endpointCall(saveResponse, Urls.profile,'')
                 });
             })

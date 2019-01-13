@@ -17,6 +17,7 @@ export default class AppContainer extends Component {
     }
 
     checkAuth() {
+        let comp = this;
         let emailPromise = AsyncStorage.getItem('email');
         let keyPromise = AsyncStorage.getItem('key');
 
@@ -25,29 +26,28 @@ export default class AppContainer extends Component {
             let key = values[1];
 
             if(email && key){
-                fetch(Urls.baseUrl + Urls.authenticated)
-                .then(res => res.json())
-                .then(
-                (result) => {
-                    this.setState({
-                        keyValid: result.is_authenticated,
-                        isLoaded: true
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        keyValid: false,
-                        isLoaded: true
-                    });
-                }
-                )
+                let setActualStates = function(response){
+                    if("is_authenticated" in response && response.is_authenticated){
+                        comp.setState({
+                            keyValid: true,
+                            isLoaded: true
+                        });
+                    }else{
+                        comp.setState({
+                            keyValid: false,
+                            isLoaded: true
+                        });
+                    }
+                };
+                endpointCall(setActualStates, Urls.authenticated, {'key':key})
             }else{
-                this.setState({
+                comp.setState({
                     keyValid: false,
                     isLoaded: true
                 });
             }
-        });
+        })
+        .catch(error => console.log(error));
     }
 
     render() {
@@ -63,7 +63,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <Map />
+                    <Map {...this.props}/>
                 );
             }
         }
