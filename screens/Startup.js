@@ -4,6 +4,7 @@ import { prevAuthCall, endpointCall } from '../services/Rest';
 import Urls from '../constants/Urls';
 import SignIn from '../screens/Signin';
 import Map from '../screens/Map';
+import Settings from '../screens/Settings';
 
 export default class AppContainer extends Component {
 
@@ -62,7 +63,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <Map {...this.props}/>
+                    <Settings {...this.props}/>
                 );
             }
         }
