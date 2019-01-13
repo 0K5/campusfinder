@@ -51,7 +51,6 @@ export default class AppContainer extends Component {
     }
 
     render() {
-        console.log(this.state);
         if (!this.state.isLoaded) {
             return (
                 <ActivityIndicator {...this.props}/>
