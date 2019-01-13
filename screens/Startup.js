@@ -4,6 +4,11 @@ import { prevAuthCall, endpointCall } from '../services/Rest';
 import Urls from '../constants/Urls';
 import SignIn from '../screens/Signin';
 import Map from '../screens/Map';
+import Building9a from '../screens/Building9a';
+import Building9b from '../screens/Building9b';
+import Building9c from '../screens/Building9c';
+import { Building9a as Building9entrance } from '../screens/Building9entrance';
+
 
 export default class AppContainer extends Component {
 
@@ -62,7 +67,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <SignIn {...this.props}/>
+                    <Building9entrance {...this.props}/>
                 );
             }
         }
