@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng } from 'react-native-maps';
 import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert} from 'react-native';
+//import SwipeUpDown from 'react-native-swipe-up-down';
+//import { Col, Row, Grid } from "react-native-easy-grid";
+//import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
 
 const BubbleMenu = require('react-native-bubble-menu');
 
@@ -331,7 +334,52 @@ export default class Map extends Component {
                 //style={}
             />
             </Callout>
-            
+            <SwipeUpDown
+                
+                itemMini={
+                    <Text style={{marginLeft:'28%',fontSize:18}}>Swipe Up to see the Menu</Text>
+                  }
+                  itemFull={
+                    <View>                    
+                    <Grid style={{marginTop:'10%'}}>
+                    <Col >
+                    
+                    <Row style={styles.col} >
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('signin')}>
+                        <Image style={styles.menuImage} source={require('../img/settings.png')} />
+                        </TouchableOpacity>
+                    </Row>
+              
+        <Row style={styles.col}>
+        <TouchableOpacity onPress={() => this.iconClicked}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+        </Row>
+    </Col>
+
+    <Col>
+    <Row style={styles.col}>
+    <TouchableOpacity onPress={() => console.log("settings clicked")}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+              </Row>
+        
+        <Row style={styles.col}>
+        <TouchableOpacity onPress={() => console.log("settings clicked")}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+              
+        </Row>
+    </Col>
+</Grid>
+                    </View>
+                    }
+                swipeHeight={240}
+                disablePressToShow={false} // Press item mini to show full
+                style={styles.swipe} // style for swipe
+                onPress={() => console.log('swipe')}
+                
+            />
 
           
             
