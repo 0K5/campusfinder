@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Building extends Component {
+export default class Building9a extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -59,13 +59,6 @@ export default class Building extends Component {
   }
   render() {
     return (
-    //   // Try setting `flexDirection` to `column`.
-    //   <View style={{}}>
-    //   
-    //     {/* <View style={{width: 150, height: 670, backgroundColor: 'powderblue'}} /> */}
-        
-       
-    //   </View>
     <View style={{
       flex: 1,
       flexDirection: 'column',
@@ -73,13 +66,13 @@ export default class Building extends Component {
       alignItems: 'stretch',
     }}>
       <Text style={styles.heading}>
-       Building 9
+       Building 9 - floor 0
       </Text>
       <Image style={{flex: 1,
               alignSelf: 'stretch',
               resizeMode: 'contain',
               width: undefined,
-              height: undefined}} source={require('../img/building9.png')} />
+              height: undefined}} source={require('../img/building9a.png')} />
     </View>
     );
     
