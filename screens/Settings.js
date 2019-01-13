@@ -51,8 +51,13 @@ export default class Settings extends Component {
     this.state = {
     switchOn1: true,
     switchOn2: false,
+    faculty: "",
+    faculty2: [{
+      value: '',
+    }]
   }
   
+
 
   }
   render() {
@@ -76,7 +81,23 @@ export default class Settings extends Component {
     },{
       value: 'Textiles & Design'
     }]
+
+    let Informatics = [{
+      value: 'Medien- und Kommunikationsinformatik',
+    },{
+      value: 'Wirtschaftsinformatik',
+    },{
+      value: 'Medizintechnische Informatik',
+    }]
     
+    let detail;
+
+    handleFaculty = (event) => {
+      alert(event);
+      this.setState({faculty: event});
+      this.setState({faculty2: Informatics});
+  }
+  
 
     const {navigation} = this.props
     return (
@@ -122,24 +143,17 @@ export default class Settings extends Component {
       <View style={styles.dropdown}>
           <Dropdown
           data={Facu}
-          value={'Informatics'} //.getUsersFAcu()
-          onChange={event => {
-
-          }}
+          value={this.state.faculty} //.getUsersFAcu()
+          onChangeText= {(value, index, data) => handleFaculty(value)}
           />
           </View> 
        <Text style={styles.text2 }>Your Department</Text>
         <View style={styles.dropdown2}>
           <Dropdown
-          data={Facu}
-          value={'sdfas'} //.getUsers()
+          data={this.state.faculty2}
+          value={""} //.getUsers()
           />
           </View>      
-     
-
-
-
-        
      </View>
       
     </ScrollView>
@@ -147,12 +161,13 @@ export default class Settings extends Component {
     
   }
 
+
   onPress1 = () => {
     this.setState({ switchOn1: !this.state.switchOn1 });
   }
   onPress2 = () => {
     this.setState({ switchOn2: !this.state.switchOn2 });
   }
-  
-  
+
+
 }
