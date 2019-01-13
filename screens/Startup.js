@@ -67,7 +67,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <Building9entrance {...this.props}/>
+                    <Building9a {...this.props}/>
                 );
             }
         }
