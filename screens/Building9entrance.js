@@ -1,8 +1,8 @@
 //init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View,ScrollView,Image } from 'react-native';
-import {Dropdown} from 'react-native-material-dropdown';
+import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight } from 'react-native';
+import { Button } from 'react-native';
 
 
 
@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginTop: 30,
     textAlign: 'center'
+  },
+  headerImage:{
+    height: 40,
+    width: 40,
+    marginTop: 0,
+    marginRight: 10
   },
   container:{
     flex:8,
@@ -26,7 +32,8 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:20,
-    fontWeight:'200'
+    fontWeight:'200',
+    textAlign: 'center'
   },
   text2:{
     fontSize:20,
@@ -57,6 +64,22 @@ export default class Building9a extends Component {
   //    </Text>
 
   }
+  
+  static navigationOptions = ({navigation})=>  {
+    return(
+   
+          <TouchableHighlight onPress={() => navigation.navigate('building9a')}>
+          <View style={{
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'stretch',
+    }}></View>
+           <View><Text style={styles.text}>Click Me</Text></View>
+          </TouchableHighlight>
+      
+    
+    )}
   render() {
     return (
     <View style={{
@@ -65,7 +88,12 @@ export default class Building9a extends Component {
       justifyContent: 'center',
       alignItems: 'stretch',
     }}>
-      <Text style={styles.heading}>
+    
+    <Text style={styles.heading}>
+       Faculty of Informatiks
+      </Text>
+     
+      <Text style={styles.text}>
        Building 9 - hall (floor 1)
       </Text>
       <Image style={{flex: 1,
