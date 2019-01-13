@@ -81,13 +81,12 @@ export default class SignIn extends Component {
 
 signIn = function(){
     let comp = this;
-    let saveResponse = function(response, data){
+    let saveResponse = function(response){
         if (response && typeof response === 'object' && "email" in response) {
             AsyncStorage.getItem('profile').
             then(profile => {
                 profile = profile == null ? {} : JSON.parse(profile)
                 profile['email'] = response.email;
-                profile['key'] = data.key;
                 profile['firstname'] = response.firstname ? response.firstname : "";
                 profile['lastname'] = response.lastname ? response.firstname : "";
                 AsyncStorage.setItem('profile', JSON.stringify(profile))
