@@ -1,47 +1,57 @@
+import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
-let realm = require('./Storage');
 
-endpointCall = async (cb, restUrl, data) => {
-    let user = realm.objects('User')[0];
-    if(user){
-          fetch(Urls.baseUrl + restUrl , {
+export const endpointCall = async function(cb, restUrl, data){
+    AsyncStorage.getItem('key').then((key) => {
+        if(!data){
+            data = {'blank':"blank"};
+        }
+        if(key){
+            fetch(Urls.baseUrl + restUrl , {
                 method: 'POST',
                  headers: {
+                            Accept: 'application/json',
                             'Content-Type': 'application/json',
-                            'key' : user.key
+                            'Authorization' : "Token " + key
                           },
                  body: JSON.stringify(data)
-          }).then((response) => response.json())
+            }).then((response) => response.json())
             .then((responseJson) => {
-                cb(responseJson)
+                return cb(responseJson)
             })
             .catch((error) => {
-                console.error(error);
-                alert("500 Server Error. Please contact an admin of the app");
+                return cb({'errorcode':'112',
+                    'error': "500 Server Error. Please contact an admin of the app",
+                    'errorMessage':error.message});
             })
-    }else{
-        throw new Error("LoginError");
-    }
+        }else{
+            return cb({'errorcode':'113', 'error': "Please register first"});
+        }
+    }).catch((error) => {
+        cb({'errorcode':'114',
+            'error': "Rest.js : Endpoint call : Async Storage getItem error",
+            'errorMessage':error.message});
+    })
 }
 
-prevAuthCall = async (cb, restUrl, data) => {
+export const prevAuthCall = async function(cb, restUrl, data){
+    if(!data){
+        data = {};
+    }
     fetch(Urls.baseUrl + restUrl , {
         method: 'POST',
          headers: {
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                   },
          body: JSON.stringify(data)
     }).then((response) => response.json())
     .then((responseJson) => {
-        cb(responseJson)
+        return cb(responseJson, data)
     })
     .catch((error) => {
-        console.error(error);
-        alert("500 Server Error. Please contact an admin of the app");
+        return cb({'errorcode':'121',
+            'error':"500 Server Error. Please contact an admin of the app",
+            'errorMessage': error.message});
     })
-}
-
-module.exports = {
-    prevAuthCall : prevAuthCall,
-    endpointCall : endpointCall
 }

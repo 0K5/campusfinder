@@ -2,8 +2,10 @@
 * @providesModule Urls
 */
 export default {
-    baseUrl : "https://zerokfive.de",
-    restLogin : "/rest-auth/login/",
-    restRegistration : "/rest-auth/registration/",
-    restLogout : "/rest-auth/logout/",
+    baseUrl : "https://zerokfive.de/",
+    authenticated: "endpoints/profile/authenticated/",
+    registration : "rest-auth/registration/",
+    login : "rest-auth/login/",
+    profile : "endpoints/profile/",
+    restLogout : "rest-auth/logout/",
 }

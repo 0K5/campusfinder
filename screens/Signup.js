@@ -102,7 +102,7 @@ export default class SignUp extends Component {
     if(this.state.password == this.state.password2  && this.state.password.length > 5 && this.state.email.length > 5){
       if(this.state.termscondition){
       console.log(JSON.stringify({ "email": this.state.email, "password1" : this.state.password, "password2" : this.state.password2 }));
-      fetch('https://zerokfive.de/rest-auth/registration', {
+      fetch('https://zerokfive.de/rest-auth/registration/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -116,7 +116,7 @@ export default class SignUp extends Component {
           for (var key in data) {
             if (data.hasOwnProperty(key)) {
               if(data[key] == "Verification e-mail sent."){
-                msg = data[key];
+                 msg = data[key];
               } else{
                 for (var i = 0; i < data[key].length; i++) {
                   msg = msg + data[key][i] + '\n'

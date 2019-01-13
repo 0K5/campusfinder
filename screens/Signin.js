@@ -1,10 +1,8 @@
 //init signin
 import React, { Component } from 'react';
-import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight } from 'react-native';
-import prevAuthCall from '../constants/Rest';
-import endpointCall from '../constants/Rest';
-import realm from '../constants/Storage';
-import User from '../constants/Storage';
+import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight, AsyncStorage } from 'react-native';
+import { prevAuthCall, endpointCall } from '../services/Rest';
+import Urls from '../constants/Urls';
 
 const styles = StyleSheet.create({
     campfind: {
@@ -81,42 +79,59 @@ export default class SignIn extends Component {
     this.setState({ password: text })
  }
 
- signIn = () => {
-    saveProfileToRealm = (response) => {
-        if (response.hasOwnProperty('profile')) {
-            realm.write(() => {
-                let users = realm.objects('User');
-                let user = items.filtered('email = '+response.profile.email)[0];
-                for(key in response.profile){
-                    user[key] = response.profile[key]
-                }
-                this.props.navigation.navigate('map');
-             });
-        }else if(response.hasOwnProperty('email'){
-             alert("Account not known. Please register first");
-        }else if(response.hasOwnProperty('non_field_errors')){
-            alert("Wrong password or email.");
-        }
-        this.props.navigation.navigate('map');
-    }
-    createProfile = (email, response) => {
-        if (response.hasOwnProperty('key')) {
-             realm.write(() => {
-                realm.create('User', { email: email, key: response.key})
-             });
-             endpointCall(saveProfileToRealm,
-                         'rest-auth/profile/',
-                         '');
-        }else if(response.hasOwnProperty('email'){
-             alert("Account not known. Please register first");
-        }else if(response.hasOwnProperty('non_field_errors')){
-            alert("Wrong password or email.");
+signIn = function(){
+    let comp = this;
+    let saveResponse = function(response, data){
+        if (response && typeof response === 'object' && "email" in response) {
+            AsyncStorage.getItem('profile').
+            then(profile => {
+                profile = profile == null ? {} : JSON.parse(profile)
+                profile['email'] = response.email;
+                profile['firstname'] = response.firstname ? response.firstname : "";
+                profile['lastname'] = response.lastname ? response.firstname : "";
+                AsyncStorage.setItem('profile', JSON.stringify(profile))
+                .then(profile => {
+                    comp.props.navigation.navigate('map');
+                })
+                .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
+        }else if (response){
+            alert(JSON.stringify(response));
+        }else{
+            alert("'errorcode':'221' 'error':'500 Server Error. Please contact an admin of the app'");
         }
     }
-    prevAuthCall(createProfile,
-        'rest-auth/login/',
-        {"email": this.state.email, "password" : this.state.password})
-}
+    let createProfile = function(response, data){
+        if (response && typeof response === 'object' && "key" in response) {
+            AsyncStorage.getItem('profile').
+            then(profile => {
+                profile = profile == null ? {} : JSON.parse(profile)
+                profile['email'] = data.email;
+                profile['key'] = response.key;
+                AsyncStorage.setItem('profile', JSON.stringify(profile))
+                .then(() => {
+                    console.log('endpointCall')
+                    return endpointCall(saveResponse, Urls.profile,'')
+                });
+            })
+            .catch(error => alert(error.message));
+        }else if(response && typeof response === 'object' && "email" in response){
+            return alert("Account not known. Please register first");
+        }else if(response && typeof response === 'object' && "password" in response){
+            return alert("Password field cannot be empty");
+        }else if(response && typeof response === 'object' && "non_field_errors" in response){
+            return alert("Wrong password or email.");
+        }else if (response){
+            return alert(JSON.stringify(response));
+        }else{
+            return alert("Please enter a valid emailaddress and password");
+        }
+    }
+    prevAuthCall(createProfile, Urls.login,
+        {"email": this.state.email, "password" : this.state.password}
+    );
+ }
 
   render() {
     return (

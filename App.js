@@ -1,13 +1,15 @@
 import {createStackNavigator} from 'react-navigation';
+import startup from './screens/Startup';
 import signin from './screens/Signin';
 import signup from './screens/Signup';
 import settings from './screens/Settings';
 import termsAndConditions from './screens/TermsAndContidions';
 import map from './screens/Map';
 
-
-
 const App = createStackNavigator({
+    home: {screen: startup,navigationOptions: () => ({
+           title:'CampusFinder'
+    })},
    signin: {screen: signin,navigationOptions: () => ({
      title:'CampusFinder', 
      headerBackTitle:'Back',
