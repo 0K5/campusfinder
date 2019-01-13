@@ -2,17 +2,18 @@ import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
 
 export const endpointCall = async function(cb, restUrl, data){
-    AsyncStorage.getItem('key').then((key) => {
+    AsyncStorage.getItem('profile').then((profile) => {
         if(!data){
             data = {'blank':"blank"};
         }
-        if(key){
+        profile = JSON.parse(profile)
+        if(profile && 'key' in profile){
             fetch(Urls.baseUrl + restUrl , {
                 method: 'POST',
                  headers: {
                             Accept: 'application/json',
                             'Content-Type': 'application/json',
-                            'Authorization' : "Token " + key
+                            'Authorization' : "Token " + profile['key']
                           },
                  body: JSON.stringify(data)
             }).then((response) => response.json())
