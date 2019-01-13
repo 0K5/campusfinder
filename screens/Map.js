@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng } from 'react-native-maps';
 import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert} from 'react-native';
-import SwipeUpDown from 'react-native-swipe-up-down';
-import { Col, Row, Grid } from "react-native-easy-grid";
+
+const BubbleMenu = require('react-native-bubble-menu');
+
 
 const styles= StyleSheet.create({
     map:{
@@ -219,7 +220,36 @@ export default class Map extends Component {
         
     }
     
+    _renderOpenBtn(){
+        //you can merge it with, react-native-vector-icon too!
+        
+        //no icon
+        return (
+            <TouchableOpacity>
+             <View>
+                 <Text>Open Me</Text>
+             </View>
+         </TouchableOpacity>
+        );
+        }
+        _renderItems(){
+            let items = ["Btn1","Btn2","Btn3","Btn4","Btn5"];
+            
+            return items.map((item,i) => (
+                <TouchableOpacity onPress={() => {
+                 this.setState({show:false});
+             }}>
+                 <View>
+                     <Text>{item}</Text>
+                 </View>
+             </TouchableOpacity>
+            ));
+        }
+
     render(){
+
+        
+
         return(
             <View style={styles.map} key={this.state.uniqueValue}>
             <MapView
@@ -293,53 +323,15 @@ export default class Map extends Component {
               <Button  title={"Go To Campus"} onPress={this.screenreloading}/>
                 </View>
             </Callout>
-
-            <SwipeUpDown
-                
-                itemMini={
-                    <Text style={{marginLeft:'28%',fontSize:18}}>Swipe Up to see the Menu</Text>
-                  }
-                  itemFull={
-                    <View>                    
-                    <Grid style={{marginTop:'10%'}}>
-                    <Col >
-                    
-                    <Row style={styles.col} >
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('signin')}>
-                        <Image style={styles.menuImage} source={require('../img/settings.png')} />
-                        </TouchableOpacity>
-                    </Row>
-              
-        <Row style={styles.col}>
-        <TouchableOpacity onPress={() => this.iconClicked}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-        </Row>
-    </Col>
-
-    <Col>
-    <Row style={styles.col}>
-    <TouchableOpacity onPress={() => console.log("settings clicked")}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-              </Row>
-        
-        <Row style={styles.col}>
-        <TouchableOpacity onPress={() => console.log("settings clicked")}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-              
-        </Row>
-    </Col>
-</Grid>
-                    </View>
-                    }
-                swipeHeight={240}
-                disablePressToShow={false} // Press item mini to show full
-                style={styles.swipe} // style for swipe
-                onPress={() => console.log('swipe')}
-                
+            <Callout>
+                <BubbleMenu
+                items={this._renderItems()}
+                openBtn={this._renderOpenBtn()}
+                show={true}
+                //style={}
             />
+            </Callout>
+            
 
           
             
