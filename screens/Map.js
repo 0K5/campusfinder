@@ -2,19 +2,20 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng } from 'react-native-maps';
 import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert} from 'react-native';
-//import SwipeUpDown from 'react-native-swipe-up-down';
-//import { Col, Row, Grid } from "react-native-easy-grid";
+import SwipeUpDown from 'react-native-swipe-up-down';
+import { Col, Row, Grid } from "react-native-easy-grid";
 //import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
 
-const BubbleMenu = require('react-native-bubble-menu');
+
+
 
 
 const styles= StyleSheet.create({
     map:{
-        left:0,
-        right:0,
+        left:5,
+        right:5,
         bottom:0,
-        top:'5%',
+        top:30,
         position: 'absolute'
     },
     headerImage:{
@@ -39,7 +40,7 @@ const styles= StyleSheet.create({
         flexDirection: "row",
         backgroundColor: "rgba(255, 255, 255, 0.9)",
         borderRadius: 10,
-        width: "70%",
+        width: "95%",
         marginLeft: "5%",
         marginTop: 20
       },
@@ -52,11 +53,11 @@ const styles= StyleSheet.create({
       },
       button:{
         flexDirection: "row",
-        backgroundColor: 'lightblue',
+        backgroundColor: '#654985',
         width: '35%',
         marginLeft:'63%',
         borderRadius: 10,
-        marginTop: 20,
+        marginTop: 0,
         height: 40,
         justifyContent: 'center',
       },
@@ -64,7 +65,7 @@ const styles= StyleSheet.create({
         backgroundColor: 'lightblue',
         height:80,
      
-        marginTop:80,
+        marginTop:'15%',
         
     },
     col:{
@@ -105,6 +106,10 @@ export default class Map extends Component {
     Building2=[{ latitude:48.482325,longitude:9.185384},{latitude:48.482518,longitude:9.185527},{latitude:48.482499,longitude:9.186062},{latitude:48.482339,longitude:9.186492},{latitude:48.482193, longitude:9.186353},{latitude:48.482114, longitude:9.185919}]
     Building1=[{latitude:48.480741,longitude:9.184611},{latitude:48.480890,longitude:9.184191},{latitude:48.481040,longitude:9.184325},{latitude:48.481086,longitude:9.184217},{latitude:48.481338,longitude:9.184442},{latitude:48.481404, longitude:9.184330},{latitude:48.481678, longitude:9.184569},{latitude:48.481607,longitude:9.184767},{latitude:48.481829,longitude:9.184999},{latitude:48.481680,longitude:9.185418},{latitude:48.481619,longitude:9.185370},{latitude:48.481473,longitude:9.185740},{latitude:48.481335,longitude:9.185649},{latitude:48.481296,longitude:9.185745},{latitude:48.481182,longitude:9.185514},{latitude:48.480940,longitude:9.185289},{latitude:48.480968,longitude:9.185203},{latitude:48.480840,longitude:9.185069
         },{latitude:48.480940,longitude:9.184796},{latitude:48.480741,longitude:9.184615}]
+
+
+        
+    
 
     static navigationOptions = ({navigation})=>  {
         return{
@@ -223,39 +228,63 @@ export default class Map extends Component {
         
     }
     
-    _renderOpenBtn(){
-        //you can merge it with, react-native-vector-icon too!
-        
-        //no icon
-        return (
-            <TouchableOpacity>
-             <View>
-                 <Text>Open Me</Text>
-             </View>
-         </TouchableOpacity>
-        );
-        }
-        _renderItems(){
-            let items = ["Btn1","Btn2","Btn3","Btn4","Btn5"];
-            
-            return items.map((item,i) => (
-                <TouchableOpacity onPress={() => {
-                 this.setState({show:false});
-             }}>
-                 <View>
-                     <Text>{item}</Text>
-                 </View>
-             </TouchableOpacity>
-            ));
-        }
-
     render(){
 
         
 
         return(
             <View style={styles.map} key={this.state.uniqueValue}>
-            <MapView
+            <View>                    
+                    <Grid style={{marginTop:'10%'}}>
+                    <Col >
+                    
+                    <Row style={styles.col} >
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('signin')}>
+                        <Image style={styles.menuImage} source={require('../img/settings.png')} />
+                        </TouchableOpacity>
+                    </Row>
+              
+        <Row style={styles.col}>
+        <TouchableOpacity onPress={() => this.iconClicked}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+        </Row>
+    </Col>
+
+    <Col>
+    <Row style={styles.col}>
+    <TouchableOpacity onPress={() => console.log("settings clicked")}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+              </Row>
+        
+        <Row style={styles.col}>
+        <TouchableOpacity onPress={() => console.log("settings clicked")}>
+                <Image style={styles.menuImage} source={require('../img/settings.png')} />
+              </TouchableOpacity>
+
+              
+
+              
+              
+        </Row>
+            </Col>
+            </Grid>
+                    </View>  
+            
+            
+             <SwipeUpDown
+                
+                itemMini={
+                    <Text style={{marginLeft:'28%',fontSize:18}}>Swipe Up to see the Map</Text>
+                  }
+                  itemFull={
+                      <View style={styles.map}>
+                    <View style={styles.button}>
+                        <Button  title={"Go To Menu"} onPress={this.screenreloading}/>
+                    </View>
+
+                    <MapView
                 style={styles.map}
                 region={this.state.region}
                 rotateEnabled={false}
@@ -314,77 +343,25 @@ export default class Map extends Component {
                 strokeColor={"rgba(0,0,0,0.01)"}
                 tappable={true}
                 onPress={(number)=>  this.clickBuilding(9)}
+                
              >
             
              </Polygon>
-          
-             
-
-
-            <Callout>
-                <View style={styles.button}>
-              <Button  title={"Go To Campus"} onPress={this.screenreloading}/>
-                </View>
-            </Callout>
-            <Callout>
-                <BubbleMenu
-                items={this._renderItems()}
-                openBtn={this._renderOpenBtn()}
-                show={true}
-                //style={}
-            />
-            </Callout>
-            <SwipeUpDown
-                
-                itemMini={
-                    <Text style={{marginLeft:'28%',fontSize:18}}>Swipe Up to see the Menu</Text>
-                  }
-                  itemFull={
-                    <View>                    
-                    <Grid style={{marginTop:'10%'}}>
-                    <Col >
-                    
-                    <Row style={styles.col} >
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('signin')}>
-                        <Image style={styles.menuImage} source={require('../img/settings.png')} />
-                        </TouchableOpacity>
-                    </Row>
-              
-        <Row style={styles.col}>
-        <TouchableOpacity onPress={() => this.iconClicked}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-        </Row>
-    </Col>
-
-    <Col>
-    <Row style={styles.col}>
-    <TouchableOpacity onPress={() => console.log("settings clicked")}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-              </Row>
-        
-        <Row style={styles.col}>
-        <TouchableOpacity onPress={() => console.log("settings clicked")}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-              
-        </Row>
-    </Col>
-</Grid>
-                    </View>
+         
+             </MapView>
+             </View>
                     }
-                swipeHeight={240}
+                swipeHeight={150}
                 disablePressToShow={false} // Press item mini to show full
                 style={styles.swipe} // style for swipe
-                onPress={() => console.log('swipe')}
+                hasRef={ref => (this.swipeUpDownRef = ref)} 
+                onShowMini={() => console.log('mini')}
+	            onShowFull={() => console.log('full')}
+	            onMoveDown={() => console.log('down')}
+	            onMoveUp={() => console.log('up')}
+
                 
             />
-
-          
-            
-             </MapView>
-             
                 
               
       
