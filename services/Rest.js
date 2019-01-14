@@ -4,32 +4,39 @@ import Urls from '../constants/Urls';
 export const endpointCall = async function(cb, restUrl, data){
     AsyncStorage.getItem('profile').then((profile) => {
         if(!data){
-            data = {'blank':"blank"};
+            data = {};
         }
         profile = JSON.parse(profile)
-        if(profile && 'key' in profile){
+        if(profile && profile.hasOwnProperty('key')){
+            let key = profile.key;
             fetch(Urls.baseUrl + restUrl , {
                 method: 'POST',
                  headers: {
                             Accept: 'application/json',
                             'Content-Type': 'application/json',
-                            'Authorization' : "Token " + profile['key']
+                            'Authorization' : "Token " + key
                           },
                  body: JSON.stringify(data)
             }).then((response) => response.json())
             .then((responseJson) => {
-                return cb(responseJson)
+                if (responseJson){
+                    return cb(responseJson, data)
+                }else{
+                    return cb({'errorcode':'1112',
+                                'error': "500 Server Error. Please contact an admin of the app",
+                                'errorMessage':error.message});
+                }
             })
             .catch((error) => {
-                return cb({'errorcode':'1112',
+                return cb({'errorcode':'1113',
                     'error': "500 Server Error. Please contact an admin of the app",
                     'errorMessage':error.message});
             })
         }else{
-            return cb({'errorcode':'1113', 'error': "Please register first"});
+            return cb({'errorcode':'1114', 'error': "Please register first"});
         }
     }).catch((error) => {
-        cb({'errorcode':'1114',
+        cb({'errorcode':'1115',
             'error': "Rest.js : Endpoint call : Async Storage getItem error",
             'errorMessage':error.message});
     })
