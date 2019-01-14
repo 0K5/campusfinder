@@ -56,49 +56,76 @@ HTMLView: https://zerokfive.de/accounts/logout/ \
 For authorization on enpoints put the token from realm db user inside the headers.
 User needs to be authenticated for that. \
 
-Example on React Native: \
-
-```javascript
-//IMPORT
-let realm = require('../services/Storage').realm 
-//CODE 
-let foo = async (foo) => { \
-  authorizationToken = realm.objects('User')[0].key;
-  fetch('https://zerokfive.de/endpoints/foo/', {
-     method: 'POST',
-     headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
-       'Authorization': 'Token '+authorizationToken,
-     },
-     body: JSON.stringify({"foo": foo})
-     }).then(response => response.json())
-       .then(data => {
-         var msg ="";
-         console.log(data); 
-         for (var key in data) {
-           if (data.hasOwnProperty(key)) {
-             if(key == 'key'){
-               msg = data[key];
-               this.props.navigation.navigate('crapper');
-             } else{
-               for (var i = 0; i < data[key].length; i++) {
-                 msg = msg + data[key][i] + '\n'
-             }
-             msg = msg + " ";
-             alert(msg);
-             }
-           }
-       }
-       })
-       .catch(err => {
-         console.log(err);
-         alert("Connection to Server interrupted. Please check your internet connection");
-       })
-  } else{ 
-     alert('Do Something better');
-   }
+For RestAPI calls use the imports:\
+import Urls from '../constants/Urls';\
+import endpointCall from '../services/Rest';\
+enpointCall requires the user to be logged in which mostly is the case.\
 ```
+function endpointcall:\
+params: callback, restUrl, data\
+callback: function you want to be called back after the response is there\
+restUrl: Url to be called, taken from the Urls-Contants\
+data: dict object with key value pairs for Rest Capp\
+'''
+Example: (Taken from Signin)
+'''javascript
+import { prevAuthCall, endpointCall } from '../services/Rest';
+import Urls from '../constants/Urls';
+...
+signIn = function(){
+    let comp = this; //this is to make the usage of referer "this" accessible in AsyncStorage.setItem promise resolve
+    let saveResponse = function(response){
+        if (response && typeof response === 'object' && "email" in response) {
+            AsyncStorage.getItem('profile').
+            then(profile => {
+                profile = profile == null ? {} : JSON.parse(profile)
+                profile['email'] = response.email;
+                profile['firstname'] = response.firstname ? response.firstname : "";
+                profile['lastname'] = response.lastname ? response.firstname : "";
+                AsyncStorage.setItem('profile', JSON.stringify(profile))
+                .then(profile => {
+                    comp.props.navigation.navigate('map');
+                })
+                .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
+        }else if (response){
+            alert(JSON.stringify(response));
+        }else{
+            alert("'errorcode':'2221' 'error':'500 Server Error. Please contact an admin of the app'");
+        }
+    }
+    let createProfile = function(response, data){
+        if (response && typeof response === 'object' && "key" in response) {
+            AsyncStorage.getItem('profile').
+            then(profile => {
+                profile = profile == null ? {} : JSON.parse(profile)
+                profile['email'] = data.email;
+                profile['key'] = response.key;
+                AsyncStorage.setItem('profile', JSON.stringify(profile))
+                .then(() => {
+                    return endpointCall(saveResponse, Urls.profile,'')
+                });
+            })
+            .catch(error => alert(error.message));
+        }else if(response && typeof response === 'object' && "email" in response){
+            return alert("Account not known. Please register first");
+        }else if(response && typeof response === 'object' && "password" in response){
+            return alert("Password field cannot be empty");
+        }else if(response && typeof response === 'object' && "non_field_errors" in response){
+            return alert("Wrong password or email.");
+        }else if (response){
+            return alert(JSON.stringify(response));
+        }else{
+            return alert("Please enter a valid emailaddress and password");
+        }
+    }
+    prevAuthCall(createProfile, Urls.login,
+        {"email": this.state.email, "password" : this.state.password}
+    );
+ }
+```
+
 
 ------------------------ ENDPOINT PROFILE -----------------------------
 
@@ -114,6 +141,14 @@ Payload: application/json\
 }\
 Comments:\
 Returns the Profile of the user
+Response success example:
+{
+    "email": "campusfinderapp@gmail.com",
+    "firstname": "test",
+    "lastname": "user",
+    "role": "guest",
+    "lastLogin": null
+}
 ```
 
 ```
@@ -141,10 +176,13 @@ Payload: application/json\
     	"pushToken": String\
 }\
 Success Response: application/json\
-{\
-    "message" : Status message,\
-    "profile" : JSON of user profile\
-}\
+{
+    "email": "campusfinderapp@gmail.com",
+    "firstname": "test",
+    "lastname": "user",
+    "role": "guest",
+    "lastLogin": null
+}
 Errorcodes:\\
 111: User does not exist\
 Comments:\
@@ -162,6 +200,14 @@ Payload: application/json\
 	"visibility" : String ("all","faculty","department","nobody")\ 
 	"faculty": String ("inf","ac","esb","tec","td","all")\
 	"department": String ("teaching","facleader","assistant","facservice","library","studservice")\
+}
+Response success example:
+{
+    "isNotification": true,
+    "isTracking": true,
+    "visibility": "all",
+    "faculty": null,
+    "department": null
 }
 Errorcodes:\
 131: User does not exist\
@@ -187,6 +233,64 @@ Payload: application/json\
 {\
     "building": Name of the building\
 }\
+Response success example for {"building": "building9"}:
+{
+    "name": "building9",
+    "faculty": {
+        "name": "inf"
+    },
+    "department": {
+        "name": "teaching"
+    },
+    "location": {
+        "name": "building9",
+        "latitude": "48.4830520000",
+        "longitude": "9.1874960000",
+        "latitudeDelta": "0.0070000000",
+        "longitudeDelta": "0.0065000000",
+        "createDate": "2019-01-13T22:57:56.602855Z",
+        "updatedDate": "2019-01-13T22:57:56.602909Z"
+    }
+}
+Response success example for {}:
+[
+    {
+        "name": "building9",
+        "faculty": {
+            "name": "inf"
+        },
+        "department": {
+            "name": "teaching"
+        },
+        "location": {
+            "name": "building9",
+            "latitude": "48.4830520000",
+            "longitude": "9.1874960000",
+            "latitudeDelta": "0.0070000000",
+            "longitudeDelta": "0.0065000000",
+            "createDate": "2019-01-13T22:57:56.602855Z",
+            "updatedDate": "2019-01-13T22:57:56.602909Z"
+        }
+    },
+    {
+        "name": "building1",
+        "faculty": {
+            "name": "tec"
+        },
+        "department": {
+            "name": "teaching"
+        },
+        "location": {
+            "name": "building1",
+            "latitude": "48.4812670000",
+            "longitude": "9.1849270000",
+            "latitudeDelta": "0.0050000000",
+            "longitudeDelta": "0.0050000000",
+            "createDate": "2019-01-13T23:14:15.697967Z",
+            "updatedDate": "2019-01-13T23:14:15.698019Z"
+        }
+    }
+]
 Errorcodes:\
 211: User does not exist\
 212: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
@@ -200,14 +304,81 @@ Returns all buildings when json is empty or "building" field is empty.\
 To get all or one specific room(s).\
 
 ```
-Get one building or room:\
+Get one or all room(s) of a building:\
 Method: POST\
-Endpoint: https://zerokfive.de/endpoints/building/room/\
+Endpoint: https://zerokfive.de/endpoints/building/\
 Payload: application/json\
 {\
     "building": Name of the building,\
     "room": Name of the room\
 }\
+Response success example for {"building" : "building9","room": "9-007"}:
+{
+    "name": "9-007",
+    "building": {
+        "name": "building9",
+        "searchTerms": "building, 9, gebäude, informatik, inf, informatic, computer, science",
+        "createDate": "2019-01-13T23:05:26.175026Z",
+        "updatedDate": "2019-01-13T23:05:26.175077Z",
+        "faculty": "inf",
+        "department": "teaching",
+        "location": "building9"
+    },
+    "location": {
+        "name": "building9",
+        "latitude": "48.4830520000",
+        "longitude": "9.1874960000",
+        "latitudeDelta": "0.0070000000",
+        "longitudeDelta": "0.0065000000",
+        "createDate": "2019-01-13T22:57:56.602855Z",
+        "updatedDate": "2019-01-13T22:57:56.602909Z"
+    }
+}
+Response success example for {"building": "building9"}:
+[
+    {
+        "name": "9-007",
+        "building": {
+            "name": "building9",
+            "searchTerms": "building, 9, gebäude, informatik, inf, informatic, computer, science",
+            "createDate": "2019-01-13T23:05:26.175026Z",
+            "updatedDate": "2019-01-13T23:05:26.175077Z",
+            "faculty": "inf",
+            "department": "teaching",
+            "location": "building9"
+        },
+        "location": {
+            "name": "building9",
+            "latitude": "48.4830520000",
+            "longitude": "9.1874960000",
+            "latitudeDelta": "0.0070000000",
+            "longitudeDelta": "0.0065000000",
+            "createDate": "2019-01-13T22:57:56.602855Z",
+            "updatedDate": "2019-01-13T22:57:56.602909Z"
+        }
+    },
+    {
+        "name": "9-008",
+        "building": {
+            "name": "building9",
+            "searchTerms": "building, 9, gebäude, informatik, inf, informatic, computer, science",
+            "createDate": "2019-01-13T23:05:26.175026Z",
+            "updatedDate": "2019-01-13T23:05:26.175077Z",
+            "faculty": "inf",
+            "department": "teaching",
+            "location": "building9"
+        },
+        "location": {
+            "name": "building9",
+            "latitude": "48.4830520000",
+            "longitude": "9.1874960000",
+            "latitudeDelta": "0.0070000000",
+            "longitudeDelta": "0.0065000000",
+            "createDate": "2019-01-13T22:57:56.602855Z",
+            "updatedDate": "2019-01-13T22:57:56.602909Z"
+        }
+    }
+]
 Errorcodes:\
 221: User does not exist\
 222: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
@@ -216,4 +387,155 @@ Errorcodes:\
 225: Room does not exist\
 Comments:\
 Returns all rooms when "rooms" field in json is not existent or empty.\
+```
+
+
+------------------------ ENDPOINT BUILDING POLYS ---------
+
+To get all Polys for one building or all existent polys
+
+```
+Get one or all room(s) of a building:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/building/polys/\
+Payload: application/json\
+{\
+    "building": Name of the building,\
+    "room": Name of the room\
+}\
+Response success example for {"building" : "building9"}:
+[
+    {
+        "building": "building9",
+        "longitude": "9.1877370000",
+        "latitude": "48.4827200000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1869010000",
+        "latitude": "48.4830380000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1871960000",
+        "latitude": "48.4833790000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1880270000",
+        "latitude": "48.4830670000"
+    }
+]
+Response success example for {"building": "building9"}:
+[
+    {
+        "building": "building9",
+        "longitude": "9.1877370000",
+        "latitude": "48.4827200000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1869010000",
+        "latitude": "48.4830380000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1871960000",
+        "latitude": "48.4833790000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1880270000",
+        "latitude": "48.4830670000"
+    },
+    {
+        "building": "building1",
+        "longitude": "9.1846110000",
+        "latitude": "48.4807410000"
+    },
+	//<...>
+]
+Errorcodes:\
+231: User does not exist\
+232: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+233: Building not set (set "building" in the JSON request)\
+Comments:\
+Returns polygones of one building if "building" is set or all polygone locations when "building" field in json is not existent or empty.\
+```
+
+------------------------ ENDPOINT SEARCH --------------------------------
+
+Searches for all occurrences in profiles, buildings and rooms so far.\
+Buildings and rooms are searched only by given searchTerms, profiles are searched for mathing email, firstname or lastname.
+
+```
+Get one or all room(s) of a building:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/search/\
+Payload: application/json\
+{\
+    "search": Input of the search field\
+}\
+Response success example for {"building" : "building9"}:
+[
+    {
+        "building": "building9",
+        "longitude": "9.1877370000",
+        "latitude": "48.4827200000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1869010000",
+        "latitude": "48.4830380000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1871960000",
+        "latitude": "48.4833790000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1880270000",
+        "latitude": "48.4830670000"
+    }
+]
+Response success example for {"building": "building9"}:
+[
+    {
+        "building": "building9",
+        "longitude": "9.1877370000",
+        "latitude": "48.4827200000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1869010000",
+        "latitude": "48.4830380000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1871960000",
+        "latitude": "48.4833790000"
+    },
+    {
+        "building": "building9",
+        "longitude": "9.1880270000",
+        "latitude": "48.4830670000"
+    },
+    {
+        "building": "building1",
+        "longitude": "9.1846110000",
+        "latitude": "48.4807410000"
+    },
+	//<...>
+]
+Errorcodes:\
+return on empty search:
+{
+    "message": "Search term empty",
+    "result": {}
+}
+311: User does not exist\
+312: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+Comments:\
+Returns polygones of one building if "building" is set or all polygone locations when "building" field in json is not existent or empty.\
 ```
