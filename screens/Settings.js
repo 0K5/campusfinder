@@ -1,7 +1,7 @@
 //init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View,ScrollView } from 'react-native';
+import { StyleSheet,Text,View,ScrollView,AsyncStorage } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
 
 
@@ -49,15 +49,13 @@ export default class Settings extends Component {
   constructor(props){
     super(props);
     this.state = {
-    switchOn1: true,
-    switchOn2: false,
+    switchNoti: true,
+    switchVisibil: false,
     faculty: "",
     faculty2: [{
       value: '',
     }]
   }
-  
-
 
   }
   render() {
@@ -181,6 +179,7 @@ export default class Settings extends Component {
 
     handleFaculty = (event) => {
       this.setState({faculty: event});
+      changeSettings(3,event)
       switch (event){
         case 'Informatik': this.setState({faculty2: inf}); break;
         case 'Angewandte Chemie': this.setState({faculty2: ac}); break;
@@ -188,6 +187,42 @@ export default class Settings extends Component {
         case 'Technik': this.setState({faculty2: tec}); break;
         case 'Textil & Design': this.setState({faculty2: td}); break;
       }
+  }
+
+  changeSettings = (settingid,setting) => {
+    switch (settingid){
+      case 0:  AsyncStorage.getItem('settings').
+                then(settings => {
+                  settings = settings == null ? {} : JSON.parse(settings)
+                  settings['isNotification'] = setting;
+                  AsyncStorage.setItem('settings', JSON.stringify(settings))
+                });break;
+      case 1: AsyncStorage.getItem('settings').
+                then(settings => {
+                  settings = settings == null ? {} : JSON.parse(settings)
+                  settings['isTracking'] = setting;
+                  AsyncStorage.setItem('settings', JSON.stringify(settings))
+                });break; 
+      case 2: AsyncStorage.getItem('settings').
+                then(settings => {
+                  settings = settings == null ? {} : JSON.parse(settings)
+                  settings['visibility'] = setting;
+                  AsyncStorage.setItem('settings', JSON.stringify(settings))
+                });break; 
+      case 3: AsyncStorage.getItem('settings').
+                then(settings => {
+                  settings = settings == null ? {} : JSON.parse(settings)
+                  settings['faculty'] = setting;
+                  AsyncStorage.setItem('settings', JSON.stringify(settings))
+                });break; 
+      case 4: AsyncStorage.getItem('settings').
+               then(settings => {
+                settings = settings == null ? {} : JSON.parse(settings)
+                settings['department'] = setting;
+                AsyncStorage.setItem('settings', JSON.stringify(settings))
+              });break; 
+    }
+
   }
   
 
@@ -205,7 +240,7 @@ export default class Settings extends Component {
         </View>
         <View style={{ flex: 1, paddingRight: 10 }}>
         <SwitchToggle
-          switchOn={this.state.switchOn1}
+          switchOn={this.state.switchNoti}
           onPress={this.onPress1}
           
         />
@@ -218,7 +253,7 @@ export default class Settings extends Component {
         </View>
         <View style={{ flex: 1, paddingRight: 10 }}>
         <SwitchToggle
-          switchOn={this.state.switchOn2}
+          switchOn={this.state.switchVisibil}
           onPress={this.onPress2}
         />
         </View>
@@ -229,6 +264,7 @@ export default class Settings extends Component {
           <Dropdown
           data={hcms}
           value={'Everyone'} //.getUsersHCSM()
+          onChangeText= {(value, index, data) => changeSettings(2,value)}
           />
           </View>
       <Text style={styles.text2 }>Your Faculty</Text>
@@ -244,6 +280,7 @@ export default class Settings extends Component {
           <Dropdown
           data={this.state.faculty2}
           value={""} //.getUsers()
+          onChangeText= {(value, index, data) => changeSettings(4,value)}
           />
           </View>      
      </View>
@@ -255,10 +292,11 @@ export default class Settings extends Component {
 
 
   onPress1 = () => {
-    this.setState({ switchOn1: !this.state.switchOn1 });
+    this.setState({ switchNoti: !this.state.switchOn1 });
+    changeSettings()
   }
   onPress2 = () => {
-    this.setState({ switchOn2: !this.state.switchOn2 });
+    this.setState({ switchVisibil: !this.state.switchOn2 });
   }
 
 
