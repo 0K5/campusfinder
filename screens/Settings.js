@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
 import { StyleSheet,Text,View,ScrollView,AsyncStorage } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
+import { prevAuthCall, endpointCall } from '../services/Rest';
+import Urls from '../constants/Urls';
 
 
 
@@ -191,40 +193,35 @@ export default class Settings extends Component {
 
   changeSettings = (settingid,setting) => {
     switch (settingid){
-      case 0:  AsyncStorage.getItem('settings').
-                then(settings => {
-                  settings = settings == null ? {} : JSON.parse(settings)
-                  settings['isNotification'] = setting;
-                  AsyncStorage.setItem('settings', JSON.stringify(settings))
-                });break;
-      case 1: AsyncStorage.getItem('settings').
-                then(settings => {
-                  settings = settings == null ? {} : JSON.parse(settings)
-                  settings['isTracking'] = setting;
-                  AsyncStorage.setItem('settings', JSON.stringify(settings))
-                });break; 
-      case 2: AsyncStorage.getItem('settings').
-                then(settings => {
-                  settings = settings == null ? {} : JSON.parse(settings)
-                  settings['visibility'] = setting;
-                  AsyncStorage.setItem('settings', JSON.stringify(settings))
-                });break; 
-      case 3: AsyncStorage.getItem('settings').
-                then(settings => {
-                  settings = settings == null ? {} : JSON.parse(settings)
-                  settings['faculty'] = setting;
-                  AsyncStorage.setItem('settings', JSON.stringify(settings))
-                });break; 
-      case 4: AsyncStorage.getItem('settings').
-               then(settings => {
-                settings = settings == null ? {} : JSON.parse(settings)
-                settings['department'] = setting;
-                AsyncStorage.setItem('settings', JSON.stringify(settings))
-              });break; 
+      case 0:  saveChange('isNotification', setting);
+                break;
+      case 1: saveChange('isTracking', setting);
+                break; 
+      case 2: saveChange('visibility', setting);
+                break; 
+      case 3: saveChange('faculty', setting);
+                break; 
+      case 4: saveChange('department', setting);
+                break; 
     }
 
   }
   
+  saveChange = (setting, value) => {
+    AsyncStorage.getItem('settings').
+                then(settingsString => {
+                  if(settingsString){
+                    let settings = JSON.parse(settingsString)
+                    console.log(JSON.stringify(settingsString))
+                  settings[setting] = value;
+                  AsyncStorage.setItem('settings', JSON.stringify(settings))
+                  /* endpointCall( Urls.settings,
+                    {setting: value}
+                  ); */
+                }
+                }); 
+                
+  }
 
     const {navigation} = this.props
     return (
