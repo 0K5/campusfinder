@@ -5,37 +5,30 @@ import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpa
 import SwipeUpDown from 'react-native-swipe-up-down';
 import { Col, Row, Grid } from "react-native-easy-grid";
 //import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
-
-
-
-
+import Menu, { MenuItem } from 'react-native-material-menu';
 
 const styles= StyleSheet.create({
     map:{
-        left:5,
-        right:5,
+        left:0,
+        right:0,
         bottom:0,
-        top:30,
+        top:80,
         position: 'absolute'
     },
     headerImage:{
         height: 40,
         width: 40,
         marginTop: 0,
+        marginBottom: 5,
         marginRight: 10
       },
       menuImage:{
-        height: 80,
-        width: 80,
-        marginTop: '30%',
-        marginLeft: '40%'
+        height: '50%',
+        width: '50%',
+        marginTop: '25%',
+        marginLeft: '25%'
       },
-      menuImage2:{
-        height: 80,
-        width: 80,
-        marginTop: '80%',
-        marginLeft: '40%'
-      },
+      
       calloutView: {
         flexDirection: "row",
         backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -52,29 +45,17 @@ const styles= StyleSheet.create({
         height: 40,
       },
       button:{
-        flexDirection: "row",
-        backgroundColor: '#654985',
-        width: '35%',
-        marginLeft:'63%',
-        borderRadius: 10,
-        marginTop: 0,
-        height: 40,
-        justifyContent: 'center',
-      },
-      swipe:{ 
         backgroundColor: 'lightblue',
-        height:80,
-     
-        marginTop:'15%',
-        
-    },
-    col:{
-        height:200, 
-        borderColor:'black',
-        borderWidth: 0.5,
-    }
+        width: '90%',
+        marginLeft:'5%',
+        borderRadius: 10,
+        marginTop: 20,
+        height: 40,
+        textAlign:'center'
+      },
+      
+    
 })
-
 
 export default class Map extends Component {
     
@@ -117,9 +98,7 @@ export default class Map extends Component {
               <TouchableHighlight onPress={() => navigation.navigate('settings')}>
                 <Image style={styles.headerImage} source={require('../img/settings.png')} />
               </TouchableHighlight>
-          
-        
-      }}
+        }}
 
       
     iconClicked = () =>{
@@ -228,63 +207,48 @@ export default class Map extends Component {
         
     }
     
+    myBuilding = () =>{
+        this.hideMenu
+        //let userBuilding = '' //get users Building
+        //this.props.navigation.navigate('UserBuilding')
+
+    }
+
+    _menu = null;
+ 
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+ 
+  hideMenu = () => {
+    this._menu.hide();
+  };
+ 
+  showMenu = () => {
+    this._menu.show();
+  };
+
     render(){
 
-        
 
         return(
             <View style={styles.map} key={this.state.uniqueValue}>
-            <View>                    
-                    <Grid style={{marginTop:'10%'}}>
-                    <Col >
+
+
+                <View style={styles.button}>
+                <Menu
                     
-                    <Row style={styles.col} >
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('signin')}>
-                        <Image style={styles.menuImage} source={require('../img/settings.png')} />
-                        </TouchableOpacity>
-                    </Row>
-              
-        <Row style={styles.col}>
-        <TouchableOpacity onPress={() => this.iconClicked}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-        </Row>
-    </Col>
-
-    <Col>
-    <Row style={styles.col}>
-    <TouchableOpacity onPress={() => console.log("settings clicked")}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-              </Row>
-        
-        <Row style={styles.col}>
-        <TouchableOpacity onPress={() => console.log("settings clicked")}>
-                <Image style={styles.menuImage} source={require('../img/settings.png')} />
-              </TouchableOpacity>
-
-              
-
-              
-              
-        </Row>
-            </Col>
-            </Grid>
-                    </View>  
+                    ref={this.setMenuRef}
+                    button={<Text style={{textAlign:'center',marginTop:'3%'}}  onPress={this.showMenu}>Show menu</Text>}
+                >
+          <MenuItem onPress={this.myBuilding}>My Building</MenuItem>
+          <MenuItem onPress={this.hideMenu}>Events</MenuItem>
+          <MenuItem onPress={this.hideMenu}>Parking</MenuItem>
+          <MenuItem onPress={this.hideMenu}>Kein Settings</MenuItem>
+        </Menu>
+      </View>
             
-            
-             <SwipeUpDown
-                
-                itemMini={
-                    <Text style={{marginLeft:'28%',fontSize:18}}>Swipe Up to see the Map</Text>
-                  }
-                  itemFull={
-                      <View style={styles.map}>
-                    <View style={styles.button}>
-                        <Button  title={"Go To Menu"} onPress={this.screenreloading}/>
-                    </View>
-
-                    <MapView
+            <MapView
                 style={styles.map}
                 region={this.state.region}
                 rotateEnabled={false}
@@ -347,27 +311,12 @@ export default class Map extends Component {
              >
             
              </Polygon>
+
+
          
              </MapView>
-             </View>
-                    }
-                swipeHeight={150}
-                disablePressToShow={false} // Press item mini to show full
-                style={styles.swipe} // style for swipe
-                hasRef={ref => (this.swipeUpDownRef = ref)} 
-                onShowMini={() => console.log('mini')}
-	            onShowFull={() => console.log('full')}
-	            onMoveDown={() => console.log('down')}
-	            onMoveUp={() => console.log('up')}
 
-                
-            />
-                
-              
-      
-            
-        </View>
+            </View>
         )
     }
 }
-
