@@ -244,8 +244,8 @@ export default class Settings extends Component {
                   AsyncStorage.getItem('profile').then(profile => {
                     profile = profile == null ? {} : JSON.parse(profile)
                     if(setting != "all"){
-                    endpointCall(refreshAsyncStorage(), Urls.settings, settingsString);
                     tempprof = profile;
+                    endpointCall(refreshAsyncStorage, Urls.settings, settings);
                     }
                     
                   });
@@ -256,7 +256,7 @@ export default class Settings extends Component {
   }
 
   refreshAsyncStorage = () => {
-    loadFromRest(showSettings(), tempprof['key']);
+    loadFromRest(showSettings, tempprof['key']);
   }
 
   showSettings = () => {
