@@ -174,7 +174,7 @@ export default class Map extends Component {
         case 9:
         text = "Gebäude 9 - Informatik",
         message = 'SCHOOL OF INFORMATICS'
-        building = 'Building9'
+        building = 'building9entrance'
         break;
 
         case 10:
@@ -207,7 +207,7 @@ export default class Map extends Component {
             message,
             [
                 {text: 'Cancel', onPress:() => console.log("Cancel")},
-                {text: 'Go In', onPress:() => console.log("Go In")} //this.navigation.navigate(building) <-- zum verliken auf die gebäuden
+                {text: 'Go In', onPress:() => this.props.navigation.navigate(building)} //this.navigation.navigate(building) <-- zum verliken auf die gebäuden
             
             ]
           )
@@ -215,9 +215,9 @@ export default class Map extends Component {
     }
     
     myBuilding = () =>{
-        this.hideMenu
+        this.hideMenu();
         //let userBuilding = '' //get users Building
-        //this.props.navigation.navigate('UserBuilding')
+        this.props.navigation.navigate('building9entrance')
 
     }
 
