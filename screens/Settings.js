@@ -233,10 +233,10 @@ export default class Settings extends Component {
   
   saveChange = (setting, value) => {
     let refreshAsyncStorage = (response, data) => {
-      if(response && !response.hasOwnProperty('errorcode'){
+      if(response && !response.hasOwnProperty('errorcode')){
          console.log(JSON.stringify(response));
           //loadFromRest(showSettings, tempprof['key']);
-      else{
+      }else{
           console.log(JSON.stringify(response));
       }
     };
@@ -248,19 +248,15 @@ export default class Settings extends Component {
                     if(setting != "all"){
                       settings[setting] = value;
                       AsyncStorage.setItem('settings', JSON.stringify(settings))
+                      .then(savedSettingsString => {
+                        if(savedSettingsString){
+                            savedSettings = JSON.parse(savedSettingsString)
+                            endpointCall(refreshAsyncStorage, Urls.settings, savedSettings);
+                        }
+                      })
                     }
-                  AsyncStorage.getItem('profile').then(profile => {
-                    profile = profile == null ? {} : JSON.parse(profile)
-                    if(setting != "all"){
-                    //tempprof = profile;
-                     endpointCall(refreshAsyncStorage, Urls.settings, settings);
-                    }
-                    
-                  });
-                  
-                }
-                }); 
-                
+                  }
+                });
   }
 
   showSettings = () => {
