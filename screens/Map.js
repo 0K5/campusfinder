@@ -12,7 +12,14 @@ const styles= StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
-        top:80,
+        top:'14%',
+        position: 'absolute'
+    },
+    contentView:{
+        left:0,
+        right:0,
+        bottom:0,
+        top:'12%',
         position: 'absolute'
     },
     headerImage:{
@@ -33,9 +40,9 @@ const styles= StyleSheet.create({
         flexDirection: "row",
         backgroundColor: "rgba(255, 255, 255, 0.9)",
         borderRadius: 10,
-        width: "95%",
+        width: "90%",
         marginLeft: "5%",
-        marginTop: 20
+        marginTop: 10
       },
       calloutSearch: {
         borderColor: "transparent",
@@ -49,7 +56,7 @@ const styles= StyleSheet.create({
         width: '90%',
         marginLeft:'5%',
         borderRadius: 10,
-        marginTop: 20,
+        marginTop: 0,
         height: 40,
         textAlign:'center'
       },
@@ -232,8 +239,8 @@ export default class Map extends Component {
 
 
         return(
-            <View style={styles.map} key={this.state.uniqueValue}>
-
+            <View style={styles.contentView} key={this.state.uniqueValue}>
+                
 
                 <View style={styles.button}>
                 <Menu
@@ -248,23 +255,22 @@ export default class Map extends Component {
         </Menu>
       </View>
             
-            <MapView
+      <View style={styles.calloutView} >
+                <TextInput style={styles.calloutSearch}
+                            placeholder={"Search"}
+                />
+                </View>
+      <MapView
                 style={styles.map}
                 region={this.state.region}
                 rotateEnabled={false}
                 mapType={"hybrid"}
                 maxDelta={0.0035}
-                //showsBuildings={true}
-                //showsUserLocation={true}
+                showsBuildings={true}
+                showsUserLocation={true}
                 
              >
-            <Callout>
-                <View style={styles.calloutView} >
-                <TextInput style={styles.calloutSearch}
-                            placeholder={"Search"}
-                />
-                </View>
-            </Callout>
+
             <Polygon
                 coordinates={this.Building1}
                 strokeColor={"rgba(0,0,0,0.01)"}
