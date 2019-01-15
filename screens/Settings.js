@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
 import { StyleSheet,Text,View,ScrollView,AsyncStorage } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
-import { prevAuthCall, endpointCall } from '../services/Rest';
+import { loadFromRest } from '../services/RestLoader';
+import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
 
 
@@ -51,25 +52,45 @@ export default class Settings extends Component {
   constructor(props){
     super(props);
     this.state = {
-    switchNoti: true,
-    switchVisibil: false,
-    faculty: "",
+    switchNoti: false,
+    switchTrack: false,
+    visiValue: "",
+    facValue: "",
+    depValue: "",
+    facValue: "",
     faculty2: [{
       value: '',
     }]
+    
   }
-
+  tempprof="";
+  AsyncStorage.getItem('settings').
+    then(settingsString => {
+      if(settingsString){
+        settingsString = settingsString == null ? {} : JSON.parse(settingsString)
+        this.setState({ switchNoti: settingsString['isNotification'] });
+        this.setState({ switchTrack: settingsString['isTracking'] });
+        this.setState({ visiValue: settingsString['visibility'] });
+        this.setState({ facValue: settingsString['faculty'] });
+        handleFaculty(settingsString['faculty']);
+        this.setState({ depValue: settingsString['department'] });
+        console.log(JSON.stringify(settingsString))
+      }
+    });
   }
   render() {
     let hcms = [{
-      value: 'Everyone',
+      value: 'nobody',
     },{
-      value: 'Friends',
+      value: 'faculty',
     },{
-      value: 'Nobody',
+      value: 'department',
     },{
-      value: '#other'
+      value: 'course'
+    },{
+      value: 'all'
     }]
+
     let facu = [{
       value: 'Informatik',
     },{
@@ -180,8 +201,8 @@ export default class Settings extends Component {
   ]
 
     handleFaculty = (event) => {
-      this.setState({faculty: event});
-      changeSettings(3,event)
+      this.setState({facValue: event});
+      //changeSettings(4,event)
       switch (event){
         case 'Informatik': this.setState({faculty2: inf}); break;
         case 'Angewandte Chemie': this.setState({faculty2: ac}); break;
@@ -191,17 +212,20 @@ export default class Settings extends Component {
       }
   }
 
-  changeSettings = (settingid,setting) => {
+   changeSettings = (settingid,setting) => {
     switch (settingid){
-      case 0:  saveChange('isNotification', setting);
+      case 0:  saveChange('all', setting);
                 break;
-      case 1: saveChange('isTracking', setting);
+      case 1:  saveChange('isNotification', setting);
+                break;
+      case 2: saveChange('isTracking', setting);
                 break; 
-      case 2: saveChange('visibility', setting);
+      case 3: saveChange('visibility', setting);
                 break; 
-      case 3: saveChange('faculty', setting);
+      case 4: saveChange('faculty', setting);
+              handleFaculty(setting)
                 break; 
-      case 4: saveChange('department', setting);
+      case 5: saveChange('department', setting);
                 break; 
     }
 
@@ -213,17 +237,44 @@ export default class Settings extends Component {
                   if(settingsString){
                     let settings = JSON.parse(settingsString)
                     console.log(JSON.stringify(settingsString))
-                  settings[setting] = value;
-                  AsyncStorage.setItem('settings', JSON.stringify(settings))
-                  /* endpointCall( Urls.settings,
-                    {setting: value}
-                  ); */
+                    if(setting != "all"){
+                      settings[setting] = value;
+                      AsyncStorage.setItem('settings', JSON.stringify(settings))
+                    }
+                  AsyncStorage.getItem('profile').then(profile => {
+                    profile = profile == null ? {} : JSON.parse(profile)
+                    if(setting != "all"){
+                    endpointCall(refreshAsyncStorage(), Urls.settings, settingsString);
+                    tempprof = profile;
+                    }
+                    
+                  });
+                  
                 }
                 }); 
                 
   }
 
+  refreshAsyncStorage = () => {
+    loadFromRest(showSettings(), tempprof['key']);
+  }
+
+  showSettings = () => {
+    AsyncStorage.getItem('settings').
+    then(settingsString => {
+      if(settingsString){
+        settingsString = settingsString == null ? {} : JSON.parse(settingsString)
+        this.setState({ switchNoti: settingsString['isNotification'] });
+        this.setState({ switchTrack: settingsString['isTracking'] });
+        this.setState({ facValue: settingsString['faculty'] });
+        this.setState({ depValue: settingsString['department'] });
+        console.log(JSON.stringify(settingsString))
+      }
+    });
+  }
+
     const {navigation} = this.props
+   
     return (
       <ScrollView>
       <View style= {styles.container}>
@@ -237,6 +288,7 @@ export default class Settings extends Component {
         </View>
         <View style={{ flex: 1, paddingRight: 10 }}>
         <SwitchToggle
+          value={this.state.switchNoti}
           switchOn={this.state.switchNoti}
           onPress={this.onPress1}
           
@@ -250,7 +302,8 @@ export default class Settings extends Component {
         </View>
         <View style={{ flex: 1, paddingRight: 10 }}>
         <SwitchToggle
-          switchOn={this.state.switchVisibil}
+          value={this.state.switchTrack}
+          switchOn={this.state.switchTrack}
           onPress={this.onPress2}
         />
         </View>
@@ -260,24 +313,24 @@ export default class Settings extends Component {
       <View style={styles.dropdown}>
           <Dropdown
           data={hcms}
-          value={'Everyone'} //.getUsersHCSM()
-          onChangeText= {(value, index, data) => changeSettings(2,value)}
+          value={this.state.visiValue} //.getUsersHCSM()
+          onChangeText= {(value, index, data) => changeSettings(3,value)}
           />
           </View>
       <Text style={styles.text2 }>Your Faculty</Text>
       <View style={styles.dropdown}>
           <Dropdown
           data={facu}
-          value={this.state.faculty} //.getUsersFAcu()
-          onChangeText= {(value, index, data) => handleFaculty(value)}
+          value={this.state.facValue} //.getUsersFAcu()
+          onChangeText= {(value, index, data) => changeSettings(4,value)}
           />
           </View> 
        <Text style={styles.text2 }>Your Department</Text>
         <View style={styles.dropdown2}>
           <Dropdown
           data={this.state.faculty2}
-          value={""} //.getUsers()
-          onChangeText= {(value, index, data) => changeSettings(4,value)}
+          value={this.state.depValue} //.getUsers()
+          onChangeText= {(value, index, data) => changeSettings(5,value)}
           />
           </View>      
      </View>
@@ -289,11 +342,12 @@ export default class Settings extends Component {
 
 
   onPress1 = () => {
-    this.setState({ switchNoti: !this.state.switchOn1 });
-    changeSettings()
+    //this.setState({ switchNoti: !this.state.switchOn1 });
+    changeSettings(1,!this.state.switchNoti)
   }
   onPress2 = () => {
-    this.setState({ switchVisibil: !this.state.switchOn2 });
+    //this.setState({ switchTrack: !this.state.switchOn2 });
+    changeSettings(2,!this.state.switchTrack)
   }
 
 
