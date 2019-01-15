@@ -81,7 +81,6 @@ export default class SignIn extends Component {
 
 signIn = function(){
     let comp = this;
-    comp.props.navigation.navigate('map');
     let saveResponse = function(response){
         if (response && typeof response === 'object' && "email" in response) {
             AsyncStorage.getItem('profile').
