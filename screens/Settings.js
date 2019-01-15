@@ -6,7 +6,7 @@ import {Dropdown} from 'react-native-material-dropdown';
 import { loadFromRest } from '../services/RestLoader';
 import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
-
+import {saveData} from '../services/RestSaverTmp';
 
 
 const styles = StyleSheet.create({
@@ -214,24 +214,24 @@ export default class Settings extends Component {
 
    changeSettings = (settingid,setting) => {
     switch (settingid){
-      case 0:  saveChange('all', setting);
+      case 0:  saveChange({'all': setting});
                 break;
-      case 1:  saveChange('isNotification', setting);
+      case 1:  saveChange({'isNotification': setting});
                 break;
-      case 2: saveChange('isTracking', setting);
+      case 2: saveChange({'isTracking': setting});
                 break; 
-      case 3: saveChange('visibility', setting);
+      case 3: saveChange({'visibility': setting});
                 break; 
-      case 4: saveChange('faculty', setting);
+      case 4: saveChange({'faculty': setting});
               handleFaculty(setting)
                 break; 
-      case 5: saveChange('department', setting);
+      case 5: saveChange({'department': setting});
                 break; 
     }
 
   }
   
-  saveChange = (setting, value) => {
+  saveChange = (newSetting) => {
     let refreshAsyncStorage = (response, data) => {
       if(response && !response.hasOwnProperty('errorcode')){
          console.log(JSON.stringify(response));
@@ -240,23 +240,7 @@ export default class Settings extends Component {
           console.log(JSON.stringify(response));
       }
     };
-    AsyncStorage.getItem('settings').
-                then(settingsString => {
-                  if(settingsString){
-                    let settings = JSON.parse(settingsString)
-                    console.log(JSON.stringify(settingsString))
-                    if(setting != "all"){
-                      settings[setting] = value;
-                      AsyncStorage.setItem('settings', JSON.stringify(settings))
-                      .then(savedSettingsString => {
-                        if(savedSettingsString){
-                            savedSettings = JSON.parse(savedSettingsString)
-                            endpointCall(refreshAsyncStorage, Urls.settings, savedSettings);
-                        }
-                      })
-                    }
-                  }
-                });
+    saveData(refreshAsyncStorage, 'settings', newSetting);
   }
 
   showSettings = () => {
