@@ -63,7 +63,6 @@ export default class Settings extends Component {
     }]
     
   }
-  tempprof="";
   AsyncStorage.getItem('settings').
     then(settingsString => {
       if(settingsString){
@@ -242,7 +241,7 @@ export default class Settings extends Component {
     };
     saveData(refreshAsyncStorage, 'settings', newSetting);
   }
-
+/*
   showSettings = () => {
     AsyncStorage.getItem('settings').
     then(settingsString => {
@@ -258,7 +257,7 @@ export default class Settings extends Component {
   }
 
     const {navigation} = this.props
-   
+   */
     return (
       <ScrollView>
       <View style= {styles.container}>
@@ -326,11 +325,11 @@ export default class Settings extends Component {
 
 
   onPress1 = () => {
-    //this.setState({ switchNoti: !this.state.switchOn1 });
+    this.setState({ switchNoti: !this.state.switchNoti });
     changeSettings(1,!this.state.switchNoti)
   }
   onPress2 = () => {
-    //this.setState({ switchTrack: !this.state.switchOn2 });
+    this.setState({ switchTrack: !this.state.switchTrack });
     changeSettings(2,!this.state.switchTrack)
   }
 
