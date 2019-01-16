@@ -6,6 +6,7 @@ import {loadFromRest} from '../services/RestLoader';
 import SignIn from '../screens/Signin';
 import Map from '../screens/Map';
 import Settings from '../screens/Settings';
+import Building9entrance from '../screens/Building9entrance';
 
 
 export default class AppContainer extends Component {
@@ -42,7 +43,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <Map {...this.props}/>
+                    <Building9entrance {...this.props}/>
                 );
             }
         }

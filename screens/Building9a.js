@@ -57,12 +57,6 @@ export default class Building9a extends Component {
   //     Building
   //    </Text>
     }
-   showUpperFloor(){
-        this.props.navigation.navigate('building9entrance');
-   }
-   showBottomFloor(){
-        this.props.navigation.navigate('building9b');
-   }
   render() {
     return (
     <View style={{
@@ -82,13 +76,9 @@ export default class Building9a extends Component {
               resizeMode: 'contain',
               width: undefined,
               height: undefined}} source={require('../img/building9a.png')} />
-      <GestureRecognizer>
-              onSwipeLeft={(state) => this.showUpperFloor(state)}
-              onSwipeRight={(state) => this.showBottomFloor(state)}
-      </GestureRecognizer>
     </View>
     );
-    
+
    }
 
   onPress1 = () => {
@@ -97,6 +87,6 @@ export default class Building9a extends Component {
   onPress2 = () => {
     this.setState({ switchOn2: !this.state.switchOn2 });
   }
-  
+
   
 }

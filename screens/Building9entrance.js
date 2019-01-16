@@ -80,6 +80,14 @@ export default class Building9entrance extends Component {
       
     
     )}
+
+   moveFloorUp(){
+        return this.props.navigation.navigate('building9a');
+   }
+
+   moveFloorDown(){
+        return this.props.navigation.navigate('building9c');
+   }
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -91,7 +99,7 @@ export default class Building9entrance extends Component {
     }}>
     <Button
         title="Go to Floor 0"
-        onPress={() => navigate('Building9a', {name: 'Floor 0'})}
+        onPress={() => this.moveFloorUp()}
       />
     <Text style={styles.heading}>
        Faculty of Informatiks
@@ -107,7 +115,7 @@ export default class Building9entrance extends Component {
               height: undefined}} source={require('../img/building9entrance.png')} />
       <Button
         title="Go to Floor 2"
-        onPress={() => navigate('Building9b', {name: 'Floor 2'})}
+        onPress={() => this.moveFloorDown()}
       />
     </View>
     );
