@@ -56,7 +56,7 @@ export default class Settings extends Component {
     switchTrack: false,
     visiValue: "",
     facValue: "",
-    depValue: "",
+    courValue: "",
     facValue: "",
     faculty2: [{
       value: '',
@@ -67,26 +67,27 @@ export default class Settings extends Component {
     then(settingsString => {
       if(settingsString){
         settingsString = settingsString == null ? {} : JSON.parse(settingsString)
-        this.setState({ switchNoti: settingsString['isNotification'] === true });
-        this.setState({ switchTrack: settingsString['isTracking'] === true });
+        this.setState({ switchNoti: settingsString['isNotification'] });
+        this.setState({ switchTrack: settingsString['isTracking'] });
         this.setState({ visiValue: settingsString['visibility'] });
         this.setState({ facValue: settingsString['faculty'] });
         handleFaculty(settingsString['faculty']);
-        this.setState({ depValue: settingsString['department'] });
+        this.setState({ courValue: settingsString['course'] });
+        console.log(JSON.stringify(settingsString))
       }
     });
   }
   render() {
     let hcms = [{
-      value: 'nobody',
+      value: 'all',
     },{
       value: 'faculty',
     },{
       value: 'department',
     },{
-      value: 'course'
+      value: 'nobody'
     },{
-      value: 'all'
+      value: 'course'
     }]
 
     let facu = [{
@@ -223,7 +224,7 @@ export default class Settings extends Component {
       case 4: saveChange({'faculty': setting});
               handleFaculty(setting)
                 break; 
-      case 5: saveChange({'department': setting});
+      case 5: saveChange({'course': setting});
                 break; 
     }
 
@@ -233,30 +234,13 @@ export default class Settings extends Component {
     let refreshAsyncStorage = (response, data) => {
       if(response && !response.hasOwnProperty('errorcode')){
          console.log(JSON.stringify(response));
-          //loadFromRest(showSettings, tempprof['key']);
       }else{
           console.log(JSON.stringify(response));
       }
     };
     saveData(refreshAsyncStorage, 'settings', newSetting);
   }
-/*
-  showSettings = () => {
-    AsyncStorage.getItem('settings').
-    then(settingsString => {
-      if(settingsString){
-        settingsString = settingsString == null ? {} : JSON.parse(settingsString)
-        this.setState({ switchNoti: settingsString['isNotification'] });
-        this.setState({ switchTrack: settingsString['isTracking'] });
-        this.setState({ facValue: settingsString['faculty'] });
-        this.setState({ depValue: settingsString['department'] });
-        console.log(JSON.stringify(settingsString))
-      }
-    });
-  }
 
-    const {navigation} = this.props
-   */
     return (
       <ScrollView>
       <View style= {styles.container}>
@@ -307,11 +291,11 @@ export default class Settings extends Component {
           onChangeText= {(value, index, data) => changeSettings(4,value)}
           />
           </View> 
-       <Text style={styles.text2 }>Your Department</Text>
+       <Text style={styles.text2 }>Your Course</Text>
         <View style={styles.dropdown2}>
           <Dropdown
           data={this.state.faculty2}
-          value={this.state.depValue} //.getUsers()
+          value={this.state.courValue} //.getUsers()
           onChangeText= {(value, index, data) => changeSettings(5,value)}
           />
           </View>      
@@ -322,7 +306,6 @@ export default class Settings extends Component {
     
   }
 
-
   onPress1 = () => {
     this.setState({ switchNoti: !this.state.switchNoti });
     changeSettings(1,!this.state.switchNoti)
@@ -331,6 +314,5 @@ export default class Settings extends Component {
     this.setState({ switchTrack: !this.state.switchTrack });
     changeSettings(2,!this.state.switchTrack)
   }
-
-
+  
 }
