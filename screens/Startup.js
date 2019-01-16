@@ -42,7 +42,7 @@ export default class AppContainer extends Component {
                 );
             }else{
                 return(
-                    <Settings {...this.props}/>
+                    <Map {...this.props}/>
                 );
             }
         }
