@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
 import { StyleSheet,Text,View,ScrollView,Image } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
 
@@ -55,8 +56,13 @@ export default class Building9a extends Component {
   // <Text style={styles.heading}>
   //     Building
   //    </Text>
-
-  }
+    }
+   showUpperFloor(){
+        this.props.navigation.navigate('building9entrance');
+   }
+   showBottomFloor(){
+        this.props.navigation.navigate('building9b');
+   }
   render() {
     return (
     <View style={{
@@ -76,6 +82,10 @@ export default class Building9a extends Component {
               resizeMode: 'contain',
               width: undefined,
               height: undefined}} source={require('../img/building9a.png')} />
+      <GestureRecognizer>
+              onSwipeLeft={(state) => this.showUpperFloor(state)}
+              onSwipeRight={(state) => this.showBottomFloor(state)}
+      </GestureRecognizer>
     </View>
     );
     
