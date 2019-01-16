@@ -26,15 +26,26 @@ export const loadFromRest = function(cb, token) {
             return endpointCall(loadRooms, Urls.room, {})
         }
     };
-    let loadSettings = function(response, data){
+    let loadSettingsOptions = function(response, data){
         if (response && typeof response === 'object' && !("errorcode" in response)) {
-            AsyncStorage.setItem('settings', JSON.stringify(response)).
+            AsyncStorage.setItem('settingsoptions', JSON.stringify(response)).
             then(settings => {
                 return endpointCall(loadBuildings, Urls.building, {})
             })
             .catch(error => alert(error.message));
         }else{
             return endpointCall(loadBuildings, Urls.building, {})
+        }
+    };
+    let loadSettings = function(response, data){
+        if (response && typeof response === 'object' && !("errorcode" in response)) {
+            AsyncStorage.setItem('settings', JSON.stringify(response)).
+            then(settings => {
+                return endpointCall(loadSettingsOptions, Urls.settingsoptions, {})
+            })
+            .catch(error => alert(error.message));
+        }else{
+            return endpointCall(loadSettingsOptions, Urls.settingsoptions, {})
         }
     };
     let loadProfile = function(response, data){

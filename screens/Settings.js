@@ -67,13 +67,12 @@ export default class Settings extends Component {
     then(settingsString => {
       if(settingsString){
         settingsString = settingsString == null ? {} : JSON.parse(settingsString)
-        this.setState({ switchNoti: settingsString['isNotification'] });
-        this.setState({ switchTrack: settingsString['isTracking'] });
+        this.setState({ switchNoti: settingsString['isNotification'] === true });
+        this.setState({ switchTrack: settingsString['isTracking'] === true });
         this.setState({ visiValue: settingsString['visibility'] });
         this.setState({ facValue: settingsString['faculty'] });
         handleFaculty(settingsString['faculty']);
         this.setState({ depValue: settingsString['department'] });
-        console.log(JSON.stringify(settingsString))
       }
     });
   }
