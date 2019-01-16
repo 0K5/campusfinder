@@ -65,6 +65,9 @@ export default class Building9c extends Component {
       justifyContent: 'center',
       alignItems: 'stretch',
     }}>
+    <Text style={styles.heading}>
+       Faculty of Informatiks
+      </Text>
       <Text style={styles.heading}>
        Building 9 - floor 3
       </Text>
