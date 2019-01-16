@@ -102,7 +102,7 @@ export default class Map extends Component {
     static navigationOptions = ({navigation})=>  {
         return{
         headerRight:
-              <TouchableHighlight onPress={() => navigation.navigate('building9entrance')}>
+              <TouchableHighlight onPress={() => navigation.navigate('settings')}>
                 <Image style={styles.headerImage} source={require('../img/settings.png')} />
               </TouchableHighlight>
         }}
