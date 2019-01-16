@@ -73,131 +73,41 @@ export default class Settings extends Component {
         this.setState({ facValue: settingsString['faculty'] });
         handleFaculty(settingsString['faculty']);
         this.setState({ courValue: settingsString['course'] });
-        console.log(JSON.stringify(settingsString))
+       // console.log(JSON.stringify(settingsString))
       }
     });
   }
   render() {
-    let hcms = [{
-      value: 'all',
-    },{
-      value: 'faculty',
-    },{
-      value: 'department',
-    },{
-      value: 'nobody'
-    },{
-      value: 'course'
-    }]
-
-    let facu = [{
-      value: 'Informatik',
-    },{
-      value: 'Angewandte Chemie',
-    },{
-      value: 'ESB Business School',
-    },{
-      value: 'Technik'
-    },{
-      value: 'Textil & Design'
-    }]
-
-    let inf = [{
-      value: 'Medien- und Kommunikationsinformatik / Bachelor',
-    },{
-      value: 'Wirtschaftsinformatik / Bachelor',
-    },{
-      value: 'Medizintechnische Informatik / Bachelor',
-    },{
-      value: 'Service Computing / Master',
-    },{
-      value: 'Human-Centered Computing / Master',
-    },{
-      value: 'Wirtschaftsinformatik / Master',
-    }
-  ]
-
-    let ac = [{
-      value: 'Angewandte Chemie / Bachelor',
-    },{
-      value: 'Biomedizinische Wissenschaft / Bachelor',
-    },{
-      value: 'Angewandte Chemie / Master',
-    },{
-      value: 'Biomedical Sciences / Master',
-    },{
-      value: 'Process Analysis & Technology-Management / Master',
-    },{
-      value: 'Umweltschutz / Master',
-    }
-  ]
-
-    let esb = [{
-      value: 'International Business / Bachelor',
-    },{
-      value: 'International Operations and Logistics Management / Bachelor',
-    },{
-      value: 'International Management Double Degree / Bachelor',
-    },{
-      value: 'Production Management / Bachelor',
-    },{
-      value: 'Digital Industrial Management and Engineering / Master',
-    },{
-      value: 'European Management Studies / Master',
-    },{
-      value: 'International Accounting, Controlling and Taxation / Master',
-    },{
-      value: 'International Business Development / Master',
-    },{
-      value: 'International Retail Management / Master',
-    },{
-      value: 'Strategic Sales Management / Master',
-    },{
-      value: 'International Purchasing Management / Master',
-    },{
-      value: 'Consulting & Business Analytics / Master',
-    },{
-      value: 'International Management / Master',
-    },{
-      value: 'Operations Management / Master',
-    }
-  ]
-
-    let tec = [{
-      value: 'Maschinenbau / Bachelor',
-    },{
-      value: 'Mechatronik / Bachelor',
-    },{
-      value: 'International Project Engineering / Bachelor',
-    },{
-      value: 'Maschinenbau / Master',
-    },{
-      value: 'Mechatronik / Master',
-    },{
-      value: 'Leistungs- und Mikroelektronik / Master',
-    },{
-      value: 'Dezentrale Energiesysteme und Energieeffizienz / Master',
-    },{
-      value: 'Technology Management / Master',
-    }
-  ]
-
-    let td = [{
-      value: 'International Fashion Retail / Bachelor',
-    },{
-      value: 'Textildesign - Modedesign / Bachelor',
-    },{
-      value: 'Textiltechnologie - Textilmanagement / Bachelor',
-    },{
-      value: 'Transportation Interior Design / Bachelor',
-    },{
-      value: 'Interdisziplinäre Produktentwicklung / Master',
-    },{
-      value: 'Design / Master',
-    },{
-      value: 'Textile Chain Research / Master',
-    }
-  ]
+    let hcms=[];
+    let facu=[];
+    let inf=[];
+    let ac=[];
+    let esb=[];
+    let tec=[];
+    let td=[];
+    AsyncStorage.getItem('settingsoptions').
+    then(settingsString => {
+      if(settingsString){
+        settingsString = settingsString == null ? {} : JSON.parse(settingsString)
+        for(i = 0; i< settingsString.visibilities.length;i++){
+          hcms[i] ={ value: settingsString.visibilities[i].name };
+        }
+        for(i = 0; i< settingsString.faculties.length;i++){
+          facu[i] ={ value: settingsString.faculties[i].name };
+        }
+        for(i = 0; i< settingsString.courses.length;i++){
+          switch(settingsString.courses[i].faculty){
+          case 'Informatik': inf[i] ={ value: settingsString.courses[i].name }; break;
+          case 'Angewandte Chemie': ac[i] ={ value: settingsString.courses[i].name }; break;
+          case 'ESB Business School': esb[i] ={ value: settingsString.courses[i].name }; break;
+          case 'Technik': tec[i] ={ value: settingsString.courses[i].name }; break;
+          case 'Textil & Design': td[i] ={ value: settingsString.courses[i].name }; break;
+          }
+          
+        }
+        console.log(JSON.stringify(settingsString));
+      }
+    });
 
     handleFaculty = (event) => {
       this.setState({facValue: event});
@@ -233,9 +143,9 @@ export default class Settings extends Component {
   saveChange = (newSetting) => {
     let refreshAsyncStorage = (response, data) => {
       if(response && !response.hasOwnProperty('errorcode')){
-         console.log(JSON.stringify(response));
+         //console.log(JSON.stringify(response));
       }else{
-          console.log(JSON.stringify(response));
+         //console.log(JSON.stringify(response));
       }
     };
     saveData(refreshAsyncStorage, 'settings', newSetting);
