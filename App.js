@@ -14,7 +14,6 @@ import map from './screens/Map';
 
 
 
-
 const App = createStackNavigator({
     home: {screen: startup,navigationOptions: () => ({
         title:'CampusFinder',
