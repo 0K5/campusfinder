@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, ActivityIndicator } from 'react-native';
+import { AsyncStorage, ActivityIndicator, Image } from 'react-native';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import Urls from '../constants/Urls';
 import {loadFromRest} from '../services/RestLoader';
-import SignIn from '../screens/Signin';
-import Map from '../screens/Map';
-import Settings from '../screens/Settings';
-import Building9entrance from '../screens/Building9entrance';
 
 
 export default class AppContainer extends Component {
@@ -31,6 +27,10 @@ export default class AppContainer extends Component {
         this.restLoad();
     }
 
+    navToNext(next){
+        return this.props.navigation.navigate(next);
+    }
+
     render() {
         if (!this.state.isLoaded) {
             return (
@@ -39,11 +39,15 @@ export default class AppContainer extends Component {
         }else{
             if(!this.state.keyValid){
                 return(
-                    <SignIn {...this.props}/>
+                    <Image
+                        onLoad={() => this.navToNext('signin')}
+                    ></Image>
                 );
             }else{
                 return(
-                    <Building9entrance {...this.props}/>
+                    <Image
+                        onLoad={() => this.navToNext('building9entrance')}
+                    ></Image>
                 );
             }
         }
