@@ -7,6 +7,7 @@ import SignIn from '../screens/Signin';
 import Map from '../screens/Map';
 import Settings from '../screens/Settings';
 
+
 export default class AppContainer extends Component {
 
     constructor(props) {
