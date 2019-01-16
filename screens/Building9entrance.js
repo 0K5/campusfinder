@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Building9a extends Component {
+export default class Building9entrance extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -81,6 +81,7 @@ export default class Building9a extends Component {
     
     )}
   render() {
+    const {navigate} = this.props.navigation;
     return (
     <View style={{
       flex: 1,
@@ -88,7 +89,10 @@ export default class Building9a extends Component {
       justifyContent: 'center',
       alignItems: 'stretch',
     }}>
-    
+    <Button
+        title="Go to Floor 0"
+        onPress={() => navigate('Building9a', {name: 'Floor 0'})}
+      />
     <Text style={styles.heading}>
        Faculty of Informatiks
       </Text>
@@ -101,6 +105,10 @@ export default class Building9a extends Component {
               resizeMode: 'contain',
               width: undefined,
               height: undefined}} source={require('../img/building9entrance.png')} />
+      <Button
+        title="Go to Floor 2"
+        onPress={() => navigate('Building9b', {name: 'Floor 2'})}
+      />
     </View>
     );
     

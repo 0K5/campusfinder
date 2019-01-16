@@ -65,8 +65,12 @@ export default class Building9b extends Component {
       justifyContent: 'center',
       alignItems: 'stretch',
     }}>
+    <Button
+        title="Go to Floor 1"
+        onPress={() => navigate('Building9entrance', {name: 'Floor 1'})}
+      />
     <Text style={styles.heading}>
-       text
+       Faculty of Informatiks
       </Text>
       <Text style={styles.heading}>
        Building 9 - floor 2
@@ -76,6 +80,10 @@ export default class Building9b extends Component {
               resizeMode: 'contain',
               width: undefined,
               height: undefined}} source={require('../img/building9b.png')} />
+              <Button
+        title="Go to Floor 3"
+        onPress={() => navigate('Building9c', {name: 'Floor 3'})}
+      />
     </View>
     );
     
