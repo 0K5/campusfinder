@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
 import { StyleSheet,Text,View,ScrollView,AsyncStorage } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
-import { loadFromRest } from '../services/RestLoader';
-import {prevAuthCall, endpointCall} from '../services/Rest'
-import Urls from '../constants/Urls';
 import {saveData} from '../services/RestSaverTmp';
+
 
 
 const styles = StyleSheet.create({
@@ -52,6 +50,13 @@ export default class Settings extends Component {
   constructor(props){
     super(props);
     this.state = {
+    hcms:[],
+    facu:[],
+    inf:[],
+    ac:[],
+    esb:[],
+    tec:[],
+    td:[],
     switchNoti: false,
     switchTrack: false,
     visiValue: "",
@@ -60,64 +65,63 @@ export default class Settings extends Component {
     facValue: "",
     faculty2: [{
       value: '',
-    }]
-    
+    }] 
   }
+  
+  AsyncStorage.getItem('settingsoptions').
+  then(settingsString => {
+    if(settingsString){
+      settingsString = settingsString == null ? {} : JSON.parse(settingsString)
+      for(i = 0; i< settingsString.visibilities.length;i++){
+        this.state.hcms[i] ={ value: settingsString.visibilities[i].name };
+      }
+      for(i = 0; i< settingsString.faculties.length;i++){
+        this.state.facu[i] ={ value: settingsString.faculties[i].name };
+      }
+      for(i = 0; i< settingsString.courses.length;i++){
+        switch(settingsString.courses[i].faculty){
+        case 'Informatik': this.state.inf.push({ value: settingsString.courses[i].name }); break;
+        case 'Angewandte Chemie': this.state.ac.push({ value: settingsString.courses[i].name }); break;
+        case 'ESB Business School': this.state.esb.push({ value: settingsString.courses[i].name }); break;
+        case 'Technik': this.state.tec.push({ value: settingsString.courses[i].name }); break;
+        case 'Textil & Design': this.state.td.push({ value: settingsString.courses[i].name }); break;
+        }
+        
+      }
+      console.log("load data");
+    }
+  });
+  
   AsyncStorage.getItem('settings').
     then(settingsString => {
       if(settingsString){
         settingsString = settingsString == null ? {} : JSON.parse(settingsString)
-        this.setState({ switchNoti: settingsString['isNotification'] });
-        this.setState({ switchTrack: settingsString['isTracking'] });
-        this.setState({ visiValue: settingsString['visibility'] });
-        this.setState({ facValue: settingsString['faculty'] });
+        this.setState({ 
+          switchNoti: settingsString['isNotification'],
+          switchTrack: settingsString['isTracking'],
+          visiValue: settingsString['visibility'],
+          facValue: settingsString['faculty'],
+          courValue: settingsString['course']
+       });
         handleFaculty(settingsString['faculty']);
-        this.setState({ courValue: settingsString['course'] });
        // console.log(JSON.stringify(settingsString))
       }
     });
   }
+
+  
   render() {
-    let hcms=[];
-    let facu=[];
-    let inf=[];
-    let ac=[];
-    let esb=[];
-    let tec=[];
-    let td=[];
-    AsyncStorage.getItem('settingsoptions').
-    then(settingsString => {
-      if(settingsString){
-        settingsString = settingsString == null ? {} : JSON.parse(settingsString)
-        for(i = 0; i< settingsString.visibilities.length;i++){
-          hcms[i] ={ value: settingsString.visibilities[i].name };
-        }
-        for(i = 0; i< settingsString.faculties.length;i++){
-          facu[i] ={ value: settingsString.faculties[i].name };
-        }
-        for(i = 0; i< settingsString.courses.length;i++){
-          switch(settingsString.courses[i].faculty){
-          case 'Informatik': inf[i] ={ value: settingsString.courses[i].name }; break;
-          case 'Angewandte Chemie': ac[i] ={ value: settingsString.courses[i].name }; break;
-          case 'ESB Business School': esb[i] ={ value: settingsString.courses[i].name }; break;
-          case 'Technik': tec[i] ={ value: settingsString.courses[i].name }; break;
-          case 'Textil & Design': td[i] ={ value: settingsString.courses[i].name }; break;
-          }
-          
-        }
-        console.log(JSON.stringify(settingsString));
-      }
-    });
+    console.log("rendern");
 
     handleFaculty = (event) => {
       this.setState({facValue: event});
       //changeSettings(4,event)
       switch (event){
-        case 'Informatik': this.setState({faculty2: inf}); break;
-        case 'Angewandte Chemie': this.setState({faculty2: ac}); break;
-        case 'ESB Business School': this.setState({faculty2: esb}); break;
-        case 'Technik': this.setState({faculty2: tec}); break;
-        case 'Textil & Design': this.setState({faculty2: td}); break;
+        case 'Informatik': this.setState({faculty2: this.state.inf}); break;
+        case 'Angewandte Chemie': this.setState({faculty2: this.state.ac}); break;
+        case 'ESB Business School': this.setState({faculty2: this.state.esb}); break;
+        case 'Technik': this.setState({faculty2: this.state.tec}); break;
+        case 'Textil & Design': this.setState({faculty2: this.state.td}); break;
       }
   }
 
@@ -188,7 +192,7 @@ export default class Settings extends Component {
       <Text style={styles.text2 }>Who can see me?</Text>
       <View style={styles.dropdown}>
           <Dropdown
-          data={hcms}
+          data={this.state.hcms}
           value={this.state.visiValue} //.getUsersHCSM()
           onChangeText= {(value, index, data) => changeSettings(3,value)}
           />
@@ -196,7 +200,7 @@ export default class Settings extends Component {
       <Text style={styles.text2 }>Your Faculty</Text>
       <View style={styles.dropdown}>
           <Dropdown
-          data={facu}
+          data={this.state.facu}
           value={this.state.facValue} //.getUsersFAcu()
           onChangeText= {(value, index, data) => changeSettings(4,value)}
           />
