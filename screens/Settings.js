@@ -6,7 +6,7 @@ import {Dropdown} from 'react-native-material-dropdown';
 import { loadFromRest } from '../services/RestLoader';
 import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
-import {saveData} from '../services/RestSaverTmp';
+import {saveData} from '../services/RestSaver';
 
 
 const styles = StyleSheet.create({

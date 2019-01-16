@@ -100,6 +100,7 @@ export default class Map extends Component {
     
 
     static navigationOptions = ({navigation})=>  {
+        console.log("NavigationOptions");
         return{
         headerRight:
               <TouchableHighlight onPress={() => navigation.navigate('settings')}>
@@ -116,7 +117,7 @@ export default class Map extends Component {
         this.setState(({uniqueValue}) => ({
             uniqueValue: uniqueValue +1
         }));
-    } 
+    }
 
     clickBuilding =(number) =>{
       let text =''
@@ -228,9 +229,16 @@ export default class Map extends Component {
   };
  
   hideMenu = () => {
+
     this._menu.hide();
   };
- 
+
+    showSettings = () => {
+        this._menu.hide();
+        this.props.navigation.navigate('settings')
+    };
+
+
   showMenu = () => {
     this._menu.show();
   };
@@ -251,7 +259,7 @@ export default class Map extends Component {
           <MenuItem onPress={this.myBuilding}>My Building</MenuItem>
           <MenuItem onPress={this.hideMenu}>Events</MenuItem>
           <MenuItem onPress={this.hideMenu}>Parking</MenuItem>
-          <MenuItem onPress={this.hideMenu}>Kein Settings</MenuItem>
+          <MenuItem onPress={this.showSettings}>Settings</MenuItem>
         </Menu>
       </View>
             
