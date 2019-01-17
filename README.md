@@ -476,58 +476,72 @@ Payload: application/json\
 {\
     "search": Input of the search field\
 }\
-Response success example for {"building" : "building9"}:
-[
-    {
-        "building": "building9",
-        "longitude": "9.1877370000",
-        "latitude": "48.4827200000"
-    },
-    {
-        "building": "building9",
-        "longitude": "9.1869010000",
-        "latitude": "48.4830380000"
-    },
-    {
-        "building": "building9",
-        "longitude": "9.1871960000",
-        "latitude": "48.4833790000"
-    },
-    {
-        "building": "building9",
-        "longitude": "9.1880270000",
-        "latitude": "48.4830670000"
-    }
-]
-Response success example for {"building": "building9"}:
-[
-    {
-        "building": "building9",
-        "longitude": "9.1877370000",
-        "latitude": "48.4827200000"
-    },
-    {
-        "building": "building9",
-        "longitude": "9.1869010000",
-        "latitude": "48.4830380000"
-    },
-    {
-        "building": "building9",
-        "longitude": "9.1871960000",
-        "latitude": "48.4833790000"
-    },
-    {
-        "building": "building9",
-        "longitude": "9.1880270000",
-        "latitude": "48.4830670000"
-    },
-    {
-        "building": "building1",
-        "longitude": "9.1846110000",
-        "latitude": "48.4807410000"
-    },
-	//<...>
-]
+Response success example for {"building" : "building1"}:
+{
+    "profiles": [],
+    "buildings": [
+        {
+            "name": "building1",
+            "faculty": {
+                "name": "Technik"
+            },
+            "department": {
+                "name": "teaching"
+            },
+            "location": {
+                "name": "building1",
+                "latitude": "48.4812670000",
+                "longitude": "9.1849270000",
+                "latitudeDelta": "0.0050000000",
+                "longitudeDelta": "0.0050000000",
+                "createDate": "2019-01-13T23:14:15.697967Z",
+                "updatedDate": "2019-01-13T23:14:15.698019Z"
+            }
+        }
+    ],
+    "rooms": []
+}
+Response success example for {"building": "buil"}:
+{
+    "profiles": [],
+    "buildings": [
+        {
+            "name": "building9",
+            "faculty": null,
+            "department": {
+                "name": "teaching"
+            },
+            "location": {
+                "name": "building9",
+                "latitude": "48.4830520000",
+                "longitude": "9.1874960000",
+                "latitudeDelta": "0.0070000000",
+                "longitudeDelta": "0.0065000000",
+                "createDate": "2019-01-13T22:57:56.602855Z",
+                "updatedDate": "2019-01-13T22:57:56.602909Z"
+            }
+        },
+        {
+            "name": "building1",
+            "faculty": {
+                "name": "Technik"
+            },
+            "department": {
+                "name": "teaching"
+            },
+            "location": {
+                "name": "building1",
+                "latitude": "48.4812670000",
+                "longitude": "9.1849270000",
+                "latitudeDelta": "0.0050000000",
+                "longitudeDelta": "0.0050000000",
+                "createDate": "2019-01-13T23:14:15.697967Z",
+                "updatedDate": "2019-01-13T23:14:15.698019Z"
+            }
+        }
+    ],
+    "rooms": []
+}
 Errorcodes:\
 return on empty search:
 {
