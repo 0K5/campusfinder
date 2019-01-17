@@ -13,6 +13,7 @@ export const saveData = async function(cb, storageKey, data){
                         item[key] = data[key];
                     }
                 }
+                console.log(JSON.stringify(data))
                 AsyncStorage.setItem(storageKey, JSON.stringify(item))
                 .then(stored => {
                     let restUrl = Urls[storageKey];
