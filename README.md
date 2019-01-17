@@ -476,28 +476,32 @@ Payload: application/json\
 {\
     "search": Input of the search field\
 }\
-Response success example for {"building" : "building1"}:
+Response success example for {"building" : "camp"}:
 {
-    "profiles": [],
-    "buildings": [
+    "profiles": [
         {
-            "name": "building1"
+            "email": "campusfinderapp@gmail.com"
         }
     ],
+    "buildings": [],
     "rooms": []
 }
-Response success example for {"building": "buil"}:
+Response success example for {"building": "9"}:
 {
     "profiles": [],
     "buildings": [
         {
             "name": "building9"
-        },
-        {
-            "name": "building1"
         }
     ],
-    "rooms": []
+    "rooms": [
+        {
+            "name": "9-007"
+        },
+        {
+            "name": "9-008"
+        }
+    ]
 }
 Errorcodes:\
 return on empty search:
