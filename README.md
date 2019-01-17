@@ -240,6 +240,7 @@ Success Response: application/json\
     "email": "campusfinderapp@gmail.com",
     "firstname": "test",
     "lastname": "user",
+    "username": "test user", //Will be firstname + lastname or if not set emailaddress before @
     "role": "guest",
     "lastLogin": null
 }
@@ -620,7 +621,8 @@ Response success example for {"building" : "camp"}:
 {
     "profiles": [
         {
-            "email": "campusfinderapp@gmail.com"
+            "email": "campusfinderapp@gmail.com",
+            "username": "SecTest Wuhuu"
         }
     ],
     "buildings": [],
