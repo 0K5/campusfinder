@@ -8,4 +8,8 @@ export default {
     login : "rest-auth/login/",
     profile : "endpoints/profile/",
     restLogout : "rest-auth/logout/",
+    settings: "endpoints/profile/settings/",
+    settingsoptions: "endpoints/profile/settings/options/",
+    building: "endpoints/building/",
+    room: "endpoints/building/room/"
 }

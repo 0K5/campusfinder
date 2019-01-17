@@ -1,8 +1,10 @@
 //init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View,ScrollView } from 'react-native';
+import { StyleSheet,Text,View,ScrollView,AsyncStorage } from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
+import {saveData} from '../services/RestSaver';
+
 
 
 
@@ -49,57 +51,111 @@ export default class Settings extends Component {
   constructor(props){
     super(props);
     this.state = {
-    switchOn1: true,
-    switchOn2: false,
-    faculty: "",
+    hcms:[],
+    facu:[],
+    inf:[],
+    ac:[],
+    esb:[],
+    tec:[],
+    td:[],
+    switchNoti: false,
+    switchTrack: false,
+    visiValue: "",
+    facValue: "",
+    courValue: "",
+    facValue: "",
     faculty2: [{
       value: '',
-    }]
+    }] 
   }
   
-
-
+  AsyncStorage.getItem('settingsoptions').
+  then(settingsString => {
+    if(settingsString){
+      settingsString = settingsString == null ? {} : JSON.parse(settingsString)
+      for(i = 0; i< settingsString.visibilities.length;i++){
+        this.state.hcms[i] ={ value: settingsString.visibilities[i].name };
+      }
+      for(i = 0; i< settingsString.faculties.length;i++){
+        this.state.facu[i] ={ value: settingsString.faculties[i].name };
+      }
+      for(i = 0; i< settingsString.courses.length;i++){
+        switch(settingsString.courses[i].faculty){
+        case 'Informatik': this.state.inf.push({ value: settingsString.courses[i].name }); break;
+        case 'Angewandte Chemie': this.state.ac.push({ value: settingsString.courses[i].name }); break;
+        case 'ESB Business School': this.state.esb.push({ value: settingsString.courses[i].name }); break;
+        case 'Technik': this.state.tec.push({ value: settingsString.courses[i].name }); break;
+        case 'Textil & Design': this.state.td.push({ value: settingsString.courses[i].name }); break;
+        }
+        
+      }
+      console.log("load data");
+    }
+  });
+  
+  AsyncStorage.getItem('settings').
+    then(settingsString => {
+      if(settingsString){
+        settingsString = settingsString == null ? {} : JSON.parse(settingsString)
+        this.setState({ 
+          switchNoti: settingsString['isNotification'],
+          switchTrack: settingsString['isTracking'],
+          visiValue: settingsString['visibility'],
+          facValue: settingsString['faculty'],
+          courValue: settingsString['course']
+       });
+        handleFaculty(settingsString['faculty']);
+       // console.log(JSON.stringify(settingsString))
+      }
+    });
   }
-  render() {
-    let HCSM = [{
-      value: 'Everyone',
-    },{
-      value: 'Friends',
-    },{
-      value: 'Nobody',
-    },{
-      value: '#other'
-    }]
-    let Facu = [{
-      value: 'Informatics',
-    },{
-      value: 'Applied Chemistry',
-    },{
-      value: 'ESB Business School',
-    },{
-      value: 'Engineering'
-    },{
-      value: 'Textiles & Design'
-    }]
 
-    let Informatics = [{
-      value: 'Medien- und Kommunikationsinformatik',
-    },{
-      value: 'Wirtschaftsinformatik',
-    },{
-      value: 'Medizintechnische Informatik',
-    }]
-    
-    let detail;
+  
+  render() {
+    console.log("rendern");
 
     handleFaculty = (event) => {
-      alert(event);
-      this.setState({faculty: event});
-      this.setState({faculty2: Informatics});
+      this.setState({facValue: event});
+      //changeSettings(4,event)
+      switch (event){
+        case 'Informatik': this.setState({faculty2: this.state.inf}); break;
+        case 'Angewandte Chemie': this.setState({faculty2: this.state.ac}); break;
+        case 'ESB Business School': this.setState({faculty2: this.state.esb}); break;
+        case 'Technik': this.setState({faculty2: this.state.tec}); break;
+        case 'Textil & Design': this.setState({faculty2: this.state.td}); break;
+      }
+  }
+
+   changeSettings = (settingid,setting) => {
+    switch (settingid){
+      case 0:  saveChange({'all': setting});
+                break;
+      case 1:  saveChange({'isNotification': setting});
+                break;
+      case 2: saveChange({'isTracking': setting});
+                break; 
+      case 3: saveChange({'visibility': setting});
+                break; 
+      case 4: saveChange({'faculty': setting});
+              handleFaculty(setting)
+                break; 
+      case 5: saveChange({'course': setting});
+                break; 
+    }
+
   }
   
+  saveChange = (newSetting) => {
+    let refreshAsyncStorage = (response, data) => {
+      if(response && !response.hasOwnProperty('errorcode')){
+         //console.log(JSON.stringify(response));
+      }else{
+         //console.log(JSON.stringify(response));
+      }
+    };
+    saveData(refreshAsyncStorage, 'settings', newSetting);
+  }
 
-    const {navigation} = this.props
     return (
       <ScrollView>
       <View style= {styles.container}>
@@ -113,7 +169,8 @@ export default class Settings extends Component {
         </View>
         <View style={{ flex: 1, paddingRight: 10 }}>
         <SwitchToggle
-          switchOn={this.state.switchOn1}
+          value={this.state.switchNoti}
+          switchOn={this.state.switchNoti}
           onPress={this.onPress1}
           
         />
@@ -126,7 +183,8 @@ export default class Settings extends Component {
         </View>
         <View style={{ flex: 1, paddingRight: 10 }}>
         <SwitchToggle
-          switchOn={this.state.switchOn2}
+          value={this.state.switchTrack}
+          switchOn={this.state.switchTrack}
           onPress={this.onPress2}
         />
         </View>
@@ -135,23 +193,25 @@ export default class Settings extends Component {
       <Text style={styles.text2 }>Who can see me?</Text>
       <View style={styles.dropdown}>
           <Dropdown
-          data={HCSM}
-          value={'Everyone'} //.getUsersHCSM()
+          data={this.state.hcms}
+          value={this.state.visiValue} //.getUsersHCSM()
+          onChangeText= {(value, index, data) => changeSettings(3,value)}
           />
           </View>
       <Text style={styles.text2 }>Your Faculty</Text>
       <View style={styles.dropdown}>
           <Dropdown
-          data={Facu}
-          value={this.state.faculty} //.getUsersFAcu()
-          onChangeText= {(value, index, data) => handleFaculty(value)}
+          data={this.state.facu}
+          value={this.state.facValue} //.getUsersFAcu()
+          onChangeText= {(value, index, data) => changeSettings(4,value)}
           />
           </View> 
-       <Text style={styles.text2 }>Your Department</Text>
+       <Text style={styles.text2 }>Your Course</Text>
         <View style={styles.dropdown2}>
           <Dropdown
           data={this.state.faculty2}
-          value={""} //.getUsers()
+          value={this.state.courValue} //.getUsers()
+          onChangeText= {(value, index, data) => changeSettings(5,value)}
           />
           </View>      
      </View>
@@ -161,13 +221,13 @@ export default class Settings extends Component {
     
   }
 
-
   onPress1 = () => {
-    this.setState({ switchOn1: !this.state.switchOn1 });
+    this.setState({ switchNoti: !this.state.switchNoti });
+    changeSettings(1,!this.state.switchNoti)
   }
   onPress2 = () => {
-    this.setState({ switchOn2: !this.state.switchOn2 });
+    this.setState({ switchTrack: !this.state.switchTrack });
+    changeSettings(2,!this.state.switchTrack)
   }
-
-
+  
 }

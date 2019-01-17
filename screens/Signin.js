@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet,Text,TouchableOpacity, View,Image, TextInput,TouchableHighlight, AsyncStorage } from 'react-native';
 import { prevAuthCall, endpointCall } from '../services/Rest';
+import {loadFromRest} from '../services/RestLoader';
 import Urls from '../constants/Urls';
 
 const styles = StyleSheet.create({
@@ -81,40 +82,27 @@ export default class SignIn extends Component {
 
 signIn = function(){
     let comp = this;
-    let saveResponse = function(response){
-        if (response && typeof response === 'object' && "email" in response) {
-            AsyncStorage.getItem('profile').
-            then(profile => {
-                profile = profile == null ? {} : JSON.parse(profile)
-                profile['email'] = response.email;
-                profile['firstname'] = response.firstname ? response.firstname : "";
-                profile['lastname'] = response.lastname ? response.firstname : "";
-                AsyncStorage.setItem('profile', JSON.stringify(profile))
-                .then(profile => {
-                    comp.props.navigation.navigate('map');
-                })
-                .catch(error => console.log(error));
-            })
-            .catch(error => console.log(error));
-        }else if (response){
-            alert(JSON.stringify(response));
+    let redirect = function(keyValid){
+        if (keyValid === true){
+            return comp.props.navigation.navigate('map');
         }else{
-            alert("'errorcode':'2221' 'error':'500 Server Error. Please contact an admin of the app'");
+            return alert("Wrong password or email.");
         }
     }
     let createProfile = function(response, data){
         if (response && typeof response === 'object' && "key" in response) {
-            AsyncStorage.getItem('profile').
+           AsyncStorage.getItem('profile').
             then(profile => {
                 profile = profile == null ? {} : JSON.parse(profile)
                 profile['email'] = data.email;
                 profile['key'] = response.key;
                 AsyncStorage.setItem('profile', JSON.stringify(profile))
                 .then(() => {
-                    return endpointCall(saveResponse, Urls.profile,'')
+                    return loadFromRest(redirect)
                 });
             })
             .catch(error => alert(error.message));
+                    loadFromRest
         }else if(response && typeof response === 'object' && "email" in response){
             return alert("Account not known. Please register first");
         }else if(response && typeof response === 'object' && "password" in response){
@@ -176,13 +164,6 @@ signIn = function(){
             </TouchableOpacity>
 
           </View>
-          
-        
-     
-        
-  
-      
-      
     );
   }
 }
