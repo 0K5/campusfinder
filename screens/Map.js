@@ -139,14 +139,36 @@ export default class Map extends Component {
     }
 */
     searchbar = (event) => {
-        if(event.length > 3){
-            console.log(event)
+        if(event.length > 1){
+            //console.log(event)
             let searchforpeople = function(response){
-                if(response != undefined){
-                    console.log(response)
+                //console.log(response)
+                if(response.buildings != undefined){
+                    var result = "";
+                    if(response.buildings.length > 0){
+                        
+                        for(i = 0;i< response.buildings.length; i++){
+                            result+= "\n"+response.buildings[i].name
+                        }
+                        alert(response.buildings[0].name);
+                    }
+                    if(response.profiles.length >0){
+                        for(i = 0;i< response.profiles.length; i++){
+                            result+="\n"+ response.profiles[i].email
+                        }
+                    }
+                    if(response.rooms.length >0){
+                        for(i = 0;i< response.rooms.length; i++){
+                            result+= "\n"+response.rooms[i].name
+                        }
+                    }
+                    if(result.length>0){
+                        alert(result);
+                    }
+                    
                     
                 }else{
-                    return cb(false);
+                    console.log(response.error);
                 }
             };
             endpointCall(searchforpeople, Urls.search,{ "search": event })
