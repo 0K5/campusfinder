@@ -47,6 +47,7 @@ export default class AppContainer extends Component {
                 return(
                     <Image
                         onLoad={() => this.navToNext('map')}
+
                     ></Image>
                 );
             }
