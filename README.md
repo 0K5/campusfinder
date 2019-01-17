@@ -13,6 +13,64 @@ https://zerokfive.de/accounts/signup/
 
 Checkout checkout the master branch and then create your own branch. As soon as the feature of your branch is implemented request a merge with the master. The Merge will be reviewed from me because of security relevance and I'm responsible for everything on that server. Cheers
 
+------------------------- Working with the Async Storage ----------------------------
+
+Load Data from the Async Storage:\
+```
+Keys of the Async Storage after startup:\
+'profile'\
+'settings'\
+'settingsoptions'\
+'buildings'\
+'rooms'\
+```
+Call Example with settings:\\
+```javascript
+// import the Async Storage 
+import { AsyncStorage } from 'react-native';
+//...
+//Get the item you need from the AsyncStorage
+AsyncStorage.getItem('settings').
+    //This will come back as a String, so you have to Parse it first
+    then(settingsString => {
+      if(settingsString){
+      //This will come back as a String, so you have to Parse it first
+        settings = JSON.parse(settingsString)
+        this.setState({ switchNoti: settings['isNotification'] });
+        this.setState({ switchTrack: settings['isTracking'] });
+        this.setState({ visiValue: settings['visibility'] });
+        this.setState({ facValue: settings['faculty'] });
+        handleFaculty(settings['faculty']);
+        this.setState({ courValue: settings['course'] });
+      }
+    });
+  }
+```
+
+Save Data to Async Storage and on the server:\
+
+Example: Settings\
+```javascript
+  //import the saveData function from RestSaver class
+  import {saveData} from '../services/RestSaver';
+  //...
+  //Save data with the function call beneath always pass a dictionary
+  saveChange({'isNotification': setting}); 
+  //...
+  saveChange = (newSetting) => {	
+    //This will be called after the data is successfully saved 
+    let refreshAsyncStorage = (response, data) => {
+      if(response && !response.hasOwnProperty('errorcode')){
+         console.log(JSON.stringify(response));
+      }else{
+          console.log(JSON.stringify(response));
+      }
+    };
+    //This is the actual save call that saves the data to Async Storage and on the server
+    saveData(refreshAsyncStorage, 'settings', newSetting);
+  }
+```
+
 ------------------------- BASIC INFORMATION ABOUT THE API ----------------------------
 
 All requests need to be POST.\
