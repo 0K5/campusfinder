@@ -656,3 +656,84 @@ return on empty search:
 Comments:\
 Returns polygones of one building if "building" is set or all polygone locations when "building" field in json is not existent or empty.\
 ```
+
+------------------------ ENDPOINT NOTIFICATION --------------------------------
+
+```
+Register for Notifications by saving the pushToken in the profile:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/notification/register/\
+Payload: application/json\
+{\
+    "pushToken": Push token from expo push notification service
+}\
+Response success example for {"pushToken" : "12389017eudhjiokh4238"}:
+{
+    "pushToken": "12389017eudhjiokh4238"
+}
+Errorcodes:\
+return on empty search:
+{
+    "message": "Search term empty",
+    "result": {}
+}
+411: User does not exist\
+412: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+Comments:\
+Sets the pushToken in the backend and returns the pushToken if it is set.
+```
+
+```
+Push Tracking Request to other user:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/notification/trackingrequest/\
+Payload: application/json\
+{\
+    "receiver": Emailaddress of the receiver that is is asked for tracking confirmation
+}\
+Response success example for {"pushToken" : "12389017eudhjiokh4238"}:
+{
+    //Don't know yet
+}
+Errorcodes:\
+431: User does not exist\
+432: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+421: receiver not set in request
+422: Receiver profile does not exist
+423: Receiver does not allow push notifications
+424: Servererror on push notification
+425: Connection error on push notification
+426: Receiver push token invalid
+427: Push Response error
+Comments:\
+Sends a tracking request to a receiver, who has to confirm the tracking by a popup.\
+```
+
+```
+Push Tracking Request to other user:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/notification/trackingresponse/\
+Payload: application/json\
+{\
+    "receiver": Emailaddress of the receiver who asked for the tracking confirmation
+    "isAllowed": true or false whether the possibly tracked allowed tracking
+}\
+Response success example for {"pushToken" : "12389017eudhjiokh4238"}:
+{
+    //Don't know yet
+}
+Errorcodes:\
+441: User does not exist\
+442: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+443: This user didn't activate the tracking function
+444: receiver does not exist
+421: receiver not set in request
+422: Receiver profile does not exist
+423: Receiver does not allow push notifications
+424: Servererror on push notification
+425: Connection error on push notification
+426: Receiver push token invalid
+427: Push Response error
+Comments:\
+Sends a tracking response, whether tracking is allowed or not
+```
