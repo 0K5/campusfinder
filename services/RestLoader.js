@@ -1,11 +1,14 @@
+import { permissionRequest } from '../services/Permission';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
+import { LocationSender } from '../services/Location';
 
 export const loadFromRest = function(cb, token) {
     keySet = false;
-    let loadRooms = function(response, data){
+    let loadedRooms = function(response, data){
         if (response && typeof response === 'object' && !("errorcode" in response)) {
+            console.log(JSON.stringify(response));
             AsyncStorage.setItem('rooms', JSON.stringify(response)).
             then(rooms => {
                 return cb(true);
@@ -15,61 +18,76 @@ export const loadFromRest = function(cb, token) {
             return cb(true);
         }
     };
-    let loadBuildings = function(response, data){
+    let loadedBuildings = function(response, data){
         if (response && typeof response === 'object' && !("errorcode" in response)) {
-            AsyncStorage.setItem('buildings', JSON.stringify(response)).
-            then(buildings => {
-                return endpointCall(loadRooms, Urls.room, {})
+            console.log(JSON.stringify(response));
+            AsyncStorage.setItem('buildings', JSON.stringify(response))
+            .then(buildings => {
+                return endpointCall(loadedRooms, Urls.room, {})
             })
             .catch(error => alert(error.message));
         }else{
-            return endpointCall(loadRooms, Urls.room, {})
+            return endpointCall(loadedRooms, Urls.room, {})
         }
     };
-    let loadSettingsOptions = function(response, data){
+    let loadedSettingsOptions = function(response, data){
         if (response && typeof response === 'object' && !("errorcode" in response)) {
-            AsyncStorage.setItem('settingsoptions', JSON.stringify(response)).
-            then(settings => {
-                return endpointCall(loadBuildings, Urls.building, {})
+            console.log(JSON.stringify(response));
+            AsyncStorage.setItem('settingsoptions', JSON.stringify(response))
+            .then(settings => {
+                return endpointCall(loadedBuildings, Urls.building, {})
             })
             .catch(error => alert(error.message));
         }else{
-            return endpointCall(loadBuildings, Urls.building, {})
+            return endpointCall(loadedBuildings, Urls.building, {})
         }
     };
-    let loadSettings = function(response, data){
+    let loadedSettings = function(response, data){
         if (response && typeof response === 'object' && !("errorcode" in response)) {
-            AsyncStorage.setItem('settings', JSON.stringify(response)).
-            then(settings => {
-                return endpointCall(loadSettingsOptions, Urls.settingsoptions, {})
+            console.log(JSON.stringify(response));
+            AsyncStorage.setItem('settings', JSON.stringify(response))
+            .then(settings => {
+                return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})
             })
             .catch(error => alert(error.message));
         }else{
-            return endpointCall(loadSettingsOptions, Urls.settingsoptions, {})
+            return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})
         }
     };
-    let loadProfile = function(response, data){
+    let loadedProfile = function(response, data){
         if (response && typeof response === 'object' && !("errorcode" in response)) {
-            response['key'] = data.key
-            AsyncStorage.setItem('profile', JSON.stringify(response)).
-            then(profile => {
-                return endpointCall(loadSettings, Urls.settings, {})
+            response['key'] = data['key'];
+            if(data.hasOwnProperty['pushToken'] && data.pushToken === ""){
+                data['isNotification'] = false;
+            }
+            console.log(JSON.stringify(response));
+            AsyncStorage.setItem('profile', JSON.stringify(response))
+            .then(savedProfile => {
+                return endpointCall(loadedSettings, Urls.settings, data)
             })
-            .catch(error => alert(error.message));
+            .catch(error => alert(error.message))
         }else{
-            return endpointCall(loadSettings, Urls.settings, {})
+            return endpointCall(loadedSettings, data)
+        }
+    };
+    let loadedPermission = function(response, data){
+        console.log(JSON.stringify(response));
+        if (response && typeof response === 'object' && !("errorcode" in response)) {
+            return endpointCall(loadedProfile, Urls.profile, data)
+        }else{
+            return endpointCall(loadedProfile, Urls.profile, data)
         }
     };
     AsyncStorage.getItem('profile')
     .then(profile => {
         if(profile){
-            profile = JSON.parse(profile)
-            if (profile.hasOwnProperty('email') && profile.hasOwnProperty('key')){
+            profile = JSON.parse(profile);
+            if (profile.hasOwnProperty('key')){
                 let email = profile.email;
                 key = profile.key;
                 let setActualStates = function(response){
                     if(response.hasOwnProperty("is_authenticated") && response.is_authenticated){
-                        return endpointCall(loadProfile, Urls.profile, {'key':key})
+                        return permissionRequest(loadedPermission, {'key':key})
                     }else{
                         return cb(false);
                     }
