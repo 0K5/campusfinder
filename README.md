@@ -189,10 +189,12 @@ Comments:\
 role is automatically added in the backend. Roles are "guest","student" and "worker".
 ```
 
+------------------------ ENDPOINT SETTINGS --------------------------------
+
 ```
 Settings Create, Update and Get:\
 Method: POST\
-Endpoint: https://zerokfive.de/endpoints/profile/ \
+Endpoint: https://zerokfive.de/endpoints/profile/settings/ \
 Payload: application/json\
 {
 	"isTracking": Boolean,\
@@ -208,6 +210,84 @@ Response success example:
     "visibility": "all",
     "faculty": null,
     "department": null
+}
+Errorcodes:\
+131: User does not exist\
+132: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+133: Visibility does not exist (needs to be one of these: "all","faculty","department","nobody"\ 
+134: Faculty does not exist (needs to be one of these: "inf","ac","esb","tec","td","all")\ 
+135: Department does not exist (needs to be one of these: "teaching","facleader","assistant","facservice","library","studservice"\ 
+Comments:\
+isTracking: set to False or True\
+isNotification: set to False or True\
+visibility, faculty and department are database entries, so use one of the names above or request a new entry\
+```
+
+```
+Settings All Options:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/profile/settings/options/ \
+Payload: application/json\
+{
+}
+Response success example:
+{
+    "visibilities": [
+        {
+            "name": "all"
+        },
+        {
+            "name": "faculty"
+        },
+        {
+            "name": "department"
+        },
+        {
+            "name": "nobody"
+        },
+        {
+            "name": "course"
+        }
+    ],
+    "faculties": [
+        {
+            "name": "Informatik"
+        },
+        {
+            "name": "Angewandte Chemie"
+        },
+        {
+            "name": "ESB Business School"
+        },
+	//...
+    ],
+    "departments": [
+        {
+            "name": "teaching"
+        },
+        {
+            "name": "facleader"
+        },
+        {
+            "name": "assistant"
+        },
+	//...
+    ],
+    "courses": [
+        {
+            "name": "Medien- und Kommunikationsinformatik Bachelor Semester 1",
+            "faculty": "Informatik"
+        },
+        {
+            "name": "Medien- und Kommunikationsinformatik / Bachelor",
+            "faculty": "Informatik"
+        },
+        {
+            "name": "Wirtschaftsinformatik / Bachelor",
+            "faculty": "Informatik"
+        },
+	//...
+    ]
 }
 Errorcodes:\
 131: User does not exist\
