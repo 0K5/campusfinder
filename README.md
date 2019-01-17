@@ -55,19 +55,21 @@ Example: Settings\
   import {saveData} from '../services/RestSaver';
   //...
   //Save data with the function call beneath always pass a dictionary
-  saveChange({'isNotification': setting}); 
+  saveChange({'isNotification': true});
   //...
   saveChange = (newSetting) => {	
     //This will be called after the data is successfully saved 
-    let refreshAsyncStorage = (response, data) => {
+    let onSaveCallback = (response, data) => {
       if(response && !response.hasOwnProperty('errorcode')){
+      	//Replace the beneath with action on error (f.e. alert(JSON.stringify(response)))
          console.log(JSON.stringify(response));
       }else{
+         //Replace the beneath with action successful save.
           console.log(JSON.stringify(response));
       }
     };
     //This is the actual save call that saves the data to Async Storage and on the server
-    saveData(refreshAsyncStorage, 'settings', newSetting);
+    saveData(onSaveCallback, 'settings', newSetting);
   }
 ```
 
