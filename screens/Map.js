@@ -65,11 +65,12 @@ const styles= StyleSheet.create({
 })
 
 export default class Map extends Component {
-    
-    
-    state = {
-        region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
-        uniqueValue:1    
+    constructor(props) {
+            super(props);
+        this.state = {
+            region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
+            uniqueValue:1
+        };
     }
 
     //Buildings of the Campus with corner-coordinates
@@ -97,20 +98,23 @@ export default class Map extends Component {
 
 
         
-    
+
 
     static navigationOptions = ({navigation})=>  {
-        console.log("NavigationOptions");
         return{
         headerRight:
-              <TouchableHighlight onPress={() => navigation.navigate('settings')}>
+            <TouchableHighlight onPress={() => navigation.navigate('settings',{props:this.props})}>
                 <Image style={styles.headerImage} source={require('../img/settings.png')} />
-              </TouchableHighlight>
+            </TouchableHighlight>,
+        headerLeft:
+            <TouchableHighlight onPress={() => navigation.navigate('profile',{props:this.props})}>
+                <Image style={styles.headerImage} source={require('../img/profile.png')} />
+            </TouchableHighlight>
         }}
 
       
     iconClicked = () =>{
-        this.props.navigation.navigate('Signin')
+        this.props.navigation.navigate('Signin');
     }
 
     screenreloading = () =>{

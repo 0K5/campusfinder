@@ -29,8 +29,7 @@ export const endpointCall = async function(cb, restUrl, data){
             })
             .catch((error) => {
                 return cb({'errorcode':'1113',
-                    'error': "500 Server Error. Please contact an admin of the app",
-                    'errorMessage':error});
+                    'error': "500 Server Error. Please contact an admin of the app"});
             })
         }else{
             return cb({'errorcode':'1114', 'error': "Please register first"});

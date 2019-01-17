@@ -3,11 +3,12 @@ import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
 import { LocationSender } from '../services/Location';
+import { NotificationReceiver } from '../services/Notification';
 
 export const loadFromRest = function(cb, token) {
     keySet = false;
     let loadedRooms = function(response, data){
-        if (response && typeof response === 'object' && !("errorcode" in response)) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
             AsyncStorage.setItem('rooms', JSON.stringify(response)).
             then(rooms => {
@@ -19,7 +20,7 @@ export const loadFromRest = function(cb, token) {
         }
     };
     let loadedBuildings = function(response, data){
-        if (response && typeof response === 'object' && !("errorcode" in response)) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
             AsyncStorage.setItem('buildings', JSON.stringify(response))
             .then(buildings => {
@@ -31,7 +32,7 @@ export const loadFromRest = function(cb, token) {
         }
     };
     let loadedSettingsOptions = function(response, data){
-        if (response && typeof response === 'object' && !("errorcode" in response)) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
             AsyncStorage.setItem('settingsoptions', JSON.stringify(response))
             .then(settings => {
@@ -43,8 +44,11 @@ export const loadFromRest = function(cb, token) {
         }
     };
     let loadedSettings = function(response, data){
-        if (response && typeof response === 'object' && !("errorcode" in response)) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
+            if(response.hasOwnProperty['isNotification'] && response.isNotification === true){
+                NotificationReceiver(response.isTracking);
+            }
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {
                 return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})
@@ -55,9 +59,9 @@ export const loadFromRest = function(cb, token) {
         }
     };
     let loadedProfile = function(response, data){
-        if (response && typeof response === 'object' && !("errorcode" in response)) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             response['key'] = data['key'];
-            if(data.hasOwnProperty['pushToken'] && data.pushToken === ""){
+            if(data.pushToken === ""){
                 data['isNotification'] = false;
             }
             console.log(JSON.stringify(response));
@@ -72,7 +76,7 @@ export const loadFromRest = function(cb, token) {
     };
     let loadedPermission = function(response, data){
         console.log(JSON.stringify(response));
-        if (response && typeof response === 'object' && !("errorcode" in response)) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             return endpointCall(loadedProfile, Urls.profile, data)
         }else{
             return endpointCall(loadedProfile, Urls.profile, data)
