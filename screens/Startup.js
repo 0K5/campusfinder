@@ -28,7 +28,7 @@ export default class AppContainer extends Component {
     }
 
     navToNext(next){
-        return this.props.navigation.navigate(next);
+        return this.props.navigation.navigate(next,{props:this.props});
     }
 
     render() {

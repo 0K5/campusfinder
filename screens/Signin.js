@@ -69,10 +69,14 @@ const styles = StyleSheet.create({
 });
 
 export default class SignIn extends Component {
-  state = {
-    email: '',
-    password: ''
- }
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        }
+    }
+
  handleEmail = (text) => {
     this.setState({ email: text })
  }
