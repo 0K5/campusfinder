@@ -29,7 +29,7 @@
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }
