@@ -13,6 +13,7 @@ export const loadFromRest = function(cb, token) {
             AsyncStorage.setItem('rooms', JSON.stringify(response)).
             then(rooms => {
                 return cb(true);
+                LocationSender().sendLocation()
             })
             .catch(error => alert(error.message));
         }else{

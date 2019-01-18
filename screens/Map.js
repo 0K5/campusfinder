@@ -103,11 +103,11 @@ export default class Map extends Component {
     static navigationOptions = ({navigation})=>  {
         return{
         headerRight:
-            <TouchableHighlight onPress={() => navigation.navigate('settings',{props:this.props})}>
+            <TouchableHighlight onPress={() => navigation.navigate('settings')}>
                 <Image style={styles.headerImage} source={require('../img/settings.png')} />
             </TouchableHighlight>,
         headerLeft:
-            <TouchableHighlight onPress={() => navigation.navigate('profile',{props:this.props})}>
+            <TouchableHighlight onPress={() => navigation.navigate('profile')}>
                 <Image style={styles.headerImage} source={require('../img/profile.png')} />
             </TouchableHighlight>
         }}

@@ -6,19 +6,21 @@ import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
 import { styles } from '../constants/Styles';
 import { saveData } from '../services/RestSaver';
-
+import { SignIn } from '../screens/Signin';
+import { SignUp } from '../screens/Signup';
 
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
+        console.log(JSON.stringify(props))
         this.state = {
             email: '',
             firstname: '',
             lastname: '',
             username: '',
             logout: false,
-            deleted: false
+            deleteAccount: false
         };
     }
 
@@ -52,20 +54,20 @@ export default class Profile extends Component {
     }
 
     logout(){
-        let confirmedLogout = () => {
-            this.setState({logout:true})
-        }
-        endpointCall(confirmedLogout, Urls.logout, {})
-    }
+        let confirmedLogout = function(response, data){
+            alert("Logout confirmed");
+        };
+        endpointCall(confirmedLogout, Urls.logout, {});
+    };
 
     deleteAccount(isDeleteConfirmed){
         if(isDeleteConfirmed){
-            let deletionComplete = () => {
-                 this.setState({deleted:true})
-            }
-            endpointCall(confirmedLogout, Urls.deleteAccount, {})
+            let confirmedLogout = function(response, data){
+                alert("Account deletion confirmed");
+            };
+            endpointCall(confirmedLogout, Urls.deleteAccount, {});
         }
-    }
+    };
 
     deleteAccountConfirm(){
         return Alert.alert(

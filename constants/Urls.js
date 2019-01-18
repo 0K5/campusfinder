@@ -17,7 +17,6 @@ export default {
     notificationRegister : "/endpoints/notification/register/",
     location: "endpoints/location/",
     tracking: "endpoints/location/track/",
-    trackingActive: "endpoints/location/track/active",
     trackingRequest: "endpoints/notification/trackrequest/",
     trackingResponse: "endpoints/notification/trackresponse/",
 }

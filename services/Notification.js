@@ -45,9 +45,9 @@ export class NotificationReceiver{
         if(notification){
             data = notification.data;
             if(data && data.hasOwnProperty('type')){
-                if (data.type === "trackRequest" && this.isTracking && data.hasOwnProperty('sender')){
+                if (data.type === "trackingrequest" && this.isTracking && data.hasOwnProperty('sender')){
                     return this.trackingRequestAlert(data.sender);
-                }else if(data.type === "trackResponse" && this.isTracking && data.hasOwnProperty('origin')){
+                }else if(data.type === "trackingresponse" && this.isTracking && data.hasOwnProperty('origin')){
                     return this.trackingResponseAlert(data.tracked);
                 }else if(data.hasOwnProperty('errorcode')){
                     Alert.alert(data.message)
