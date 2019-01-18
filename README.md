@@ -737,3 +737,82 @@ Errorcodes:\
 Comments:\
 Sends a tracking response, whether tracking is allowed or not
 ```
+
+------------------------ ENDPOINT LOCATION --------------------------------
+
+```
+Set locations for profile:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/location/\
+Payload: application/json\
+{\
+    "latitude": Latitude of sender
+    "longitude": Longitude of sender
+}\
+Response success example for {"latitude":48.481169,"longitude":9.189783}:
+{
+    "profile": "campusfinderapp@gmail.com",
+    "longitude": "9.1897830000",
+    "latitude": "48.4811690000",
+    "createDate": "2019-01-17T23:54:33.617730Z"
+}
+Response left campus:
+{
+    'type': 'leftcampus',
+    'message': 'The user left the campus 
+}
+Errorcodes:\
+511: User does not exist\
+512: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+513: longitude und latitude not set
+Comments:\
+Sets the location of the user to the database, if the user is on the campus.
+```
+
+```
+Get locations of profile if there is a valid tracking request:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/location/tracking/\
+Payload: application/json\
+{
+	"tracked":"campusfinderapp@gmail.com"
+}
+Response success example for {"tracked":"campusfinderapp@gmail.com"}:
+{
+    "senderLocation": {
+        "profile": "oliver_klaus.schneider@student.reutlingen-university.de",
+        "longitude": "9.1860920000",
+        "latitude": "48.4809980000",
+        "createDate": "2019-01-18T00:15:39.859115Z"
+    },
+    "trackedLocation": {
+        "profile": "campusfinderapp@gmail.com",
+        "longitude": "9.1885340000",
+        "latitude": "48.4830480000",
+        "createDate": "2019-01-18T00:38:48.837479Z"
+    },
+    "distanceToTarget": 404.13736848105634
+}
+Response left campus:
+{
+    "type": "mindistance",
+    "message": "You reached your targed"
+}
+{
+    "type": "leftcampus",
+    "message": "The user left the campus"
+}
+{
+    "type": "timeout",
+    "message": "The Tracking timed out after x minutes"
+}
+Errorcodes:\
+521: User does not exist\
+522: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+523: tracked email not set
+524: Profile of tracked does not exist
+525: Track request was not confirmed by user
+526: No location data in database
+Comments:\
+Sends back the location of the tracked user if a valid track request exists. 
+```
