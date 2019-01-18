@@ -13,11 +13,11 @@ export default {
     settings: "endpoints/profile/settings/",
     settingsoptions: "endpoints/profile/settings/options/",
     building: "endpoints/building/",
-    buildingPolys: "endpoints/building/polys/,
+    buildingPolys: "endpoints/building/polys/",
     room: "endpoints/building/room/",
     notificationRegister : "/endpoints/notification/register/",
     location: "endpoints/location/",
-    tracking: "endpoints/location/track/",
+    tracking: "endpoints/location/tracking/",
     trackingRequest: "endpoints/notification/trackrequest/",
     trackingResponse: "endpoints/notification/trackresponse/",
 }

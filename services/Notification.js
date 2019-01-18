@@ -1,5 +1,5 @@
 import { Notifications } from 'expo';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { LocationSender } from '../services/Location';
 import Urls from '../constants/Urls';

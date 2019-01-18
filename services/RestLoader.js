@@ -2,8 +2,6 @@ import { permissionRequest } from '../services/Permission';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
-import { LocationSender } from '../services/Location';
-import { NotificationReceiver } from '../services/Notification';
 
 export const loadFromRest = function(cb, token) {
     keySet = false;
@@ -13,7 +11,6 @@ export const loadFromRest = function(cb, token) {
             AsyncStorage.setItem('rooms', JSON.stringify(response)).
             then(rooms => {
                 return cb(true);
-                LocationSender().sendLocation()
             })
             .catch(error => alert(error.message));
         }else{
