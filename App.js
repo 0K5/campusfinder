@@ -10,7 +10,17 @@ import building9c from './screens/Building9c';
 import building9entrance from './screens/Building9entrance';
 import termsAndConditions from './screens/TermsAndContidions';
 import map from './screens/Map';
+import firebase from "firebase";
 
+var config = {
+    apiKey: "AIzaSyC-8--1yi1zXlG1d6kKfPWyYo3HGnYjUsc",
+    authDomain: "campusfinder-4b980.firebaseapp.com",
+    databaseURL: "https://campusfinder-4b980.firebaseio.com",
+    projectId: "campusfinder-4b980",
+    storageBucket: "campusfinder-4b980.appspot.com",
+    messagingSenderId: "29692018773"
+};
+firebase.initializeApp(config);
 
 
 
