@@ -1,7 +1,7 @@
 import { Notifications } from 'expo';
 import { AsyncStorage, Alert } from 'react-native';
 import { prevAuthCall, endpointCall } from '../services/Rest';
-import { LocationSender } from '../services/Location';
+import { LocationSender, LocationReceiver } from '../services/Location';
 import Urls from '../constants/Urls';
 
 export class NotificationReceiver{
@@ -10,7 +10,7 @@ export class NotificationReceiver{
         if(this.isTracking){
             this.locationSender = new LocationSender();
         }
-        Notifications.addListener(this._handleNotification);
+        this._notifListener = Notifications.addListener(this._handleNotification);
     }
 
     sentTrackingAnswer(isAllowed){
@@ -69,8 +69,12 @@ export class NotificationReceiver{
     };
 
     trackingResponseAlert(sender){
+        let receivedLoc = (response, data) =>{
+            console.log(JSON.stringify(response))
+        }
+        LocationReceiver.receiveLocation(receivedLoc,sender)
         return Alert.alert(
-            'Tracking Request',
+            'Tracking request accepted',
             "You're now tracking "+sender
         )
     }
@@ -79,7 +83,7 @@ export class NotificationReceiver{
         if(notification){
             data = notification.data;
             if(data && data.hasOwnProperty('type')){
-                if (data.type === "trackingrequest" && this.isTracking && data.hasOwnProperty('sender')){
+                if (data.type === "" && this.isTracking && data.hasOwnProperty('sender')){
                     return this.trackingRequestAlert(data.sender);
                 }else if(data.type === "trackingresponse" && this.isTracking && data.hasOwnProperty('sender')){
                     return this.trackingResponseAlert(data.sender);
