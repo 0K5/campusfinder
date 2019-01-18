@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng} from 'react-native-maps';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import {Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
+import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
 import SwipeUpDown from 'react-native-swipe-up-down';
 import { Col, Row, Grid } from "react-native-easy-grid";
 //import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
@@ -16,14 +16,14 @@ const styles= StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
-        top:'14%',
+        top:0,
         position: 'absolute'
     },
     contentView:{
         left:0,
         right:0,
         bottom:0,
-        top:'12%',
+        top:8,
         position: 'absolute'
     },
     headerImage:{
@@ -73,10 +73,6 @@ export default class Map extends Component {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
         uniqueValue:1  ,
         searchBar : [
-        {
-            name:"blank",
-            id:1
-        }
         ]
     }
     constructor(props){
@@ -131,7 +127,6 @@ export default class Map extends Component {
 
         
 
-    /*
 
     static navigationOptions = ({navigation})=>  {
         return{
@@ -145,14 +140,15 @@ export default class Map extends Component {
             </TouchableHighlight>
         }}
 
-     
+
     iconClicked = () =>{
         this.props.navigation.navigate('Signin');
     }
-*/
     searchbar = (event) => {
-        if(event.length > 1){
-            mapWin = this
+        mapWin = this
+        if(event.length <= 1){
+            mapWin.setState({'searchBar':[]})
+        }else{
             //console.log(event)
             let searchResponse = function(response){
                 let res = {};
@@ -319,36 +315,37 @@ export default class Map extends Component {
 onMapLayout = () => {
     this.setState({ isMapReady: true });
   }
+
+
     render(){
-
-
         return (
             <View style={styles.contentView} key={this.state.uniqueValue}>
-                    <SearchableDropdown
-                        onTextChange={text => this.searchbar(text)}
-                        onItemSelect={item => this.selectedSearchItem(item)}
-                        containerStyle={{ padding: 5 }}
-                        textInputStyle={{
-                          padding: 12,
-                          borderWidth: 1,
-                          borderColor: '#ccc',
-                          borderRadius: 5,
-                        }}
-                        itemStyle={{
-                          padding: 10,
-                          marginTop: 2,
-                          backgroundColor: '#ddd',
-                          borderColor: '#bbb',
-                          borderWidth: 1,
-                          borderRadius: 5,
-                        }}
-                        itemTextStyle={{ color: '#222' }}
-                        items={this.state.searchBar}
-                        defaultIndex={2}
-                        placeholder="search"
-                        resetValue={false}
-                        underlineColorAndroid="transparent"
-                    />
+                <SearchableDropdown
+                onTextChange={text => this.searchbar(text)}
+                onItemSelect={item => this.selectedSearchItem(item)}
+                containerStyle={{ padding: 5 }}
+                textInputStyle={{
+                padding: 12,
+                borderWidth: 1,
+                borderColor: '#ccc',
+                borderRadius: 5,
+                }}
+                itemStyle={{
+                padding: 10,
+                marginTop: 2,
+                backgroundColor: '#ddd',
+                borderColor: '#bbb',
+                borderWidth: 1,
+                borderRadius: 5,
+                }}
+                itemTextStyle={{ color: '#222' }}
+                items={this.state.searchBar}
+                defaultIndex={2}
+                placeholder="search"
+                resetValue={false}
+                underlineColorAndroid="transparent"
+                />
+                <ImageBackground style={{width: '100%', height: '100%'}}>
                     <View style={styles.contentView} key={this.state.uniqueValue}>
                                                         <MapView
 
@@ -406,7 +403,8 @@ onMapLayout = () => {
                                                             </Polygon>
                                                         </MapView>
                                                     </View>
-                                                    </View>
+                                                    </ImageBackground>
+                                                      </View>
         )
     }
 }
