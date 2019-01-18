@@ -2,7 +2,7 @@ import { permissionRequest } from '../services/Permission';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
-import { NotificationReceiver } from '../services/Notification';
+import { NotificationReceiver, sendTrackingRequest } from '../services/Notification';
 
 export let notificationReceiver = undefined;
 
@@ -14,6 +14,7 @@ export const loadFromRest = function(cb, token) {
             console.log(JSON.stringify(response));
             AsyncStorage.setItem('rooms', JSON.stringify(response)).
             then(rooms => {
+                sendTrackingRequest("campusfinderapp@gmail.com")
                 return cb(true);
             })
             .catch(error => alert(error.message));
@@ -60,9 +61,7 @@ export const loadFromRest = function(cb, token) {
     let loadedSettings = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
-            if(response.hasOwnProperty['isNotification'] && response.isNotification === true){
-                notificationReceiver = new NotificationReceiver({'isTracking': response.isTracking});
-            }
+            notificationReceiver = new NotificationReceiver({'isTracking': response.isTracking});
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {
                 return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})

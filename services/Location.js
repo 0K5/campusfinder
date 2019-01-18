@@ -59,7 +59,7 @@ export class LocationReceiver {
         this.fetcher = undefined;
     }
 
-    receiveLocation(email, cb){
+    receiveLocation(cb, email){
         this.cb = cb
         this.email = email
         locRec = this;
