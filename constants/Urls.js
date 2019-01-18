@@ -20,4 +20,5 @@ export default {
     tracking: "endpoints/location/tracking/",
     trackingRequest: "endpoints/notification/trackingrequest/",
     trackingResponse: "endpoints/notification/trackingresponse/",
+    search: "endpoints/search/"
 }
