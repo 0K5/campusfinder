@@ -2,12 +2,8 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng} from 'react-native-maps';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
-import SwipeUpDown from 'react-native-swipe-up-down';
-import { Col, Row, Grid } from "react-native-easy-grid";
-//import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
-import Menu, { MenuItem } from 'react-native-material-menu';
-
+import {  ImageBackground,Text, View, StyleSheet,TouchableOpacity, TouchableHighlight, Image, Alert,AsyncStorage} from 'react-native';
+import {Icon, Container,Left, Header} from 'native-base'
 import Urls from '../constants/Urls';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 
@@ -23,7 +19,7 @@ const styles= StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
-        top:8,
+        top:0,
         position: 'absolute'
     },
     headerImage:{
@@ -31,7 +27,8 @@ const styles= StyleSheet.create({
         width: 40,
         marginTop: 0,
         marginBottom: 5,
-        marginRight: 10
+        marginRight: 10,
+        marginLeft: 10,
       },
       menuImage:{
         height: '50%',
@@ -69,6 +66,7 @@ const styles= StyleSheet.create({
 })
 
 export default class Map extends Component {
+    
     state = {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
         uniqueValue:1  ,
@@ -90,6 +88,7 @@ export default class Map extends Component {
       }
      
     
+
 
     //Buildings of the Campus with corner-coordinates
 
@@ -125,25 +124,19 @@ export default class Map extends Component {
         {latitude:48.480968,longitude:9.185203},{latitude:48.480840,longitude:9.185069},{latitude:48.480940,longitude:9.184796},{latitude:48.480741,longitude:9.184615}]
 
 
-        
 
+   
 
-    static navigationOptions = ({navigation})=>  {
+    /*static navigationOptions = ({navigation})=>  {
+
         return{
         headerRight:
-            <TouchableHighlight onPress={() => navigation.navigate('settings')}>
-                <Image style={styles.headerImage} source={require('../img/settings.png')} />
-            </TouchableHighlight>,
-        headerLeft:
             <TouchableHighlight onPress={() => navigation.navigate('profile')}>
                 <Image style={styles.headerImage} source={require('../img/profile.png')} />
             </TouchableHighlight>
         }}
 
-
-    iconClicked = () =>{
-        this.props.navigation.navigate('Signin');
-    }
+*/
     searchbar = (event) => {
         mapWin = this
         if(event.length <= 1){
@@ -284,26 +277,7 @@ export default class Map extends Component {
 
     }
 
-    _menu = null;
- 
-  setMenuRef = ref => {
-    this._menu = ref;
-  };
- 
-  hideMenu = () => {
-
-    this._menu.hide();
-  };
-
-    showSettings = () => {
-        this._menu.hide();
-        this.props.navigation.navigate('settings')
-    };
-
-
-  showMenu = () => {
-    this._menu.show();
-  };
+  
 
   
     selectedSearchItem(item){
@@ -317,9 +291,17 @@ onMapLayout = () => {
   }
 
 
+
     render(){
+
         return (
-            <View style={styles.contentView} key={this.state.uniqueValue}>
+            <Container style={styles.contentView} key={this.state.uniqueValue}>
+                <Header>
+                    <Left>
+                        <Icon name="ios-menu" onPress={() => 
+                            this.props.navigation.navigate('DrawerOpen')} />
+                    </Left>
+                </Header>
                 <SearchableDropdown
                 onTextChange={text => this.searchbar(text)}
                 onItemSelect={item => this.selectedSearchItem(item)}
@@ -346,7 +328,6 @@ onMapLayout = () => {
                 underlineColorAndroid="transparent"
                 />
                 <ImageBackground style={{width: '100%', height: '100%'}}>
-                    <View style={styles.contentView} key={this.state.uniqueValue}>
                                                         <MapView
 
                                                             style={styles.map}
@@ -402,9 +383,9 @@ onMapLayout = () => {
                                                             >
                                                             </Polygon>
                                                         </MapView>
-                                                    </View>
+                                                
                                                     </ImageBackground>
-                                                      </View>
+                                                      </Container>
         )
     }
 }
