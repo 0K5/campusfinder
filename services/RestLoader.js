@@ -20,16 +20,28 @@ export const loadFromRest = function(cb, token) {
             return cb(true);
         }
     };
-    let loadedBuildings = function(response, data){
+    let loadedBuildingPolys = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
-            AsyncStorage.setItem('buildings', JSON.stringify(response))
+            AsyncStorage.setItem('buildingPolys', JSON.stringify(response))
             .then(buildings => {
                 return endpointCall(loadedRooms, Urls.room, {})
             })
             .catch(error => alert(error.message));
         }else{
             return endpointCall(loadedRooms, Urls.room, {})
+        }
+    };
+    let loadedBuildings = function(response, data){
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
+            console.log(JSON.stringify(response));
+            AsyncStorage.setItem('buildings', JSON.stringify(response))
+            .then(buildings => {
+                return endpointCall(loadedBuildingPolys, Urls.buildingPolys, {})
+            })
+            .catch(error => alert(error.message));
+        }else{
+            return endpointCall(loadedBuildingPolys, Urls.buildingPolys, {})
         }
     };
     let loadedSettingsOptions = function(response, data){
