@@ -2,9 +2,13 @@ import { permissionRequest } from '../services/Permission';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
+import { NotificationReceiver } from '../services/Notification';
+
+export let notificationReceiver = undefined;
 
 export const loadFromRest = function(cb, token) {
     keySet = false;
+
     let loadedRooms = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
@@ -57,7 +61,7 @@ export const loadFromRest = function(cb, token) {
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
             if(response.hasOwnProperty['isNotification'] && response.isNotification === true){
-                NotificationReceiver(response.isTracking);
+                notificationReceiver = new NotificationReceiver({'isTracking': response.isTracking});
             }
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {

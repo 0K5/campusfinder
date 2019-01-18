@@ -27,14 +27,12 @@ export class LocationSender {
                     'Tracking aborted',
                     'Cause: ' + response.message,
                 )
-                locSen.cb(response);
             }else{
                  Alert.alert(
                         'Tracking aborted',
                         'Cause: ' + response.message,
                     )
                 locSen.stopSendLocation();
-
             }
         }
         locSen = this;
@@ -57,7 +55,7 @@ export class LocationSender {
 
 export class LocationReceiver {
     //trackedId is primary key value of item or profile to track (for profile its email, for building/room its name)
-    constructor(email) {
+    constructor() {
         this.fetcher = undefined;
     }
 
@@ -67,7 +65,15 @@ export class LocationReceiver {
         locRec = this;
         let gotLocation = function(response, data){
             if(response && !response.hasOwnProperty("errorcode") && !response.hasOwnProperty("type")){
-                locRec.cb(response);
+                trackedName = response.trackedLocation.profile;
+                trackedLocation = {
+                    "longitude" : response.trackedLocation.longitude,
+                    "latitude" : response.trackedLocation.latitude
+                }
+                AsyncStorage.setItem(trackedName, JSON.stringify(trackedLocation))
+                .then(trackedName => {
+                    locRec.cb(response);
+                })
             }else if(response && response.hasOwnProperty("type")){
                 locRec.stopReceiveLocation();
                 Alert.alert(

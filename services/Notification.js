@@ -6,13 +6,19 @@ import Urls from '../constants/Urls';
 
 export class NotificationReceiver{
     constructor(data) {
-        this.isTracking = data.hasOwnProperty('isTracking') ? data.isTracking : false;
-        this.watchId = undefined;
-        this.locationSender = LocationSender();
+        this.isTracking = data.hasOwnProperty('isTracking') ? data['isTracking'] : false;
+        if(this.isTracking){
+            this.locationSender = new LocationSender();
+        }
         Notifications.addListener(this._handleNotification);
     }
 
     sentTrackingAnswer(isAllowed){
+        let sentLocation = function(response, data){
+            if(response){
+                console.log(JSON.stringify(response));
+            }
+        }
         let trackRequestResponse = function(response, data){
             if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode") && isAllowed === true) {
                 locationSender.sendLocation();
@@ -26,19 +32,47 @@ export class NotificationReceiver{
     }
 
     trackingRequestAlert(sender){
-        return Alert.alert(
-            'Tracking Request',
-            ''+origin+' wants to track you on the campus',
-            [
-                {text: 'Deny', onPress: () => this.sendTrackingAnswer(false), style: 'cancel'},
-                {text: 'Allow', onPress: () => this.sendTrackingAnswer(true)},
-            ],
-            { cancelable: false }
-        )
+        notRec = this;
+        let empty = (response,data) => {
+            console.log(JSON.stringify(response));
+        }
+        let sentTrackingAnswer = function(isAllowed){
+            let sentLocation = function(response, data){
+                return null;
+            }
+            let trackRequestResponse = function(response, data){
+                if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
+                    return Alert.alert(
+                        "Tracking startet",
+                        "You're now tracked by "+response.sender
+                    )
+                }
+            }
+            if(isAllowed){
+                notRec.locationSender.sendLocation(sentLocation);
+                return endpointCall(trackRequestResponse, Urls.trackingResponse, {receiver:sender, confirmed:isAllowed});
+            }
+        }
+        if(this.locationSender){
+            return Alert.alert(
+                'Tracking Startet',
+                ''+sender+' wants to track you on the campus',
+                [
+                    {text: 'Deny', onPress: () => sentTrackingAnswer(false), style: 'cancel'},
+                    {text: 'Allow', onPress: () => sentTrackingAnswer(true)},
+                ],
+                { cancelable: false }
+            )
+        }else{
+            return endpointCall(empty, Urls.trackingResponse, {receiver:sender, confirmed:isAllowed});
+        }
     };
 
     trackingResponseAlert(sender){
-
+        return Alert.alert(
+            'Tracking Request',
+            "You're now tracking "+sender
+        )
     }
 
     _handleNotification = (notification) => {
@@ -47,8 +81,8 @@ export class NotificationReceiver{
             if(data && data.hasOwnProperty('type')){
                 if (data.type === "trackingrequest" && this.isTracking && data.hasOwnProperty('sender')){
                     return this.trackingRequestAlert(data.sender);
-                }else if(data.type === "trackingresponse" && this.isTracking && data.hasOwnProperty('origin')){
-                    return this.trackingResponseAlert(data.tracked);
+                }else if(data.type === "trackingresponse" && this.isTracking && data.hasOwnProperty('sender')){
+                    return this.trackingResponseAlert(data.sender);
                 }else if(data.hasOwnProperty('errorcode')){
                     Alert.alert(data.message)
                 }

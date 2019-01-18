@@ -18,6 +18,6 @@ export default {
     notificationRegister : "/endpoints/notification/register/",
     location: "endpoints/location/",
     tracking: "endpoints/location/tracking/",
-    trackingRequest: "endpoints/notification/trackrequest/",
-    trackingResponse: "endpoints/notification/trackresponse/",
+    trackingRequest: "endpoints/notification/trackingrequest/",
+    trackingResponse: "endpoints/notification/trackingresponse/",
 }
