@@ -47,7 +47,7 @@ export const loadFromRest = function(cb) {
     };
     let loadedSettingsOptions = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
             AsyncStorage.setItem('settingsoptions', JSON.stringify(response))
             .then(settings => {
                 return endpointCall(loadedBuildings, Urls.building, {})
@@ -59,7 +59,6 @@ export const loadFromRest = function(cb) {
     };
     let loadedSettings = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
-            console.log(JSON.stringify(response));
             notificationReceiver = new NotificationReceiver(response.isTracking, response.isNotification, data.pushToken);
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {
@@ -72,7 +71,7 @@ export const loadFromRest = function(cb) {
     };
     let loadedProfile = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
             response['key'] = data['key'];
             AsyncStorage.setItem('profile', JSON.stringify(response))
             .then(savedProfile => {
