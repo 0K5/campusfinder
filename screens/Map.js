@@ -1,6 +1,6 @@
 //init maps
 import React, { Component } from 'react';
-import MapView, {Callout, Polygon,LatLng} from 'react-native-maps';
+import MapView, {Callout, Polygon,LatLng, Marker} from 'react-native-maps';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
 import SwipeUpDown from 'react-native-swipe-up-down';
@@ -11,6 +11,7 @@ import Menu, { MenuItem } from 'react-native-material-menu';
 import Urls from '../constants/Urls';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { sendTrackingRequest } from '../services/Notification';
+
 
 const styles= StyleSheet.create({
     map:{
@@ -74,7 +75,11 @@ export default class Map extends Component {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
         uniqueValue:1  ,
         searchBar : [],
-        tracking : false
+        tracking : false,
+        markerLatLng : {
+            latitude: 0.000000,
+            longitude: 0.000000
+        }
     }
     constructor(props){
         super(props);
@@ -314,18 +319,33 @@ export default class Map extends Component {
     }
 
     startTracking(receiver){
-        mapComp = this;
-        AsyncStorage.getItem(receiver)
-        .then(locations => {
-            if(locations){
-                console.log(locations)
-            }else{
-                mapComp.setState({tracking:""})
-            }
-        }).catch(error => console.log(error));
+        let mapComp = this;
+        this.tracker = setInterval(() => {
+            AsyncStorage.getItem(receiver)
+            .then(locationString => {
+                location = JSON.parse(locationString)
+                console.log(JSON.stringify(location));
+                if(location.hasOwnProperty('latitude')){
+                    markerLatLng = {
+                        'markerLatLng' : {
+                            'latitude' : location.latitude,
+                            'longitude' : location.longitude
+                        }
+                    }
+                    mapComp.setState(markerLatLng);
+                }else if(location='done'){
+                    mapComp.setState({markerLatLng:{latitude:0.000000,longitude:0.000000}});
+                    AsyncStorage.setItem(email,"done")
+                    .then(() => {
+                        clearInterval(mapComp.tracker);
+                    })
+                }
+            }).catch(error => console.log(error));
+        }, 2000);
     }
 
     selectedSearchItem = (item) => {
+        let mapTh = this;
         let search = this.state.search;
         let receiver = undefined;
         let name = undefined;
@@ -339,8 +359,11 @@ export default class Map extends Component {
             }
         }
         if(receiver && !this.state.tracking){
-            this.startTracking(receiver);
             sendTrackingRequest(receiver);
+            AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
+            .then(rec => {
+                mapTh.startTracking(receiver);
+            })
         }
         if(name){
             this.trackBuilding(name);
@@ -387,6 +410,9 @@ export default class Map extends Component {
                         showsUserLocation={true}
                         onLayout={this.onMapLayout}
                         >
+                            <Marker
+                              coordinate={this.state.markerLatLng}
+                            />
                             <Polygon
                                 coordinates={this.Building1}
                                 strokeColor={"rgba(0,0,0,0.01)"}

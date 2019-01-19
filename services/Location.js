@@ -67,8 +67,8 @@ export class LocationReceiver {
             if(response && !response.hasOwnProperty("errorcode") && !response.hasOwnProperty("type")){
                 trackedName = response.trackedLocation.profile.email;
                 trackedLocation = {
-                    "longitude" : response.trackedLocation.longitude,
-                    "latitude" : response.trackedLocation.latitude
+                    "longitude" : parseFloat(response.trackedLocation.longitude),
+                    "latitude" : parseFloat(response.trackedLocation.latitude)
                 }
                 AsyncStorage.setItem(email, JSON.stringify(trackedLocation))
                 .then(email => {
@@ -80,17 +80,16 @@ export class LocationReceiver {
                     'Tracking ended',
                     ''+response.message,
                 )
-                locRec.cb(response);
+                AsyncStorage.setItem(email,"done")
+                .then(() => {
+                    locRec.cb(response);
+                })
             }else if(response && response.hasOwnProperty("errorcode")){
-                locRec.stopReceiveLocation();
-                Alert.alert(
-                    'Tracking aborted',
-                    'Cause: ' + response.message,
-                )
                 locRec.cb(response);
             }else{
                 locRec.stopReceiveLocation();
             }
+
         }
         this.fetcher = setInterval(() => {
             endpointCall(gotLocation, Urls.tracking, {tracked: this.email})

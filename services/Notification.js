@@ -74,7 +74,8 @@ export class NotificationReceiver{
         let receivedLoc = (response, data) =>{
             console.log(JSON.stringify(response))
         }
-        LocationReceiver.receiveLocation(receivedLoc,sender)
+        this._locReceiver = new LocationReceiver()
+        this._locReceiver.receiveLocation(receivedLoc,sender);
         return Alert.alert(
             'Tracking request accepted',
             "You're now tracking "+sender
@@ -87,9 +88,9 @@ export class NotificationReceiver{
             let trackNotif = function(response, data){
                 if(response && !response.hasOwnProperty('errorcode')){
                     if(response.reason == 'trackingrequest'){
-                        notRecH.trackingRequestAlert(response.sender);
-                    }else if(response.reason == 'trackingrespone'){
-                        notRecH.trackingResponseAlert(response.sender);
+                        return notRecH.trackingRequestAlert(response.sender);
+                    }else if(response.reason == 'trackingresponse'){
+                        return notRecH.trackingResponseAlert(response.sender);
                     }
                 }
             }
