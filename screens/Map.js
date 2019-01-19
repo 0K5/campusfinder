@@ -1,6 +1,6 @@
 //init maps
 import React, { Component } from 'react';
-import MapView, {Callout, Polygon,LatLng} from 'react-native-maps';
+import MapView, {Callout, Polygon,LatLng, Marker} from 'react-native-maps';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
 import SwipeUpDown from 'react-native-swipe-up-down';
@@ -10,6 +10,8 @@ import Menu, { MenuItem } from 'react-native-material-menu';
 
 import Urls from '../constants/Urls';
 import { prevAuthCall, endpointCall } from '../services/Rest';
+import { sendTrackingRequest } from '../services/Notification';
+
 
 const styles= StyleSheet.create({
     map:{
@@ -72,8 +74,12 @@ export default class Map extends Component {
     state = {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
         uniqueValue:1  ,
-        searchBar : [
-        ]
+        searchBar : [],
+        tracking : false,
+        markerLatLng : {
+            latitude: 0.000000,
+            longitude: 0.000000
+        }
     }
     constructor(props){
         super(props);
@@ -138,12 +144,14 @@ export default class Map extends Component {
             <TouchableHighlight onPress={() => navigation.navigate('profile')}>
                 <Image style={styles.headerImage} source={require('../img/profile.png')} />
             </TouchableHighlight>
-        }}
+        }
+    }
 
 
     iconClicked = () =>{
         this.props.navigation.navigate('Signin');
     }
+
     searchbar = (event) => {
         mapWin = this
         if(event.length <= 1){
@@ -305,106 +313,153 @@ export default class Map extends Component {
     this._menu.show();
   };
 
-  
-    selectedSearchItem(item){
-        alert(
-            JSON.stringify(item)
-        );
+
+    trackBuilding(name){
+        alert("Tracking building not yet implemented");
     }
 
-onMapLayout = () => {
-    this.setState({ isMapReady: true });
-  }
+    startTracking(receiver){
+        let mapComp = this;
+        this.tracker = setInterval(() => {
+            AsyncStorage.getItem(receiver)
+            .then(locationString => {
+                location = JSON.parse(locationString)
+                console.log(JSON.stringify(location));
+                if(location.hasOwnProperty('latitude')){
+                    markerLatLng = {
+                        'markerLatLng' : {
+                            'latitude' : location.latitude,
+                            'longitude' : location.longitude
+                        }
+                    }
+                    mapComp.setState(markerLatLng);
+                }else if(location='done'){
+                    mapComp.setState({markerLatLng:{latitude:0.000000,longitude:0.000000}});
+                    AsyncStorage.setItem(email,"done")
+                    .then(() => {
+                        clearInterval(mapComp.tracker);
+                    })
+                }
+            }).catch(error => console.log(error));
+        }, 2000);
+    }
 
+    selectedSearchItem = (item) => {
+        let mapTh = this;
+        let search = this.state.search;
+        let receiver = undefined;
+        let name = undefined;
+        for(category in search){
+            for(val in search[category]){
+                if(search[category][val].email && search[category][val].email == item.name){
+                    receiver = search[category][val].email
+                }else if(search[category][val].name && search[category][val].name == item.name){
+                    name = search[category][val].name
+                }
+            }
+        }
+        if(receiver && !this.state.tracking){
+            sendTrackingRequest(receiver);
+            AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
+            .then(rec => {
+                mapTh.startTracking(receiver);
+            })
+        }
+        if(name){
+            this.trackBuilding(name);
+        }
+    }
 
     render(){
         return (
             <View style={styles.contentView} key={this.state.uniqueValue}>
                 <SearchableDropdown
-                onTextChange={text => this.searchbar(text)}
-                onItemSelect={item => this.selectedSearchItem(item)}
-                containerStyle={{ padding: 5 }}
-                textInputStyle={{
-                padding: 12,
-                borderWidth: 1,
-                borderColor: '#ccc',
-                borderRadius: 5,
-                }}
-                itemStyle={{
-                padding: 10,
-                marginTop: 2,
-                backgroundColor: '#ddd',
-                borderColor: '#bbb',
-                borderWidth: 1,
-                borderRadius: 5,
-                }}
-                itemTextStyle={{ color: '#222' }}
-                items={this.state.searchBar}
-                defaultIndex={2}
-                placeholder="search"
-                resetValue={false}
-                underlineColorAndroid="transparent"
+                    onTextChange={text => this.searchbar(text)}
+                    onItemSelect={item => this.selectedSearchItem(item)}
+                    containerStyle={{ padding: 5 }}
+                    textInputStyle={{
+                        padding: 12,
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        borderRadius: 5,
+                    }}
+                    itemStyle={{
+                        padding: 10,
+                        marginTop: 2,
+                        backgroundColor: '#ddd',
+                        borderColor: '#bbb',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }}
+                    itemTextStyle={{ color: '#222' }}
+                    items={this.state.searchBar}
+                    defaultIndex={2}
+                    placeholder="search"
+                    resetValue={false}
+                    underlineColorAndroid="transparent"
                 />
                 <ImageBackground style={{width: '100%', height: '100%'}}>
                     <View style={styles.contentView} key={this.state.uniqueValue}>
-                                                        <MapView
-
-                                                            style={styles.map}
-                                                            region={this.state.region}
-                                                            rotateEnabled={false}
-                                                            mapType={"hybrid"}
-                                                            maxDelta={0.0035}
-                                                            showsBuildings={true}
-                                                            showsUserLocation={true}
-                                                            onLayout={this.onMapLayout}
-                                                        >
-                                                            <Polygon
-                                                                coordinates={this.Building1}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(1)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building2}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(2)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building3}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(3)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building4}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(4)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building5}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(5)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building7}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(7)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building9}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(9)}
-                                                            >
-                                                            </Polygon>
-                                                        </MapView>
-                                                    </View>
-                                                    </ImageBackground>
-                                                      </View>
+                        <MapView
+                        style={styles.map}
+                        region={this.state.region}
+                        rotateEnabled={false}
+                        mapType={"hybrid"}
+                        maxDelta={0.0035}
+                        showsBuildings={true}
+                        showsUserLocation={true}
+                        onLayout={this.onMapLayout}
+                        >
+                            <Marker
+                              coordinate={this.state.markerLatLng}
+                            />
+                            <Polygon
+                                coordinates={this.Building1}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(1)}
+                            ></Polygon>
+                            <Polygon
+                                coordinates={this.Building2}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(2)}
+                            ></Polygon>
+                            <Polygon
+                                coordinates={this.Building3}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(3)}
+                            ></Polygon>
+                            <Polygon
+                                coordinates={this.Building4}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(4)}
+                            ></Polygon>
+                            <Polygon
+                                coordinates={this.Building5}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(5)}
+                            ></Polygon>
+                            <Polygon
+                                coordinates={this.Building7}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(7)}
+                            ></Polygon>
+                            <Polygon
+                                coordinates={this.Building9}
+                                strokeColor={"rgba(0,0,0,0.01)"}
+                                tappable={true}
+                                onPress={(number)=>  this.clickBuilding(9)}
+                            >
+                            </Polygon>
+                        </MapView>
+                    </View>
+                </ImageBackground>
+            </View>
         )
     }
 }

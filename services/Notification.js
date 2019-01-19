@@ -1,16 +1,22 @@
 import { Notifications } from 'expo';
 import { AsyncStorage, Alert } from 'react-native';
 import { prevAuthCall, endpointCall } from '../services/Rest';
-import { LocationSender } from '../services/Location';
+import { LocationSender, LocationReceiver } from '../services/Location';
 import Urls from '../constants/Urls';
 
 export class NotificationReceiver{
-    constructor(data) {
-        this.isTracking = data.hasOwnProperty('isTracking') ? data['isTracking'] : false;
+    constructor(pushToken, isTracking) {
+        this.isTracking = isTracking;
+        this.hasPush = pushToken ? true : false;
         if(this.isTracking){
             this.locationSender = new LocationSender();
         }
-        Notifications.addListener(this._handleNotification);
+        if(this.hasPush){
+            console.log(pushToken);
+          //  this._notifListener = this._handleTrackingNotification();
+        }else{
+            this._notifListener = this._handleTrackingRestNotification();
+        }
     }
 
     sentTrackingAnswer(isAllowed){
@@ -44,57 +50,63 @@ export class NotificationReceiver{
                 if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
                     return Alert.alert(
                         "Tracking startet",
-                        "You're now tracked by "+response.sender
+                        "You're now tracked by "+response.sender.username
                     )
                 }
             }
             if(isAllowed){
                 notRec.locationSender.sendLocation(sentLocation);
-                return endpointCall(trackRequestResponse, Urls.trackingResponse, {receiver:sender, confirmed:isAllowed});
+                return endpointCall(trackRequestResponse, Urls.trackingResponse, {receiver:sender, confirm:isAllowed});
             }
-        }
-        if(this.locationSender){
-            return Alert.alert(
-                'Tracking Startet',
-                ''+sender+' wants to track you on the campus',
-                [
-                    {text: 'Deny', onPress: () => sentTrackingAnswer(false), style: 'cancel'},
-                    {text: 'Allow', onPress: () => sentTrackingAnswer(true)},
-                ],
-                { cancelable: false }
-            )
-        }else{
-            return endpointCall(empty, Urls.trackingResponse, {receiver:sender, confirmed:isAllowed});
-        }
+        };
+        Alert.alert(
+            'Tracking Startet',
+            ''+sender+' wants to track you on the campus',
+            [
+                {text: 'Deny', onPress: () => sentTrackingAnswer(false), style: 'cancel'},
+                {text: 'Allow', onPress: () => sentTrackingAnswer(true)},
+            ],
+            { cancelable: false }
+        );
     };
 
     trackingResponseAlert(sender){
+        let receivedLoc = (response, data) =>{
+            console.log(JSON.stringify(response))
+        }
+        this._locReceiver = new LocationReceiver()
+        this._locReceiver.receiveLocation(receivedLoc,sender);
         return Alert.alert(
-            'Tracking Request',
+            'Tracking request accepted',
             "You're now tracking "+sender
         )
     }
 
-    _handleNotification = (notification) => {
-        if(notification){
-            data = notification.data;
-            if(data && data.hasOwnProperty('type')){
-                if (data.type === "trackingrequest" && this.isTracking && data.hasOwnProperty('sender')){
-                    return this.trackingRequestAlert(data.sender);
-                }else if(data.type === "trackingresponse" && this.isTracking && data.hasOwnProperty('sender')){
-                    return this.trackingResponseAlert(data.sender);
-                }else if(data.hasOwnProperty('errorcode')){
-                    Alert.alert(data.message)
+    _handleTrackingRestNotification = () => {
+        let notRecH = this;
+        this.notifFetcher = setInterval(() => {
+            let trackNotif = function(response, data){
+                if(response && !response.hasOwnProperty('errorcode')){
+                    if(response.reason == 'trackingrequest'){
+                        return notRecH.trackingRequestAlert(response.sender);
+                    }else if(response.reason == 'trackingresponse'){
+                        return notRecH.trackingResponseAlert(response.sender);
+                    }
                 }
             }
-        }
+            endpointCall(trackNotif, Urls.notification, {})
+        }, 2000);
     };
 }
 
 
-export const sendTrackingRequest = async function(email){
+export const sendTrackingRequest = function(email){
     let trackRequestSent = function(response,data){
-        if (response && typeof response === 'object' && response.hasOwnProperty("errorcode")) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
+            return Alert.alert(
+                'Tracking request send to user'
+            )
+        }else  if (response && typeof response === 'object' && response.hasOwnProperty("errorcode")){
             return Alert.alert(
                 'Tracking not possible',
                 ''+response.message

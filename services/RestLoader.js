@@ -2,11 +2,11 @@ import { permissionRequest } from '../services/Permission';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
-import { NotificationReceiver } from '../services/Notification';
+import { NotificationReceiver, sendTrackingRequest } from '../services/Notification';
 
 export let notificationReceiver = undefined;
 
-export const loadFromRest = function(cb, token) {
+export const loadFromRest = function(cb) {
     keySet = false;
 
     let loadedRooms = function(response, data){
@@ -60,9 +60,7 @@ export const loadFromRest = function(cb, token) {
     let loadedSettings = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
-            if(response.hasOwnProperty['isNotification'] && response.isNotification === true){
-                notificationReceiver = new NotificationReceiver({'isTracking': response.isTracking});
-            }
+            notificationReceiver = new NotificationReceiver(data.pushToken, response.isTracking);
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {
                 return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})
@@ -74,11 +72,8 @@ export const loadFromRest = function(cb, token) {
     };
     let loadedProfile = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
-            response['key'] = data['key'];
-            if(data.pushToken === ""){
-                data['isNotification'] = false;
-            }
             console.log(JSON.stringify(response));
+            response['key'] = data['key'];
             AsyncStorage.setItem('profile', JSON.stringify(response))
             .then(savedProfile => {
                 return endpointCall(loadedSettings, Urls.settings, data)
@@ -88,13 +83,8 @@ export const loadFromRest = function(cb, token) {
             return endpointCall(loadedSettings, data)
         }
     };
-    let loadedPermission = function(response, data){
-        console.log(JSON.stringify(response));
-        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
-            return endpointCall(loadedProfile, Urls.profile, data)
-        }else{
-            return endpointCall(loadedProfile, Urls.profile, data)
-        }
+    let loadedPermission = function(data){
+        return endpointCall(loadedProfile, Urls.profile, data)
     };
     AsyncStorage.getItem('profile')
     .then(profile => {
