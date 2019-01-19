@@ -310,9 +310,7 @@ export default class Map extends Component {
 
 
     trackBuilding(name){
-
-
-
+        alert("Tracking building not yet implemented");
     }
 
     startTracking(receiver){
@@ -335,7 +333,7 @@ export default class Map extends Component {
             for(val in search[category]){
                 if(search[category][val].email && search[category][val].email == item.name){
                     receiver = search[category][val].email
-                }else if(search[category][val].hasOwnProperty['name'] && search[category][val].email == item.name){
+                }else if(search[category][val].name && search[category][val].name == item.name){
                     name = search[category][val].name
                 }
             }

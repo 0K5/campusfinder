@@ -101,7 +101,11 @@ export class NotificationReceiver{
 
 export const sendTrackingRequest = function(email){
     let trackRequestSent = function(response,data){
-        if (response && typeof response === 'object' && response.hasOwnProperty("errorcode")) {
+        if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
+            return Alert.alert(
+                'Tracking request send to user'
+            )
+        }else  if (response && typeof response === 'object' && response.hasOwnProperty("errorcode")){
             return Alert.alert(
                 'Tracking not possible',
                 ''+response.message
