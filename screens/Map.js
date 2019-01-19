@@ -10,7 +10,7 @@ import Menu, { MenuItem } from 'react-native-material-menu';
 
 import Urls from '../constants/Urls';
 import { prevAuthCall, endpointCall } from '../services/Rest';
-import { sendTrackingRequest } from '../services/Notification';
+import { sendTrackingRequest, NotificationReceiver } from '../services/Notification';
 
 
 const styles= StyleSheet.create({
@@ -502,8 +502,19 @@ export default class Map extends Component {
         let receiver = this.state.trackedUser;
         endpointCall(cancelledTracking, Urls.trackingAbort, {'receiver':receiver});
     }
+// =============================== OLI END ==================================================
 
     render(){
+        let setTrackingState = function(isTracked,tracker){
+            if(isTracked){
+                console.log("TRACKED " + isTracked);
+                this.setState({tracking:true});
+                this.trackUser(tracker);
+            }
+        }
+        if(this.state.loaded){
+            this._notificationReceiver.getTrackingState(setTrackingState);
+        }
         return (
             <View style={styles.contentView} key={this.state.uniqueValue}>
                 <SearchableDropdown

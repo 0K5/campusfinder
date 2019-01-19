@@ -1,22 +1,23 @@
 import { Notifications } from 'expo';
 import { AsyncStorage, Alert } from 'react-native';
 import { prevAuthCall, endpointCall } from '../services/Rest';
-import { LocationSender, LocationReceiver } from '../services/Location';
+import { LocationActivator } from '../services/Location';
 import Urls from '../constants/Urls';
 
 export class NotificationReceiver{
-    constructor(pushToken, isTracking, isNotification) {
+    constructor(isTracking, isNotification, pushToken) {
         this.isTracking = isTracking;
         this.hasPush = pushToken && pushToken != "" ? true : false;
         if(isNotification && this.isTracking){
-            this._locationSender = new LocationSender();
+            this._locActivator = new LocationActivator()
         }
         if(isNotification && this.hasPush){
-            console.log(pushToken);
             this._notifListener = this._handleTrackingNotification();
         }else if(isNotification){
             this._notifListener = this._handleTrackingRestNotification();
         }
+        this.isTracked = false;
+        this.tracker = "";
     }
 
     sentTrackingAnswer(isAllowed){
@@ -27,7 +28,6 @@ export class NotificationReceiver{
         }
         let trackRequestResponse = function(response, data){
             if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode") && isAllowed === true) {
-                locationSender.sendLocation();
                 return Alert.alert(
                     "Tracking startet",
                     "You're now tracked by "+response.sender
@@ -43,8 +43,8 @@ export class NotificationReceiver{
             console.log(JSON.stringify(response));
         }
         let sentTrackingAnswer = function(isAllowed){
-            let sentLocation = function(response, data){
-                return null;
+            let receivedLoc = (response, data) =>{
+                console.log("RECEIVING LOCATION " + JSON.stringify(response))
             }
             let trackRequestResponse = function(response, data){
                 if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
@@ -54,8 +54,10 @@ export class NotificationReceiver{
                     )
                 }
             }
-            if(isAllowed && notRec._locationSender){
-                notRec._locationSender.sendLocation(empty);
+            if(isAllowed && notRec._locActivator){
+                this.isTracked = true;
+                this.tracker = sender;
+                notRec._locActivator.activateLocation(receivedLoc,sender);
                 return endpointCall(trackRequestResponse, Urls.trackingResponse, {receiver:sender, confirm:isAllowed});
             }
         };
@@ -74,8 +76,7 @@ export class NotificationReceiver{
         let receivedLoc = (response, data) =>{
             console.log("RECEIVING LOCATION " + JSON.stringify(response))
         }
-        this._locReceiver = new LocationReceiver()
-        this._locReceiver.receiveLocation(receivedLoc,sender);
+        this._locActivator.activateLocation(receivedLoc,sender);
         return Alert.alert(
             'Tracking request accepted',
             "You're now tracking "+sender
@@ -83,7 +84,9 @@ export class NotificationReceiver{
     }
 
     trackingAbortedAlert(sender){
-        this._locReceiver.stopReceiveLocation();
+        this.isTracked = false;
+        this.tracker = "";
+        this._locActivator.stopReceiveLocation();
     }
 
     _handleTrackingRestNotification = () => {
@@ -91,6 +94,7 @@ export class NotificationReceiver{
         console.log("NOTIFICATIONLISTENER ACTIVE")
         this.notifFetcher = setInterval(() => {
             let trackNotif = function(response, data){
+                console.log("NOTIFICATIONLISTENER: " + JSON.stringify(response))
                 if(response && !response.hasOwnProperty('errorcode')){
                     if(response.reason == 'trackingrequest'){
                         return notRecH.trackingRequestAlert(response.sender);
@@ -101,9 +105,14 @@ export class NotificationReceiver{
                     }
                 }
             }
+            console.log("NOTIFICATIONLISTENER ACTIVE")
             endpointCall(trackNotif, Urls.notification, {})
         }, 2000);
     };
+
+    getTrackingState(mapCB){
+        return mapCB(this.isTracked, this.tracker);
+    }
 }
 
 

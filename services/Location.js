@@ -4,7 +4,7 @@ import { prevAuthCall, endpointCall } from '../services/Rest';
 import Urls from '../constants/Urls';
 
 
-export class LocationSender {
+class LocationSender {
     constructor() {
         this.fetcher = undefined;
         this.isSending = false;
@@ -56,14 +56,14 @@ export class LocationSender {
     }
 }
 
-export class LocationReceiver {
+export class LocationActivator {
     //trackedId is primary key value of item or profile to track (for profile its email, for building/room its name)
     constructor() {
         this.fetcher = undefined;
         this._locationSender = new LocationSender()
     }
 
-    receiveLocation(cb, email){
+    activateLocation(cb, email){
         this.cb = cb
         this.email = email
         locRec = this;
