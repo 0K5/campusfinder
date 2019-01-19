@@ -662,63 +662,73 @@ Returns polygones of one building if "building" is set or all polygone locations
 ```
 Register for Notifications by saving the pushToken in the profile:\
 Method: POST\
-Endpoint: https://zerokfive.de/endpoints/notification/register/\
-Payload: application/json\
-{\
-    "pushToken": Push token from expo push notification service
-}\
-Response success example for {"pushToken" : "12389017eudhjiokh4238"}:
-{
-    "pushToken": "12389017eudhjiokh4238"
-}
-Errorcodes:\
-return on empty search:
-{
-    "message": "Search term empty",
-    "result": {}
-}
-411: User does not exist\
-412: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
-Comments:\
-Sets the pushToken in the backend and returns the pushToken if it is set.
-```
-
-```
-Push Tracking Request to other user:\
-Method: POST\
 Endpoint: https://zerokfive.de/endpoints/notification/trackingrequest/\
 Payload: application/json\
 {\
-    "receiver": Emailaddress of the receiver that is is asked for tracking confirmation
+    "receiver": Email of receiver for tracking request
 }\
-Response success example for {"pushToken" : "12389017eudhjiokh4238"}:
+Response success example for {"receiver":"campusfinderapp@gmail.com"}
 {
-    //Don't know yet
+    "type": "trackingrequest",
+    "sender": {
+        "email": "oliver_klaus.schneider@student.reutlingen-university.de",
+        "firstname": "Oliver",
+        "lastname": "Schneider",
+        "username": "",
+        "role": "student",
+        "lastLogin": null
+    },
+    "receiver": {
+        "email": "campusfinderapp@gmail.com",
+        "firstname": "asd",
+        "lastname": "qwe",
+        "username": "asd qwe",
+        "role": "guest",
+        "lastLogin": null
+    }
 }
 Errorcodes:\
+return on empty search:
 431: User does not exist\
 432: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
-421: receiver not set in request
-422: Receiver profile does not exist
-423: Receiver does not allow push notifications
-424: Servererror on push notification
-425: Connection error on push notification
-426: Receiver push token invalid
-427: Push Response error
+433: receiver email not set
+434: Receiver does not exist
+435: Not able to track yourself
 Comments:\
-Sends a tracking request to a receiver, who has to confirm the tracking by a popup.\
+Sets the tracking request and a notification element so that the requested track can be transferred.
 ```
 
 ```
-Push Tracking Request to other user:\
+Register for Notifications by saving the pushToken in the profile:\
+Method: POST\
+Endpoint: https://zerokfive.de/endpoints/notification/\
+Payload: application/json\
+{\
+}\
+Response success example for {}
+{
+    "sender": "oliver_klaus.schneider@student.reutlingen-university.de",
+    "receiver": "campusfinderapp@gmail.com",
+    "reason": "trackingrequest"
+}
+Errorcodes:\
+return on empty search:
+451: User does not exist\
+452: Profile of user does not exist (need to call https://zerokfive.de/endpoints/profile/ first)\
+Comments:\
+Retrieves all open notifications for the user.
+```
+
+```
+Tracking response from tracked user:\
 Method: POST\
 Endpoint: https://zerokfive.de/endpoints/notification/trackingresponse/\
 Payload: application/json\
 {\
     "receiver": Emailaddress of the receiver who asked for the tracking confirmation
-    "isAllowed": true or false whether the possibly tracked allowed tracking
+    "confirmed": true or false whether the possibly tracked allowed tracking
 }\
-Response success example for {"pushToken" : "12389017eudhjiokh4238"}:
+Response success example for {"receiver" : "12389017eudhjiokh4238"}:
 {
     //Don't know yet
 }

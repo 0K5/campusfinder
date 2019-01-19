@@ -27,7 +27,6 @@ firebase.initializeApp(config);
 const App = createStackNavigator({
     home: {screen: startup,navigationOptions: () => ({
         title:'CampusFinder',
-        headerBackTitle:'Back',
    })},
    signin: {screen: signin,navigationOptions: () => ({
      title:'CampusFinder', 

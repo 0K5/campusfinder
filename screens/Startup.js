@@ -41,12 +41,14 @@ export default class AppContainer extends Component {
                 return(
                     <Image
                         onLoad={() => this.navToNext('signin')}
+                        source={require('../assets/images/splash.png')}
                     ></Image>
                 );
             }else{
                 return(
                     <Image
                         onLoad={() => this.navToNext('map')}
+                        source={require('../assets/images/splash.png')}
                     ></Image>
                 );
             }
