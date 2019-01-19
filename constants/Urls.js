@@ -15,7 +15,7 @@ export default {
     building: "endpoints/building/",
     buildingPolys: "endpoints/building/polys/",
     room: "endpoints/building/room/",
-    notificationRegister : "/endpoints/notification/register/",
+    notification: "endpoints/notification/",
     location: "endpoints/location/",
     tracking: "endpoints/location/tracking/",
     trackingRequest: "endpoints/notification/trackingrequest/",

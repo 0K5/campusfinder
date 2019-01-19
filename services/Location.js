@@ -65,13 +65,13 @@ export class LocationReceiver {
         locRec = this;
         let gotLocation = function(response, data){
             if(response && !response.hasOwnProperty("errorcode") && !response.hasOwnProperty("type")){
-                trackedName = response.trackedLocation.profile;
+                trackedName = response.trackedLocation.profile.email;
                 trackedLocation = {
                     "longitude" : response.trackedLocation.longitude,
                     "latitude" : response.trackedLocation.latitude
                 }
-                AsyncStorage.setItem(trackedName, JSON.stringify(trackedLocation))
-                .then(trackedName => {
+                AsyncStorage.setItem(email, JSON.stringify(trackedLocation))
+                .then(email => {
                     locRec.cb(response);
                 })
             }else if(response && response.hasOwnProperty("type")){
