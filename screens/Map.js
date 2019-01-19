@@ -70,10 +70,8 @@ const styles= StyleSheet.create({
     
 })
 
-let buildings;
 export default class Map extends Component {
     state = {
-        region:{latitude: 48.483336,     longitude: 9.186335 ,   latitudeDelta: 0.0010,longitudeDelta: 0.0010},
         isLoaded: false,
         uniqueValue:1 ,
         searchBar : [
@@ -83,20 +81,6 @@ export default class Map extends Component {
     constructor(props){
         super(props);
         
-        AsyncStorage.getItem('profil').
-        then(profil => {
-      if(profil){
-        profil = profil == null ? {} : JSON.parse(profil)
-        setState({ 
-          key: profil['key']
-       });
-       // console.log(JSON.stringify(settingsString))
-      }
-      
-    });
-
-    
-    
     
 
      }
@@ -124,10 +108,29 @@ export default class Map extends Component {
             }
           
           }
-            this.setState({"buildings": buildingstemp});
-            console.log(this.state.buildings);
+            this.setState({"buildingspoly": buildingstemp});
         }
-        this.setState({isLoaded: true});
+        this.setState({isLoaded: true,
+            region:{latitude: 48.483336,     longitude: 9.186335 ,   latitudeDelta: 0.0010,longitudeDelta: 0.0010},
+        });
+        
+      });
+      AsyncStorage.getItem('buildings').
+        then(bpstring => {
+        if(bpstring){
+          let buildingstemp2=[];
+          bpstring = bpstring == null ? {} : JSON.parse(bpstring)
+          //console.log("BUILDINGS: ----------------------------------------------------------------")
+          //console.log(bpstring)
+          for(i = 0; i<bpstring.length; i++){
+            let num2 = parseInt(bpstring[i].name.replace(/[^\d.]/g, '' ));
+            console.log(bpstring[i].location.latitude)
+                buildingstemp2[num2] = {latitude: parseFloat(bpstring[i].location.latitude),longitude: parseFloat(bpstring[i].location.longitude),
+                    latitudeDelta: parseFloat(bpstring[i].location.latitudeDelta),longitudeDelta: parseFloat(bpstring[i].location.longitudeDelta)};
+          }
+          this.setState({"buildings": buildingstemp2});
+        }
+        
       });
     }
 
@@ -476,13 +479,23 @@ export default class Map extends Component {
         endpointCall(cancelledTracking, Urls.trackingAbort, {'receiver':receiver});
     }
 // =============================== OLI END ==================================================
-  
+
 /*    selectedSearchItem(item){
-        this.setState({
-            region:{latitude: 48.483059, longitude: 9.187477, latitudeDelta: 0.007,longitudeDelta: 0.0025}
-        })
-        //alert( JSON.stringify(item) );
+        num = parseInt(item.name.replace(/[^\d.]/g, '' ));
+        if(num <10 && num >0){
+            this.setState({
+                region: this.state.buildings[num]
+            })
+        }else{
+            alert( JSON.stringify(item) );
+        }
+       
+        
     }*/
+
+onMapLayout = () => {
+    this.setState({ isMapReady: true });
+  }
 
 
     render(){ if (!this.state.isLoaded) {
