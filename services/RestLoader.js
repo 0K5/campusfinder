@@ -60,7 +60,7 @@ export const loadFromRest = function(cb) {
     let loadedSettings = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
-            notificationReceiver = new NotificationReceiver(data.pushToken, response.isTracking);
+            notificationReceiver = new NotificationReceiver(data.pushToken, response.isTracking, response.isNotification);
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {
                 return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})

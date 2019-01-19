@@ -5,13 +5,16 @@ import { LocationSender, LocationReceiver } from '../services/Location';
 import Urls from '../constants/Urls';
 
 export class NotificationReceiver{
-    constructor(pushToken, isTracking) {
+    constructor(pushToken, isTracking, isNotification) {
         this.isTracking = isTracking;
-        this.hasPush = pushToken ? true : false;
-        if(this.hasPush){
+        this.hasPush = pushToken && pushToken != "" ? true : false;
+        if(isNotification && this.isTracking){
+            this._locationSender = new LocationSender();
+        }
+        if(isNotification && this.hasPush){
             console.log(pushToken);
-          //  this._notifListener = this._handleTrackingNotification();
-        }else{
+            this._notifListener = this._handleTrackingNotification();
+        }else if(isNotification){
             this._notifListener = this._handleTrackingRestNotification();
         }
     }
@@ -51,8 +54,8 @@ export class NotificationReceiver{
                     )
                 }
             }
-            if(isAllowed){
-                notRec.locationSender.sendLocation(sentLocation);
+            if(isAllowed && notRec._locationSender){
+                notRec._locationSender.sendLocation(empty);
                 return endpointCall(trackRequestResponse, Urls.trackingResponse, {receiver:sender, confirm:isAllowed});
             }
         };
@@ -85,6 +88,7 @@ export class NotificationReceiver{
 
     _handleTrackingRestNotification = () => {
         let notRecH = this;
+        console.log("NOTIFICATIONLISTENER ACTIVE")
         this.notifFetcher = setInterval(() => {
             let trackNotif = function(response, data){
                 if(response && !response.hasOwnProperty('errorcode')){

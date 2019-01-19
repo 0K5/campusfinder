@@ -313,6 +313,8 @@ export default class Map extends Component {
     this._menu.show();
   };
 
+  // ================================ OLI ============================================
+
     trackUser(receiver){
         let mapComp = this;
         this.tracker = setInterval(() => {
@@ -355,7 +357,7 @@ export default class Map extends Component {
 
     searchProfilePopup(receiver, isTracking) {
         let mapTh = this;
-        if(isTracking && !this.state.tracking){
+        if(this.state.isTrackingAllowed && isTracking && !this.state.tracking){
             sendTrackingRequest(receiver);
             mapTh.setState({tracking : true});
             AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
@@ -462,15 +464,33 @@ export default class Map extends Component {
     }
 
     selectedSearchItem = (item) => {
-        Alert.alert(
-            'What do you want to do',
-            'with '+item.name,
-            [
-                {text: 'Get Info', onPress: () => this.getSearchItemAndDoAction(item, false), style: 'cancel'},
-                {text: 'Track', onPress: () => this.getSearchItemAndDoAction(item, true), style: 'cancel'},
-            ],
-            { cancelable: true }
-        );
+        AsyncStorage.getItem('settings')
+        .then(settingsString => {
+            let settings = JSON.parse(settingsString);
+            this.setState({
+                'isTrackingAllowed' : settings.isTracking && settings.isNotification
+            })
+            if(this.state.isTrackingAllowed){
+                Alert.alert(
+                    'What do you want to do',
+                    'with '+item.name,
+                    [
+                        {text: 'Get Info', onPress: () => this.getSearchItemAndDoAction(item, false), style: 'cancel'},
+                        {text: 'Track', onPress: () => this.getSearchItemAndDoAction(item, true), style: 'cancel'}
+                    ],
+                    { cancelable: true }
+                );
+            }else{
+                Alert.alert(
+                    'What do you want to do',
+                    'with '+item.name+ "\n(Info: for tracking please activate notifications and tracking in settings menu)",
+                    [
+                        {text: 'Get Info', onPress: () => this.getSearchItemAndDoAction(item, false), style: 'cancel'}
+                    ],
+                    { cancelable: true }
+                );
+            }
+        });
     }
 
     cancelTracking = () => {
