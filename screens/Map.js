@@ -2,8 +2,12 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng, Marker} from 'react-native-maps';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import {  ImageBackground,Text, View, StyleSheet,TouchableOpacity, TouchableHighlight, Image, Alert,AsyncStorage} from 'react-native';
-import {Icon, Container,Left, Header} from 'native-base'
+import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
+import SwipeUpDown from 'react-native-swipe-up-down';
+import { Col, Row, Grid } from "react-native-easy-grid";
+//import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
+import Menu, { MenuItem } from 'react-native-material-menu';
+
 import Urls from '../constants/Urls';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { sendTrackingRequest, NotificationReceiver } from '../services/Notification';
@@ -21,7 +25,7 @@ const styles= StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
-        top:0,
+        top:8,
         position: 'absolute'
     },
     headerImage:{
@@ -29,8 +33,7 @@ const styles= StyleSheet.create({
         width: 40,
         marginTop: 0,
         marginBottom: 5,
-        marginRight: 10,
-        marginLeft: 10,
+        marginRight: 10
       },
       menuImage:{
         height: '50%',
@@ -68,7 +71,6 @@ const styles= StyleSheet.create({
 })
 
 export default class Map extends Component {
-    
     state = {
         region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
         uniqueValue:1  ,
@@ -94,7 +96,6 @@ export default class Map extends Component {
       }
      
     
-
 
     //Buildings of the Campus with corner-coordinates
 
@@ -130,21 +131,26 @@ export default class Map extends Component {
         {latitude:48.480968,longitude:9.185203},{latitude:48.480840,longitude:9.185069},{latitude:48.480940,longitude:9.184796},{latitude:48.480741,longitude:9.184615}]
 
 
+        
 
-   
 
-    /*static navigationOptions = ({navigation})=>  {
-
+    static navigationOptions = ({navigation})=>  {
         return{
         headerRight:
+            <TouchableHighlight onPress={() => navigation.navigate('settings')}>
+                <Image style={styles.headerImage} source={require('../img/settings.png')} />
+            </TouchableHighlight>,
+        headerLeft:
             <TouchableHighlight onPress={() => navigation.navigate('profile')}>
                 <Image style={styles.headerImage} source={require('../img/profile.png')} />
             </TouchableHighlight>
         }
     }
 
-*/
->>>>>>> new DrawerNavigation
+    iconClicked = () =>{
+        this.props.navigation.navigate('Signin');
+    }
+
     searchbar = (event) => {
         mapWin = this
         if(event.length <= 1){
@@ -285,7 +291,26 @@ export default class Map extends Component {
 
     }
 
-  
+    _menu = null;
+ 
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+ 
+  hideMenu = () => {
+
+    this._menu.hide();
+  };
+
+    showSettings = () => {
+        this._menu.hide();
+        this.props.navigation.navigate('settings')
+    };
+
+
+  showMenu = () => {
+    this._menu.show();
+  };
 
   // ================================ OLI ============================================
 
@@ -479,14 +504,9 @@ export default class Map extends Component {
 // =============================== OLI END ==================================================
 
 
+    render(){
         return (
-            <Container style={styles.contentView} key={this.state.uniqueValue}>
-                <Header>
-                    <Left>
-                        <Icon name="ios-menu" onPress={() => 
-                            this.props.navigation.navigate('DrawerOpen')} />
-                    </Left>
-                </Header>
+            <View style={styles.contentView} key={this.state.uniqueValue}>
                 <SearchableDropdown
                     onTextChange={text => this.searchbar(text)}
                     onItemSelect={item => this.selectedSearchItem(item)}
@@ -513,7 +533,6 @@ export default class Map extends Component {
                     underlineColorAndroid="transparent"
                 />
                 <ImageBackground style={{width: '100%', height: '100%'}}>
-<<<<<<< HEAD
                     <View style={styles.contentView} key={this.state.uniqueValue}>
                         <MapView
                         style={styles.map}
@@ -583,66 +602,6 @@ export default class Map extends Component {
                     }
                 </ImageBackground>
             </View>
-=======
-                                                        <MapView
-
-                                                            style={styles.map}
-                                                            region={this.state.region}
-                                                            rotateEnabled={false}
-                                                            mapType={"hybrid"}
-                                                            maxDelta={0.0035}
-                                                            showsBuildings={true}
-                                                            showsUserLocation={true}
-                                                            onLayout={this.onMapLayout}
-                                                        >
-                                                            <Polygon
-                                                                coordinates={this.Building1}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(1)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building2}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(2)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building3}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(3)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building4}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(4)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building5}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(5)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building7}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(7)}
-                                                            ></Polygon>
-                                                            <Polygon
-                                                                coordinates={this.Building9}
-                                                                strokeColor={"rgba(0,0,0,0.01)"}
-                                                                tappable={true}
-                                                                onPress={(number)=>  this.clickBuilding(9)}
-                                                            >
-                                                            </Polygon>
-                                                        </MapView>
-                                                
-                                                    </ImageBackground>
-                                                      </Container>
->>>>>>> new DrawerNavigation
         )
     }
 }

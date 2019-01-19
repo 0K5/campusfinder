@@ -1,4 +1,4 @@
-import {createStackNavigator, DrawerNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation';
 import startup from './screens/Startup';
 import signin from './screens/Signin';
 import signup from './screens/Signup';
@@ -24,29 +24,23 @@ firebase.initializeApp(config);
 
 
 
-const App = DrawerNavigator({
+const App = createStackNavigator({
     home: {screen: startup,navigationOptions: () => ({
-        title:'Home',
+        title:'CampusFinder',
    })},
    signin: {screen: signin,navigationOptions: () => ({
-     title:'Signin', 
+     title:'CampusFinder', 
      headerBackTitle:'Back',
     })},
-  signup: {screen: signup,navigationOptions: () => ({title:'Signup', headerBackTitle:'Back'})},
-  settings: {screen: settings,navigationOptions: () => ({title:'Settings', headerBackTitle:'Back'})},
-  profile: {screen: Profile,navigationOptions: () => ({title:'Profile', headerBackTitle:'Back'})},
-  building9entrance: {screen: building9entrance,navigationOptions: () => ({title:'Building9', headerBackTitle:'Back'})},
-  building9a: {screen: building9a,navigationOptions: () => ({title:'Building9a', headerBackTitle:'Back'})},
-  building9b: {screen: building9b,navigationOptions: () => ({title:'Building9b', headerBackTitle:'Back'})},
-  building9c: {screen: building9c,navigationOptions: () => ({title:'Building9c', headerBackTitle:'Back'})},
-  termsAndConditions: {screen: termsAndConditions,navigationOptions: () => ({title:'TermsAndConditions', headerBackTitle:'Back'})},
-  map: {screen: map,navigationOptions: () => ({title:'Map', headerBackTitle:'Back'})},
-  },{
-    initialRouteName: 'home',
-    drawerPosition: 'left',
-   drawerOpenRoute: 'DrawerOpen',
-    drawerCloseRoute: 'DrawerClose',
-    drawerToggleRoute: 'DrawerToggle'
+  signup: {screen: signup,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
+  settings: {screen: settings,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  profile: {screen: Profile,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  building9entrance: {screen: building9entrance,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  building9a: {screen: building9a,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  building9b: {screen: building9b,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  building9c: {screen: building9c,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  termsAndConditions: {screen: termsAndConditions,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  map: {screen: map,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
 });
 
 export default App;
