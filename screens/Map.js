@@ -313,38 +313,133 @@ export default class Map extends Component {
     this._menu.show();
   };
 
-
-    trackBuilding(name){
-        alert("Tracking building not yet implemented");
-    }
-
-    startTracking(receiver){
+    trackUser(receiver){
         let mapComp = this;
         this.tracker = setInterval(() => {
             AsyncStorage.getItem(receiver)
             .then(locationString => {
-                location = JSON.parse(locationString)
-                console.log(JSON.stringify(location));
-                if(location.hasOwnProperty('latitude')){
-                    markerLatLng = {
-                        'markerLatLng' : {
-                            'latitude' : location.latitude,
-                            'longitude' : location.longitude
-                        }
-                    }
-                    mapComp.setState(markerLatLng);
-                }else if(location='done'){
+                console.log("MAP.TRACKUSER LOCSTRING: " +locationString)
+                if(locationString == 'done' || !this.state.tracking){
                     mapComp.setState({markerLatLng:{latitude:0.000000,longitude:0.000000}});
-                    AsyncStorage.setItem(email,"done")
+                    AsyncStorage.removeItem(receiver)
                     .then(() => {
+                        mapComp.setState({tracking: false})
                         clearInterval(mapComp.tracker);
                     })
+                }else{
+                    location = JSON.parse(locationString)
+                    if(location.hasOwnProperty('latitude')){
+                        markerLatLng = {
+                            'markerLatLng' : {
+                                'latitude' : location.latitude,
+                                'longitude' : location.longitude
+                            }
+                        }
+                        mapComp.setState({tracking: true})
+                        mapComp.setState(markerLatLng);
+                    }
                 }
             }).catch(error => console.log(error));
         }, 2000);
     }
 
-    selectedSearchItem = (item) => {
+    showInfoPopup(response){
+        res = ""
+        for(key in response){
+            res += key + ": " + response[key] + "\n";
+        }
+        return Alert.alert("Info",
+            res
+        )
+    }
+
+    searchProfilePopup(receiver, isTracking) {
+        let mapTh = this;
+        if(isTracking && !this.state.tracking){
+            sendTrackingRequest(receiver);
+            mapTh.setState({tracking : true});
+            AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
+            .then(rec => {
+                mapTh.setState({trackedUser: receiver});
+                mapTh.trackUser(receiver);
+            })
+        }else{
+            endpointCall(this.showInfoPopup,Urls.profileinfo,{email:receiver})
+        }
+    }
+
+    getBuildingOrRoom(cb, buildingRoomName){
+        AsyncStorage.getItem('buildings')
+        .then(buildingsString => {
+            let found = false;
+            buildings = JSON.parse(buildingsString);
+            for(key in buildings){
+                if(buildings[key].name == buildingRoomName){
+                    found = true;
+                    return cb(buildings[key])
+                }
+            }
+            if(!found){
+                AsyncStorage.getItem('rooms')
+                .then(roomsString => {
+                    let res = undefined
+                    rooms = JSON.parse(roomsString);
+                    for(key in rooms){
+                        if(rooms[key].name == buildingRoomName){
+                            return cb(rooms[key])
+                        }
+                    }
+                }).catch(error => console.log(error));
+            }
+        }).catch(error => console.log(error));
+    }
+
+    searchBuildingRoomPopup(buildingRoomName, isTracking){
+        let sbrpThis = this;
+        if(isTracking){
+            let trackBuildingOrRoom = function(buildingOrRoom){
+                let building = buildingOrRoom;
+                if(buildingOrRoom.hasOwnProperty("building")){
+                    building = buildingOrRoom.building;
+                }
+                sbrpThis.setState({
+                    'markerLatLng':{
+                        'latitude':parseFloat(building.location.latitude),
+                        'longitude':parseFloat(building.location.longitude)
+                    }});
+                sbrpThis.setState({'tracking' : true});
+            };
+            sbrpThis.getBuildingOrRoom(trackBuildingOrRoom, buildingRoomName);
+        }else{
+            let createInfo = function(buildingOrRoom){
+                console.log(buildingOrRoom)
+                res = {}
+                if(buildingOrRoom.hasOwnProperty("building")){
+                    res['Room'] = buildingOrRoom.name;
+                    res['In building'] = buildingOrRoom.building.name;
+                    if(buildingOrRoom.building.hasOwnProperty('faculty')){
+                        res['Faculty'] = buildingOrRoom.building.faculty.name;
+                    }
+                    if(buildingOrRoom.building.hasOwnProperty('department')){
+                        res['Department'] = buildingOrRoom.building.department.name;
+                    }
+                }else{
+                    res['Building'] = buildingOrRoom['name'];
+                    if(buildingOrRoom.hasOwnProperty('faculty')){
+                        res['Faculty'] = buildingOrRoom.faculty.name;
+                    }
+                    if(buildingOrRoom.hasOwnProperty('department')){
+                        res['Department'] = buildingOrRoom.department.name;
+                    }
+                }
+                sbrpThis.showInfoPopup(res);
+            }
+            sbrpThis.getBuildingOrRoom(createInfo, buildingRoomName);
+        }
+
+    }
+
+    getSearchItemAndDoAction = (item, isTracking) => {
         let mapTh = this;
         let search = this.state.search;
         let receiver = undefined;
@@ -358,16 +453,34 @@ export default class Map extends Component {
                 }
             }
         }
-        if(receiver && !this.state.tracking){
-            sendTrackingRequest(receiver);
-            AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
-            .then(rec => {
-                mapTh.startTracking(receiver);
-            })
+        if(receiver){
+            mapTh.searchProfilePopup(receiver, isTracking);
         }
         if(name){
-            this.trackBuilding(name);
+            mapTh.searchBuildingRoomPopup(name, isTracking);
         }
+    }
+
+    selectedSearchItem = (item) => {
+        Alert.alert(
+            'What do you want to do',
+            'with '+item.name,
+            [
+                {text: 'Get Info', onPress: () => this.getSearchItemAndDoAction(item, false), style: 'cancel'},
+                {text: 'Track', onPress: () => this.getSearchItemAndDoAction(item, true), style: 'cancel'},
+            ],
+            { cancelable: true }
+        );
+    }
+
+    cancelTracking = () => {
+        let cancelledTracking = (response, data) => {
+            this.setState({trackedUser:""});
+            this.setState({tracking:false});
+            this.setState({markerLatLng:{latitude:0.000000,longitude:0.000000}});
+        }
+        let receiver = this.state.trackedUser;
+        endpointCall(cancelledTracking, Urls.trackingAbort, {'receiver':receiver});
     }
 
     render(){
@@ -458,6 +571,14 @@ export default class Map extends Component {
                             </Polygon>
                         </MapView>
                     </View>
+                    { this.state.tracking &&
+                    <View style={styles.contentView}>
+                        <Button
+                            onPress={this.cancelTracking}
+                            title="Cancel Tracking"
+                        />
+                    </View>
+                    }
                 </ImageBackground>
             </View>
         )

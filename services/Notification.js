@@ -8,9 +8,6 @@ export class NotificationReceiver{
     constructor(pushToken, isTracking) {
         this.isTracking = isTracking;
         this.hasPush = pushToken ? true : false;
-        if(this.isTracking){
-            this.locationSender = new LocationSender();
-        }
         if(this.hasPush){
             console.log(pushToken);
           //  this._notifListener = this._handleTrackingNotification();
@@ -72,7 +69,7 @@ export class NotificationReceiver{
 
     trackingResponseAlert(sender){
         let receivedLoc = (response, data) =>{
-            console.log(JSON.stringify(response))
+            console.log("RECEIVING LOCATION " + JSON.stringify(response))
         }
         this._locReceiver = new LocationReceiver()
         this._locReceiver.receiveLocation(receivedLoc,sender);
@@ -80,6 +77,10 @@ export class NotificationReceiver{
             'Tracking request accepted',
             "You're now tracking "+sender
         )
+    }
+
+    trackingAbortedAlert(sender){
+        this._locReceiver.stopReceiveLocation();
     }
 
     _handleTrackingRestNotification = () => {
@@ -91,6 +92,8 @@ export class NotificationReceiver{
                         return notRecH.trackingRequestAlert(response.sender);
                     }else if(response.reason == 'trackingresponse'){
                         return notRecH.trackingResponseAlert(response.sender);
+                    }else if(response.reason == 'trackingaborted'){
+                        return notRecH.trackingAbortedAlert(response.sender);
                     }
                 }
             }
@@ -102,6 +105,7 @@ export class NotificationReceiver{
 
 export const sendTrackingRequest = function(email){
     let trackRequestSent = function(response,data){
+        console.log(JSON.stringify(response))
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             return Alert.alert(
                 'Tracking request send to user'

@@ -9,6 +9,7 @@ export default {
     logout : "rest-auth/logout/",
     deleteAccount: "endpoints/profile/delete/",
     profile : "endpoints/profile/",
+    profileinfo: "endpoints/profile/info/",
     restLogout : "rest-auth/logout/",
     settings: "endpoints/profile/settings/",
     settingsoptions: "endpoints/profile/settings/options/",
@@ -20,5 +21,6 @@ export default {
     tracking: "endpoints/location/tracking/",
     trackingRequest: "endpoints/notification/trackingrequest/",
     trackingResponse: "endpoints/notification/trackingresponse/",
+    trackingAbort: "endpoints/notification/trackingaborted/",
     search: "endpoints/search/"
 }

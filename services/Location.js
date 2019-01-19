@@ -7,6 +7,7 @@ import Urls from '../constants/Urls';
 export class LocationSender {
     constructor() {
         this.fetcher = undefined;
+        this.isSending = false;
     }
 
     sendLocation(cb){
@@ -36,6 +37,7 @@ export class LocationSender {
             }
         }
         locSen = this;
+        locSen.isSending = true;
         this.fetcher = setInterval(() => {
             navigator.geolocation.watchPosition(
                 position => {
@@ -50,6 +52,7 @@ export class LocationSender {
 
     stopSendLocation(){
         clearInterval(this.fetcher);
+        locSen.isSending = false;
     }
 }
 
@@ -57,12 +60,17 @@ export class LocationReceiver {
     //trackedId is primary key value of item or profile to track (for profile its email, for building/room its name)
     constructor() {
         this.fetcher = undefined;
+        this._locationSender = new LocationSender()
     }
 
     receiveLocation(cb, email){
         this.cb = cb
         this.email = email
         locRec = this;
+        let sentLoc = (response, data) =>{
+            console.log("RECEIVING LOCATION " + JSON.stringify(response))
+        }
+        this._locationSender.sendLocation(sentLoc);
         let gotLocation = function(response, data){
             if(response && !response.hasOwnProperty("errorcode") && !response.hasOwnProperty("type")){
                 trackedName = response.trackedLocation.profile.email;
@@ -75,19 +83,21 @@ export class LocationReceiver {
                     locRec.cb(response);
                 })
             }else if(response && response.hasOwnProperty("type")){
-                locRec.stopReceiveLocation();
                 Alert.alert(
                     'Tracking ended',
                     ''+response.message,
                 )
                 AsyncStorage.setItem(email,"done")
                 .then(() => {
+                    locRec.stopReceiveLocation();
+                    locRec._locationSender.stopSendLocation();
                     locRec.cb(response);
                 })
             }else if(response && response.hasOwnProperty("errorcode")){
                 locRec.cb(response);
             }else{
                 locRec.stopReceiveLocation();
+                locRec._locationSender.stopSendLocation();
             }
 
         }
@@ -97,6 +107,7 @@ export class LocationReceiver {
     }
 
     stopReceiveLocation(){
+        this._locationSender.stopSendLocation();
         clearInterval(this.fetcher);
     }
 }
