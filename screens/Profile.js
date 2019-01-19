@@ -6,15 +6,15 @@ import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
 import { styles } from '../constants/Styles';
 import { saveData } from '../services/RestSaver';
-import { SignIn } from '../screens/Signin';
-import { SignUp } from '../screens/Signup';
+import {SignIn} from '../screens/Signin';
+import {SignUp} from '../screens/Signup';
 
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
-        console.log(JSON.stringify(props))
         this.state = {
+            navigation: props.navigation,
             email: '',
             firstname: '',
             lastname: '',
@@ -39,6 +39,10 @@ export default class Profile extends Component {
         });
     }
 
+    componendDidUpdate(){
+        this.render();
+    }
+
     componentWillUnmount(){
         let savedProfile = (response, data) => {
             console.log(JSON.stringify(response));
@@ -54,16 +58,18 @@ export default class Profile extends Component {
     }
 
     logout(){
+        lThis = this;
         let confirmedLogout = function(response, data){
-            alert("Logout confirmed");
+            lThis.isLogout = true;
         };
         endpointCall(confirmedLogout, Urls.logout, {});
     };
 
     deleteAccount(isDeleteConfirmed){
+        lThis = this;
         if(isDeleteConfirmed){
             let confirmedLogout = function(response, data){
-                alert("Account deletion confirmed");
+                lThis.isAccountDeleted = true;
             };
             endpointCall(confirmedLogout, Urls.deleteAccount, {});
         }
@@ -82,52 +88,67 @@ export default class Profile extends Component {
     }
 
     render(){
-        return (
-            <ScrollView>
-                <View style= {styles.container}>
-                    <Text style={styles.heading}>
-                        Profile
-                    </Text>
+        if(this.isLogout){
+            return(
+                <View>
+                    <SignIn {...this.props} />
                 </View>
-                <View style={styles.row}>
-                    <View style={{ flex: 1, paddingTop: 10}}>
-                        <Text style={styles.text}>Email: {this.state.email}</Text>
+            )
+        }
+        if(this.isAccountDeleted){
+            return(
+                <View>
+                    <SignUp {...this.props} />
+                </View>
+            )
+        }else{
+            return (
+                <ScrollView>
+                    <View style= {styles.container}>
+                        <Text style={styles.heading}>
+                            Profile
+                        </Text>
                     </View>
-                </View>
-                <View style={styles.row}>
-                    <View style={{ flex: 1, paddingTop: 10}}>
-                        <Text style={styles.text}>Username: {this.state.username}</Text>
+                    <View style={styles.row}>
+                        <View style={{ flex: 1, paddingTop: 10}}>
+                            <Text style={styles.text}>Email: {this.state.email}</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.row}>
-                    <View style={{ flex: 1, paddingTop: 10}}>
-                        <TextInput style = {styles.input}
-                               underlineColorAndroid = "transparent"
-                               placeholder = {this.state.initFirstname}
-                               placeholderTextColor = "grey"
-                               autoCapitalize = "none"
-                               onChangeText = {(text) => this.setState({firstname:text})}/>
+                    <View style={styles.row}>
+                        <View style={{ flex: 1, paddingTop: 10}}>
+                            <Text style={styles.text}>Username: {this.state.username}</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.row}>
-                    <View style={{ flex: 1, paddingTop: 10}}>
-                        <TextInput style = {styles.input}
-                               underlineColorAndroid = "transparent"
-                               placeholder = {this.state.initLastname}
-                               placeholderTextColor = "grey"
-                               autoCapitalize = "none"
-                               onChangeText = {(text) => this.setState({lastname:text})}/>
+                    <View style={styles.row}>
+                        <View style={{ flex: 1, paddingTop: 10}}>
+                            <TextInput style = {styles.input}
+                                   underlineColorAndroid = "transparent"
+                                   placeholder = {this.state.initFirstname}
+                                   placeholderTextColor = "grey"
+                                   autoCapitalize = "none"
+                                   onChangeText = {(text) => this.setState({firstname:text})}/>
+                        </View>
                     </View>
-                </View>
-                <Button
-                    onPress={this.logout}
-                    title="Logout"
-                />
-                <Button
-                    onPress={this.deleteAccountConfirm}
-                    title="Delete Account"
-                />
-            </ScrollView>
-        )
+                    <View style={styles.row}>
+                        <View style={{ flex: 1, paddingTop: 10}}>
+                            <TextInput style = {styles.input}
+                                   underlineColorAndroid = "transparent"
+                                   placeholder = {this.state.initLastname}
+                                   placeholderTextColor = "grey"
+                                   autoCapitalize = "none"
+                                   onChangeText = {(text) => this.setState({lastname:text})}/>
+                        </View>
+                    </View>
+                    <Button
+                        onPress={this.logout}
+                        title="Logout"
+                    />
+                    <Button
+                        onPress={this.deleteAccountConfirm}
+                        title="Delete Account"
+                    />
+                </ScrollView>
+            )
+        }
     }
 }

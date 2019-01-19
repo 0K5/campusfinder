@@ -12,9 +12,9 @@ export class NotificationReceiver{
             this._locActivator = new LocationActivator()
         }
         if(isNotification && this.hasPush){
+            this._notifListener = Notifications.addListener(this._handleTrackingNotification);
+        }else if(isNotification && !this.hasPush){
             this._notifListener = this._handleTrackingNotification();
-        }else if(isNotification){
-            this._notifListener = this._handleTrackingRestNotification();
         }
         this.isTracked = false;
         this.tracker = "";
@@ -89,7 +89,7 @@ export class NotificationReceiver{
         this._locActivator.stopReceiveLocation();
     }
 
-    _handleTrackingRestNotification = () => {
+    _handleTrackingNotification = () => {
         let notRecH = this;
         console.log("NOTIFICATIONLISTENER ACTIVE")
         this.notifFetcher = setInterval(() => {

@@ -3,7 +3,7 @@ import startup from './screens/Startup';
 import signin from './screens/Signin';
 import signup from './screens/Signup';
 import settings from './screens/Settings';
-import Profile from './screens/Profile';
+import profile from './screens/Profile';
 import building9a from './screens/Building9a';
 import building9b from './screens/Building9b';
 import building9c from './screens/Building9c';
@@ -34,7 +34,7 @@ const App = createStackNavigator({
     })},
   signup: {screen: signup,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
   settings: {screen: settings,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
-  profile: {screen: Profile,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  profile: {screen: profile,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9entrance: {screen: building9entrance,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9a: {screen: building9a,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9b: {screen: building9b,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},

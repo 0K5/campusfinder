@@ -34,7 +34,9 @@ export default class AppContainer extends Component {
     render() {
         if (!this.state.isLoaded) {
             return (
-                <ActivityIndicator {...this.props}/>
+                <Image
+                    source={require('../assets/images/splash.png')}
+                ></Image>
             );
         }else{
             if(!this.state.keyValid){
