@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import MapView, {Callout, Polygon,LatLng} from 'react-native-maps';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage} from 'react-native';
+import {  ImageBackground, Text, View, StyleSheet,Button,TextInput, TouchableHighlight,TouchableOpacity, Image, Alert,AsyncStorage, ActivityIndicator} from 'react-native';
 import SwipeUpDown from 'react-native-swipe-up-down';
 import { Col, Row, Grid } from "react-native-easy-grid";
 //import ReactNativeTooltipMenu from 'react-native-tooltip-menu';
@@ -74,7 +74,8 @@ let buildings;
 export default class Map extends Component {
     state = {
         region:{latitude: 48.483336,     longitude: 9.186335 ,   latitudeDelta: 0.0010,longitudeDelta: 0.0010},
-        uniqueValue:1  ,
+        isLoaded: false,
+        uniqueValue:1 ,
         searchBar : [
         ]
     }
@@ -82,18 +83,6 @@ export default class Map extends Component {
     constructor(props){
         super(props);
         
-        AsyncStorage.getItem('buildingPolys').
-    then(bpstring => {
-    if(bpstring){
-      bpstring = bpstring == null ? {} : JSON.parse(bpstring)
-      for(i = 0; i< bpstring.length;i++){
-        console.log(bpstring.length);
-        this.buildings[parseInt(bpstring[i].building.replace(/[^\d.]/g, '' ))].push({latitude: bpstring[i].latitude,longitude: bpstring[i].longitude})
-      }
-        console.log(buildings[9])
-    }
-  });
-
         AsyncStorage.getItem('profil').
         then(profil => {
       if(profil){
@@ -119,7 +108,32 @@ export default class Map extends Component {
 
     //Buildings of the Campus with corner-coordinates
 
-    
+    buildingsLoad(){
+        AsyncStorage.getItem('buildingPolys').
+        then(bpstring => {
+        if(bpstring){
+            let buildingstemp=[];
+          bpstring = bpstring == null ? {} : JSON.parse(bpstring)
+          for(i = 0; i<bpstring.length; i++){
+            let num = parseInt(bpstring[i].building.replace(/[^\d.]/g, '' ));
+            if( buildingstemp[num] != undefined){
+                buildingstemp[num].push({latitude: parseFloat(bpstring[i].latitude),longitude: parseFloat(bpstring[i].longitude)});
+            }else{
+                buildingstemp[num] = [];
+                buildingstemp[num].push({latitude: parseFloat(bpstring[i].latitude),longitude: parseFloat(bpstring[i].longitude)});
+            }
+          
+          }
+            this.setState({"buildings": buildingstemp});
+            console.log(this.state.buildings);
+        }
+        this.setState({isLoaded: true});
+      });
+    }
+
+    componentWillMount() {
+        this.buildingsLoad();
+    }
 
         
 
@@ -272,34 +286,6 @@ export default class Map extends Component {
           )
         
     }
-    
-    myBuilding = () =>{
-        this.hideMenu();
-        //let userBuilding = '' //get users Building
-        this.props.navigation.navigate('building9entrance')
-
-    }
-
-    _menu = null;
- 
-  setMenuRef = ref => {
-    this._menu = ref;
-  };
- 
-  hideMenu = () => {
-
-    this._menu.hide();
-  };
-
-    showSettings = () => {
-        this._menu.hide();
-        this.props.navigation.navigate('settings')
-    };
-
-
-  showMenu = () => {
-    this._menu.show();
-  };
 
   
     selectedSearchItem(item){
@@ -316,7 +302,11 @@ onMapLayout = () => {
 
 
 
-    render(){
+    render(){ if (!this.state.isLoaded) {
+        return (
+            <ActivityIndicator {...this.props}/>
+        );
+    }else{
         return (
             <View style={styles.contentView} key={this.state.uniqueValue}>
                 <SearchableDropdown
@@ -358,43 +348,43 @@ onMapLayout = () => {
                                                             onLayout={this.onMapLayout}
                                                         >
                                                             <Polygon
-                                                                coordinates={this.buildings[1]}
+                                                                coordinates={this.state.buildings[1]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(1)}
                                                             ></Polygon>
                                                             <Polygon
-                                                                coordinates={this.buildings[2]}
+                                                                coordinates={this.state.buildings[2]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(2)}
                                                             ></Polygon>
                                                             <Polygon
-                                                                coordinates={this.buildings[3]}
+                                                                coordinates={this.state.buildings[3]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(3)}
                                                             ></Polygon>
                                                             <Polygon
-                                                                coordinates={this.buildings[4]}
+                                                                coordinates={this.state.buildings[4]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(4)}
                                                             ></Polygon>
                                                             <Polygon
-                                                                coordinates={this.buildings[5]}
+                                                                coordinates={this.state.buildings[5]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(5)}
                                                             ></Polygon>
                                                             <Polygon
-                                                                coordinates={this.buildings[7]}
+                                                                coordinates={this.state.buildings[7]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(7)}
                                                             ></Polygon>
                                                             <Polygon
-                                                                coordinates={this.buildings[9]}
+                                                                coordinates={this.state.buildings[9]}
                                                                 strokeColor={"rgba(0,0,0,0.01)"}
                                                                 tappable={true}
                                                                 onPress={(number)=>  this.clickBuilding(9)}
@@ -406,4 +396,5 @@ onMapLayout = () => {
                                                       </View>
         )
     }
+}
 }
