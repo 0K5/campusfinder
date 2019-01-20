@@ -34,7 +34,7 @@ const App = createStackNavigator({
     })},
   signup: {screen: signup,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
   settings: {screen: settings,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
-  profile: {screen: Profile,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  profile: {screen: profile,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9entrance: {screen: building9entrance,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9a: {screen: building9a,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   building9b: {screen: building9b,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
