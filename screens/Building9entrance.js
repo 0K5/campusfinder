@@ -1,12 +1,28 @@
 //init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight } from 'react-native';
+import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight,Dimensions, ImageBackground } from 'react-native';
 import { Button } from 'react-native';
 
 
 
 const styles = StyleSheet.create({
+  carousel:{
+    flex: 1,
+    marginTop:20,
+    width:this.screenWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  floorimage:{
+    flex: 1,
+    alignSelf: 'stretch',
+    resizeMode: 'contain',
+    width: undefined,
+    height: undefined
+  },
+  
   heading:{
     fontSize: 35,
     marginTop: 30,
@@ -49,6 +65,16 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
     width:'75%',
     marginBottom: 70,
+  },
+  button:{
+    backgroundColor: 'red',
+    width: '20%',
+    marginLeft:'50%',
+    marginRight:'40%',
+    borderRadius: 10,
+    marginTop: 100,
+    height: 40,
+    textAlign:'center'
   }
 });
 
@@ -59,11 +85,9 @@ export default class Building9a extends Component {
     switchOn1: true,
     switchOn2: false,
   }
-  // <Text style={styles.heading}>
-  //     Building
-  //    </Text>
-
   }
+
+ 
   
   static navigationOptions = ({navigation})=>  {
     return(
@@ -81,27 +105,101 @@ export default class Building9a extends Component {
     
     )}
   render() {
+    let screenWidth = Dimensions.get("window").width;
     return (
-    <View style={{
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'stretch',
-    }}>
+
+  
+      <ScrollView 
+        horizontal={true}
+        showsHorizontalScrollIndicator={true}
+        indicatorStyle='black'
+        pagingEnabled={true}
+      >
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+        <Text style={styles.text}>
+          Building 9 - UG
+        </Text>
+         <Image
+              style={styles.floorimage} 
+              source={require('../img/building9a.png')}
+              >
+        </Image>
+        </View>
+
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+         <Text style={styles.text}>
+          Building 9 - EG
+        </Text>
+        <Image
+              style={styles.floorimage}
+              source={require('../img/building9entrance.png')}
+              >
+        </Image>
+        </View>
+
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+         <Text style={styles.text}>
+          Building 9 - 1st Floor
+        </Text>
+        <ImageBackground 
+        
+              style={styles.floorimage}
+              source={require('../img/building9b.png')}
+
+        >     
+        <Button style={styles.button}
+        
+        title='Ma'
+        onPress={() => console.log("Pressed")}>
+          
+        </Button> 
+       
+        </ImageBackground>
+        
     
-    <Text style={styles.heading}>
-       Faculty of Informatiks
-      </Text>
+        </View>
+
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+         <Text style={styles.text}>
+          Building 9 - 2nd Floor
+        </Text>
+        <Image
+              style={styles.floorimage}
+              source={require('../img/building9c.png')}
+              >
+        </Image>
+        </View>
+
+      </ScrollView>
      
-      <Text style={styles.text}>
-       Building 9 - hall (floor 1)
-      </Text>
-      <Image style={{flex: 1,
-              alignSelf: 'stretch',
-              resizeMode: 'contain',
-              width: undefined,
-              height: undefined}} source={require('../img/building9entrance.png')} />
-    </View>
     );
     
    }
