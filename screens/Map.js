@@ -498,6 +498,7 @@ onMapLayout = () => {
   }
 
 
+
     render(){ if (!this.state.isLoaded) {
         return (
             <ActivityIndicator {...this.props}/>
