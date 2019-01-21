@@ -1,8 +1,7 @@
 //init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight,Dimensions, ImageBackground } from 'react-native';
-import { Button } from 'react-native';
+import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight,Dimensions, ImageBackground, Alert } from 'react-native';
 
 
 
@@ -66,15 +65,13 @@ const styles = StyleSheet.create({
     width:'75%',
     marginBottom: 70,
   },
-  button:{
-    backgroundColor: 'red',
-    width: '20%',
-    marginLeft:'50%',
-    marginRight:'40%',
-    borderRadius: 10,
-    marginTop: 100,
-    height: 40,
-    textAlign:'center'
+  buttonV:{
+    marginTop:202,
+    marginLeft: 230,
+    borderColor: 'grey',
+    height:48,
+    width:48,
+    backgroundColor: "rgba(230,230,230, 0.3)",
   }
 });
 
@@ -167,14 +164,23 @@ export default class Building9a extends Component {
               style={styles.floorimage}
               source={require('../img/building9b.png')}
 
-        >     
-        <Button style={styles.button}
-        
-        title='Ma'
-        onPress={() => console.log("Pressed")}>
+        >
+        <TouchableHighlight
+               style = {styles.buttonV}
+               onPress = {
+                  () =>  Alert.alert(
           
-        </Button> 
-       
+                    "Room: 124 - Professor \n Prof. Dr. Natividad Martínez ",
+                    "E-Mail: natividad.martinez@reutlingen-university.de \n Appointment: Wed. 9:45-13:00 ",
+                    [
+                        {text: 'Cancel', onPress:() => console.log("Cancel")},
+                    
+                    ]
+                  )
+               }>
+               <Text style={styles.text2} >  </Text>
+            </TouchableHighlight>
+        
         </ImageBackground>
         
     
