@@ -12,7 +12,7 @@ export class NotificationReceiver{
             this._locActivator = new LocationActivator()
         }
         if(isNotification && this.hasPush){
-            this._notifListener = Notifications.addListener(this._handleTrackingNotification);
+            this._notifListener = this._handleTrackingNotification();
         }else if(isNotification && !this.hasPush){
             this._notifListener = this._handleTrackingNotification();
         }
