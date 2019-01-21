@@ -72,115 +72,113 @@ const styles= StyleSheet.create({
 
 export default class Map extends Component {
     state = {
-        region:{latitude: 48.482522, longitude: 9.187809, latitudeDelta: 0.007,longitudeDelta: 0.0025},
-        uniqueValue:1  ,
-        searchBar : [],
-        tracking : false,
+        //Generic stuff
+        isLoaded : false,
+        uniqueValue:1 ,
+        viewInit : {
+            latitude: 48.481725,
+            longitude: 9.186295,
+            latitudeDelta: 0.007,
+            longitudeDelta: 0.005
+        },
+        region:{
+            latitude: 48.481725,
+            longitude: 9.186295,
+            latitudeDelta: 0.007,
+            longitudeDelta: 0.005
+        },
+        //UserInfos loaded after mount
+        profile: {},
+        settings: {},
+        //BuildingPolygons
+        buildings : {},
+        mapBuildingPolygones : {},
+        //Searchbar stuff
+        searchBarItems : [],
+        searchResults: [],
+        //Tracking stuff
+        isTracking : false,
+        isData: false,
         markerLatLng : {
             latitude: 0.000000,
             longitude: 0.000000
         }
     }
+
     constructor(props){
         super(props);
-        AsyncStorage.getItem('prfil').
-        then(profil => {
-      if(profil){
-        profil = profil == null ? {} : JSON.parse(profil)
-        setState({ 
-          key: profil['key']
-       });
-       // console.log(JSON.stringify(settingsString))
-      }
-    });
-      }
-     
-    
+    }
 
-    //Buildings of the Campus with corner-coordinates
-
-    Buidling20=[]
-    Buidling18=[]
-    Buidling17=[]
-    Buidling16=[]
-    Buidling15=[]
-    Buidling14=[]
-    Buidling13=[]
-    Buidling12=[]
-    Building11=[]
-    Building10=[]
-    Building9=[{ latitude:48.482729,longitude:9.187737},{latitude:48.483038,longitude:9.186901},{latitude:48.483379,longitude:9.187196},{latitude:48.483067,longitude:9.188027}]
-    Buidling8=[]
-    Building7=[{latitude:48.481881,longitude:9.188568},{latitude:48.481959,longitude:9.188364},{latitude:48.482037,longitude:9.188402},{latitude:48.482091,longitude:9.188318},
-        {latitude:48.482159,longitude:9.188375},{latitude:48.482235,longitude:9.188173},{latitude:48.482556,longitude:9.188441},{latitude:48.482524,longitude:9.188585},
-        {latitude:48.482624,longitude:9.188696},{latitude:48.482451,longitude:9.189172}]
-    Building6=[]
-    Building5=[{ latitude:48.482695,longitude:9.185688},{latitude:48.482849,longitude:9.185825},{latitude:48.482825,longitude:9.186321},{latitude:48.482661,longitude:9.186759},
-        {latitude:48.482515, longitude:9.186638},{latitude:48.482507, longitude:9.186238}]
-    Building4=[{ latitude:48.481727,longitude:9.187106},{latitude:48.481874,longitude:9.187232},{latitude:48.481719,longitude:9.187659},{latitude:48.481471,longitude:9.187844},
-        {latitude:48.481326, longitude:9.187710},{latitude:48.481471, longitude:9.187267}]
-    Building3=[{ latitude:48.482166,longitude:9.186438},{latitude:48.482307,longitude:9.186560},{latitude:48.482205,longitude:9.186849},{latitude:48.482239,longitude:9.186891},
-        {latitude:48.482188, longitude:9.187019},{latitude:48.482018, longitude:9.186880},{latitude:48.481905, longitude:9.187170},{latitude:48.481761, longitude:9.187023},
-        {latitude:48.481859, longitude:9.186737},{latitude:48.481834, longitude:9.186700},{latitude:48.481878, longitude:9.186571}]
-    Building2=[{ latitude:48.482325,longitude:9.185384},{latitude:48.482518,longitude:9.185527},{latitude:48.482499,longitude:9.186062},{latitude:48.482339,longitude:9.186492},
-        {latitude:48.482193, longitude:9.186353},{latitude:48.482114, longitude:9.185919}]
-    Building1=[{latitude:48.480741,longitude:9.184611},{latitude:48.480890,longitude:9.184191},{latitude:48.481040,longitude:9.184325},{latitude:48.481086,longitude:9.184217},
-        {latitude:48.481338,longitude:9.184442},{latitude:48.481404, longitude:9.184330},{latitude:48.481678, longitude:9.184569},{latitude:48.481607,longitude:9.184767},
-        {latitude:48.481829,longitude:9.184999},{latitude:48.481680,longitude:9.185418},{latitude:48.481619,longitude:9.185370},{latitude:48.481473,longitude:9.185740},
-        {latitude:48.481335,longitude:9.185649},{latitude:48.481296,longitude:9.185745},{latitude:48.481182,longitude:9.185514},{latitude:48.480940,longitude:9.185289},
-        {latitude:48.480968,longitude:9.185203},{latitude:48.480840,longitude:9.185069},{latitude:48.480940,longitude:9.184796},{latitude:48.480741,longitude:9.184615}]
-
-
-        
-
-
-    static navigationOptions = ({navigation})=>  {
-        return{
-        headerRight:
-            <TouchableHighlight onPress={() => navigation.navigate('settings')}>
-                <Image style={styles.headerImage} source={require('../img/settings.png')} />
-            </TouchableHighlight>,
-        headerLeft:
-            <TouchableHighlight onPress={() => navigation.navigate('profile')}>
-                <Image style={styles.headerImage} source={require('../img/profile.png')} />
-            </TouchableHighlight>
+    componentWillMount(){
+        console.log("MAP COMPONENT DID MOUNT");
+        let cThis = this;
+        let setFinalStates = (polygons) => {
+            console.log("MAP BUILDINGPOLYS LOADED");
+            cThis.setState({mapBuildingPolygones:polygons});
+            cThis.setState({isLoaded:true});
+            console.log("MAP LOADED");
         }
-    }
-
-
-    iconClicked = () =>{
-        this.props.navigation.navigate('Signin');
-    }
-
-    searchbar = (event) => {
-        mapWin = this
-        if(event.length <= 1){
-            mapWin.setState({'searchBar':[]})
-        }else{
-            //console.log(event)
-            let searchResponse = function(response){
-                let res = {};
-                let srchbar = [];
-                let id = 0;
-                for(key in response){
-                    res[key] = [];
-                    for(item in response[key]){
-                        res[key].push(response[key][item]);
-                        if(response[key][item].hasOwnProperty('name')){
-                            srchbar.push({'name': response[key][item].name, 'id' : id})
-                            id = id + 1;
-                        }else{
-                            srchbar.push({'name': response[key][item].email, 'id' : id})
-                            id = id + 1;
+        let loadPolys = () => {
+            console.log("MAP BUILDINGS LOADED");
+            AsyncStorage.getItem('buildingPolys')
+            .then(buildingPolysString => {
+                let buildingPolys = JSON.parse(buildingPolysString);
+                if(buildingPolys){
+                    let polygons = {}
+                    for(let i in buildingPolys){
+                        let building = buildingPolys[i].building
+                        if (!polygons.hasOwnProperty(building)){
+                             polygons[building] = [];
                         }
+                        polygons[building].push({
+                            longitude : parseFloat(buildingPolys[i].longitude),
+                            latitude : parseFloat(buildingPolys[i].latitude)
+                        });
                     }
-                    mapWin.setState({'search':res})
-                    mapWin.setState({'searchBar':srchbar})
+                    setFinalStates(polygons);
                 }
-            };
-            endpointCall(searchResponse, Urls.search,{ "search": event })
+            });
         }
-        
+        let loadBuildings = () => {
+            console.log("MAP SETTINGS LOADED");
+            AsyncStorage.getItem('buildings')
+            .then(buildingsString => {
+                let buildings = JSON.parse(buildingsString);
+                if(buildings){
+                    let tmpBuildings = {};
+                    for(let b in buildings){
+                        tmpBuildings[buildings[b].name] = buildings[b];
+                    }
+                    cThis.setState({
+                        buildings : tmpBuildings
+                    })
+                    loadPolys();
+                }
+            });
+        }
+        let loadSettings = () => {
+            console.log("MAP PROFILE LOADED");
+            AsyncStorage.getItem('settings')
+            .then(settingsString => {
+                let settings = JSON.parse(settingsString);
+                if(settings){
+                    cThis.setState({
+                        settings : settings
+                    });
+                    loadBuildings();
+                }
+            });
+        }
+        AsyncStorage.getItem('profile')
+        .then(profileString => {
+            let profile = JSON.parse(profileString)
+            if (profile){
+                cThis.setState({
+                    profile : profile,
+                });
+                loadSettings();
+            }
+        });
     }
 
     screenreloading = () =>{
@@ -189,131 +187,113 @@ export default class Map extends Component {
         }));
     }
 
-    clickBuilding =(number) =>{
-      let text =''
-      let building = ''
-      let message =''
-      switch(number){
-        
-        case 1:
-        text = "Gebäude 1 - Textil & Design - Maschinenhalle",
-        message = "TEXTIL & DESIGN\nSCHOOL OF TEXTILES & DESIGN\nBETRIEBSHALLE\nZENTRALWERKSTATT\nMASCHINENLABORE TECHNIK\nLEHR- UND FORSCHUNGSZENTRUM\nINTERAKTIVE MATERIALIEN"
-        building = 'Building1'
-        break;
-        
-        case 2:
-        text = "Gebäude 2 - ANGEWANDTE CHEMIE / DEKANAT",
-        message = 'SCHOOL OF APPLIED CHEMISTRY\nREUTLINGEN RESEARCH INSTITUTE'
-        building = 'Building2'
-        break;
-        
-        case 3:
-        text = 'Gebäude 3 - Bibliothek',
-        message = 'PRÄSIDIUM / VERWALTUNG \n STUDIENSERVICECENTER\nINTERNATIONAL OFFICE\nLERNZENTRUM'
-        building = 'Building3'
-        break;
-        
-        case 4:
-        text = 'Gebäude 4 - TECHNIK / DEKANAT',
-        message = 'SCHOOL OF ENGINEERING'
-        building = 'Building4'
-        break;
-
-        case 5:
-        text = "Gebäude 5 - ESB BUSINESS SCHOOL",
-        message = 'REUTLINGEN RESEARCH INSTITUTE \n STEINBEIS TRANSFER GMBH'
-        building = 'Building5'
-        
-        break;
-        case 6:
-        text = 'Gebäude 6 - Aula',
-        building = 'Building6'
-        
-        break;
-        case 7:
-        text = 'Gebäude 7 - Mensa',
-        message = 'SEMINAR FÜR DIDAKTIK UND LEHRERBILDUNG'
-        building = 'Building7'
-        break;
-
-        case 8:
-        text = "Gebäude 8",
-        message = 'Rechen und Medienzentrum'
-        building = 'Building8'
-        break;
-
-        case 9:
-        text = "Gebäude 9 - Informatik",
-        message = 'SCHOOL OF INFORMATICS'
-        building = 'building9entrance'
-        break;
-
-        case 10:
-        text = "Gebäude 10 - Informatik",
-        message = 'Öffnungszeiten:'
-        building = 'Building10'
-        break;
-
-        case 11:
-        text = "Gebäude 11 - Informatik",
-        message = 'Öffnungszeiten:'
-        building = 'Building11'
-        break;
-
-        case 12:
-        text = "Gebäude 12 - Informatik",
-        message = 'Öffnungszeiten:'
-        building = 'Building12'
-        break;
-
-        case 13:
-        text = "Gebäude 13 - Informatik",
-        message = 'Öffnungszeiten:'
-        building = 'Building13'
-        break;
-    }
-        Alert.alert(
-          
-            text,
-            message,
-            [
-                {text: 'Cancel', onPress:() => console.log("Cancel")},
-                {text: 'Go In', onPress:() => this.props.navigation.navigate(building)} //this.navigation.navigate(building) <-- zum verliken auf die gebäuden
-            
-            ]
-          )
-        
-    }
-    
-    myBuilding = () =>{
-        this.hideMenu();
-        //let userBuilding = '' //get users Building
-        this.props.navigation.navigate('building9entrance')
-
+    static navigationOptions = ({navigation})=>  {
+        return{
+            headerRight:
+                <TouchableHighlight onPress={() => navigation.navigate('settings')}>
+                    <Image style={styles.headerImage} source={require('../img/settings.png')} />
+                </TouchableHighlight>,
+            headerLeft:
+                <TouchableHighlight onPress={() => navigation.navigate('profile')}>
+                    <Image style={styles.headerImage} source={require('../img/profile.png')} />
+                </TouchableHighlight>
+        }
     }
 
-    _menu = null;
- 
-  setMenuRef = ref => {
-    this._menu = ref;
-  };
- 
-  hideMenu = () => {
+    iconClicked = () =>{
+        this.props.navigation.navigate('signin');
+    }
 
-    this._menu.hide();
-  };
+    setUpBuildingPolys(buildingPolys){
+        let polygons = {}
+        for(let i in buildingPolys){
+            let building = buildingsPolys[i].building
+            if (!polygons.hasOwnProperty(building)){
+                 polygons[building] = [];
+            }
+            polygons[building].push({
+                longitude : buildingsPolys[i].longitude,
+                latitude : buildinsPolys[i].latitude
+            });
+        }
+        this.setState({mapBuildingPolygones:polygons});
+        this.setState({isLoaded:true});
+        console.log("MAP LOADED");
+    }
 
-    showSettings = () => {
-        this._menu.hide();
-        this.props.navigation.navigate('settings')
-    };
+    search = (event) => {
+        mapWin = this
+        if(event.length <= 1){
+            mapWin.setState({'searchBar':[]})
+        }else{
+            let searchResponse = function(response){
+                let res = {};
+                let searchBarItems = [];
+                let id = 0;
+                for(key in response){
+                    res[key] = [];
+                    for(item in response[key]){
+                        res[key].push(response[key][item]);
+                        if(response[key][item].hasOwnProperty('name')){
+                            searchBarItems.push({'name': response[key][item].name, 'id' : id})
+                            id = id + 1;
+                        }else{
+                            searchBarItems.push({'name': response[key][item].email, 'id' : id})
+                            id = id + 1;
+                        }
+                    }
+                    mapWin.setState({'searchResults':res})
+                    mapWin.setState({'searchBarItems':searchBarItems})
+                }
+            };
+            endpointCall(searchResponse, Urls.search,{ "search": event })
+        }
+    }
 
+    zoomLocation = (cb, goalView) => {
+        let zLThis = this;
+        let origRegion = this.state.region;
+        let gLat = parseFloat(goalView.latitude) > origRegion.latitude ? (parseFloat(goalView.latitude)-origRegion.latitude)/80 : (origRegion.latitude-parseFloat(goalView.latitude))/80;
+        let gLon = parseFloat(goalView.longitude) > origRegion.longitude ? (parseFloat(goalView.longitude)-origRegion.longitude)/80 : (origRegion.longitude-parseFloat(goalView.longitude))/80;
+        let gLatD = parseFloat(goalView.latitudeDelta) > origRegion.latitudeDelta ? (parseFloat(goalView.latitudeDelta)-origRegion.latitudeDelta)/80 : (origRegion.latitudeDelta-parseFloat(goalView.latitudeDelta))/80;
+        let gLonD = parseFloat(goalView.longitudeDelta) > origRegion.longitudeDelta ? (parseFloat(goalView.longitudeDelta)-origRegion.longitudeDelta)/80 : (origRegion.longitudeDelta-parseFloat(goalView.longitudeDelta))/80;
+        let cnt = 0;
+        let zoom = setInterval(() => {
+            if(cnt < 80){
+                let tmpRegion = this.state.region;
+                zLThis.setState({region: {
+                    latitude : goalView.latitude <= origRegion.latitude ? tmpRegion.latitude - gLat : tmpRegion.latitude + gLat,
+                    longitude : goalView.longitude <= origRegion.longitude ? tmpRegion.longitude - gLon : tmpRegion.longitude + gLon,
+                    latitudeDelta : goalView.latitudeDelta <= origRegion.latitudeDelta ? tmpRegion.latitudeDelta - gLatD : tmpRegion.latitudeDelta + gLatD,
+                    longitudeDelta : goalView.longitudeDelta <= origRegion.longitudeDelta ? tmpRegion.longitudeDelta - gLonD : tmpRegion.longitudeDelta + gLonD
+                }});
+                cnt = cnt + 1;
+            }else{
+                clearInterval(zoom);
+                cb()
+            }
+        }, 25);
+    }
 
-  showMenu = () => {
-    this._menu.show();
-  };
-
-  // ================================ OLI ============================================
+    clickBuilding =(buildingName) =>{
+        console.log("MAP CLICKED ON BUILDING " + buildingName);
+        let cBThis = this;
+        let zoomedOut = () => {
+            cBThis.setState({region : this.state.viewInit});
+        }
+        let afterZoom = () => {
+            Alert.alert(
+                cBThis.state.buildings[buildingName].description,
+                cBThis.state.buildings[buildingName].message,
+                [
+                {text: 'Cancel', onPress:() => {cBThis.zoomLocation(zoomedOut, cBThis.state.viewInit)}},
+                {text: 'Go In', onPress:() => {cBThis.props.navigation.navigate(buildingName)}}
+                ]
+            )
+        }
+        let buildingZoomLoc = this.state.buildings[buildingName].location;
+        this.zoomLocation(afterZoom, buildingZoomLoc);
+    }
 
     trackUser(receiver){
         let mapComp = this;
@@ -321,11 +301,11 @@ export default class Map extends Component {
             AsyncStorage.getItem(receiver)
             .then(locationString => {
                 console.log("MAP.TRACKUSER LOCSTRING: " +locationString)
-                if(locationString == 'done' || !this.state.tracking){
+                if(locationString == 'done' || !this.state.isTracking){
                     mapComp.setState({markerLatLng:{latitude:0.000000,longitude:0.000000}});
                     AsyncStorage.removeItem(receiver)
                     .then(() => {
-                        mapComp.setState({tracking: false})
+                        mapComp.setState({isTracking: false})
                         clearInterval(mapComp.tracker);
                     })
                 }else{
@@ -337,7 +317,7 @@ export default class Map extends Component {
                                 'longitude' : location.longitude
                             }
                         }
-                        mapComp.setState({tracking: true})
+                        mapComp.setState({isTracking: true})
                         mapComp.setState(markerLatLng);
                     }
                 }
@@ -357,9 +337,9 @@ export default class Map extends Component {
 
     searchProfilePopup(receiver, isTracking) {
         let mapTh = this;
-        if(this.state.isTrackingAllowed && isTracking && !this.state.tracking){
+        if(this.state.isTrackingAllowed && isTracking && !this.state.isTracking){
             sendTrackingRequest(receiver);
-            mapTh.setState({tracking : true});
+            mapTh.setState({isTracking : true});
             AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
             .then(rec => {
                 mapTh.setState({trackedUser: receiver});
@@ -409,7 +389,7 @@ export default class Map extends Component {
                         'latitude':parseFloat(building.location.latitude),
                         'longitude':parseFloat(building.location.longitude)
                     }});
-                sbrpThis.setState({'tracking' : true});
+                sbrpThis.setState({'isTracking' : true});
             };
             sbrpThis.getBuildingOrRoom(trackBuildingOrRoom, buildingRoomName);
         }else{
@@ -496,8 +476,12 @@ export default class Map extends Component {
     cancelTracking = () => {
         let cancelledTracking = (response, data) => {
             this.setState({trackedUser:""});
-            this.setState({tracking:false});
-            this.setState({markerLatLng:{latitude:0.000000,longitude:0.000000}});
+            this.setState({isTracking:false});
+            this.setState({markerLatLng:{
+                latitude:0.000000,
+                longitude:0.000000
+                }
+            });
         }
         let receiver = this.state.trackedUser;
         endpointCall(cancelledTracking, Urls.trackingAbort, {'receiver':receiver});
@@ -505,113 +489,108 @@ export default class Map extends Component {
 // =============================== OLI END ==================================================
 
     render(){
-        let setTrackingState = function(isTracked,tracker){
-            if(isTracked){
-                console.log("TRACKED " + isTracked);
-                this.setState({tracking:true});
-                this.trackUser(tracker);
-            }
-        }
-        if(this.state.loaded){
-            this._notificationReceiver.getTrackingState(setTrackingState);
-        }
-        return (
-            <View style={styles.contentView} key={this.state.uniqueValue}>
-                <SearchableDropdown
-                    onTextChange={text => this.searchbar(text)}
-                    onItemSelect={item => this.selectedSearchItem(item)}
-                    containerStyle={{ padding: 5 }}
-                    textInputStyle={{
-                        padding: 12,
-                        borderWidth: 1,
-                        borderColor: '#ccc',
-                        borderRadius: 5,
-                    }}
-                    itemStyle={{
-                        padding: 10,
-                        marginTop: 2,
-                        backgroundColor: '#ddd',
-                        borderColor: '#bbb',
-                        borderWidth: 1,
-                        borderRadius: 5,
-                    }}
-                    itemTextStyle={{ color: '#222' }}
-                    items={this.state.searchBar}
-                    defaultIndex={2}
-                    placeholder="search"
-                    resetValue={false}
-                    underlineColorAndroid="transparent"
-                />
-                <ImageBackground style={{width: '100%', height: '100%'}}>
-                    <View style={styles.contentView} key={this.state.uniqueValue}>
-                        <MapView
-                        style={styles.map}
-                        region={this.state.region}
-                        rotateEnabled={false}
-                        mapType={"hybrid"}
-                        maxDelta={0.0035}
-                        showsBuildings={true}
-                        showsUserLocation={true}
-                        onLayout={this.onMapLayout}
-                        >
-                            <Marker
-                              coordinate={this.state.markerLatLng}
-                            />
-                            <Polygon
-                                coordinates={this.Building1}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(1)}
-                            ></Polygon>
-                            <Polygon
-                                coordinates={this.Building2}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(2)}
-                            ></Polygon>
-                            <Polygon
-                                coordinates={this.Building3}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(3)}
-                            ></Polygon>
-                            <Polygon
-                                coordinates={this.Building4}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(4)}
-                            ></Polygon>
-                            <Polygon
-                                coordinates={this.Building5}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(5)}
-                            ></Polygon>
-                            <Polygon
-                                coordinates={this.Building7}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(7)}
-                            ></Polygon>
-                            <Polygon
-                                coordinates={this.Building9}
-                                strokeColor={"rgba(0,0,0,0.01)"}
-                                tappable={true}
-                                onPress={(number)=>  this.clickBuilding(9)}
+        if(!this.state.isLoaded){
+            return (
+                <Image
+                    source={require('../assets/images/splash.png')}
+                ></Image>
+            );
+        }else{
+            return (
+                <View style={styles.contentView} key={this.state.uniqueValue}>
+                    <SearchableDropdown
+                        onTextChange={text => this.search(text)}
+                        onItemSelect={item => this.selectedSearchItem(item)}
+                        containerStyle={{ padding: 5 }}
+                        textInputStyle={{
+                            padding: 12,
+                            borderWidth: 1,
+                            borderColor: '#ccc',
+                            borderRadius: 5,
+                        }}
+                        itemStyle={{
+                            padding: 10,
+                            marginTop: 2,
+                            backgroundColor: '#ddd',
+                            borderColor: '#bbb',
+                            borderWidth: 1,
+                            borderRadius: 5,
+                        }}
+                        itemTextStyle={{ color: '#222' }}
+                        items={this.state.searchBarItems}
+                        defaultIndex={2}
+                        placeholder="search"
+                        resetValue={false}
+                        underlineColorAndroid="transparent"
+                    />
+                    <ImageBackground style={{width: '100%', height: '100%'}}>
+                        <View style={styles.contentView} key={this.state.uniqueValue}>
+                            <MapView
+                            style={styles.map}
+                            region={this.state.region}
+                            rotateEnabled={false}
+                            mapType={"hybrid"}
+                            maxDelta={0.0035}
+                            showsBuildings={true}
+                            showsUserLocation={true}
+                            onLayout={this.onMapLayout}
                             >
-                            </Polygon>
-                        </MapView>
-                    </View>
-                    { this.state.tracking &&
-                    <View style={styles.contentView}>
-                        <Button
-                            onPress={this.cancelTracking}
-                            title="Cancel Tracking"
-                        />
-                    </View>
-                    }
-                </ImageBackground>
-            </View>
-        )
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building1']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building1')}
+                                ></Polygon>
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building2']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building2')}
+                                ></Polygon>
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building3']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building3')}
+                                ></Polygon>
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building4']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building4')}
+                                ></Polygon>
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building5']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building5')}
+                                ></Polygon>
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building7']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building7')}
+                                ></Polygon>
+                                <Polygon
+                                    coordinates={this.state.mapBuildingPolygones['building9']}
+                                    strokeColor={"rgba(0,0,0,0.01)"}
+                                    tappable={true}
+                                    onPress={()=>  this.clickBuilding('building9')}
+                                >
+                                </Polygon>
+                            </MapView>
+                        </View>
+                        { this.state.isTracking &&
+                        <View style={styles.contentView}>
+                            <Button
+                                onPress={this.cancelTracking}
+                                title="Cancel Tracking"
+                            />
+                        </View>
+                        }
+                    </ImageBackground>
+                </View>
+            )
+        }
     }
 }

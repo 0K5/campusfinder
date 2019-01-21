@@ -58,7 +58,7 @@ export default class Profile extends Component {
     }
 
     logout(){
-        lThis = this;
+        let lThis = this;
         let confirmedLogout = function(response, data){
             lThis.isLogout = true;
         };
@@ -66,7 +66,7 @@ export default class Profile extends Component {
     };
 
     deleteAccount(isDeleteConfirmed){
-        lThis = this;
+        let lThis = this;
         if(isDeleteConfirmed){
             let confirmedLogout = function(response, data){
                 lThis.isAccountDeleted = true;
