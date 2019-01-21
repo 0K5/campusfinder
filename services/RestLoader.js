@@ -2,9 +2,6 @@ import { permissionRequest } from '../services/Permission';
 import { prevAuthCall, endpointCall } from '../services/Rest';
 import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
-import { NotificationReceiver, sendTrackingRequest } from '../services/Notification';
-
-export let notificationReceiver = undefined;
 
 export const loadFromRest = function(cb) {
     keySet = false;
@@ -60,7 +57,6 @@ export const loadFromRest = function(cb) {
     let loadedSettings = function(response, data){
         if (response && typeof response === 'object' && !response.hasOwnProperty("errorcode")) {
             console.log(JSON.stringify(response));
-            notificationReceiver = new NotificationReceiver(response.isTracking, response.isNotification, data.pushToken);
             AsyncStorage.setItem('settings', JSON.stringify(response))
             .then(settings => {
                 return endpointCall(loadedSettingsOptions, Urls.settingsoptions, {})

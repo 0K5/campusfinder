@@ -11,39 +11,7 @@ export const permissionRequest = async function(cb, data){
         }else{
             data['isTracking'] = false;
         }
-        Permissions.askAsync(Permissions.NOTIFICATIONS)
-        .then(statusNotification => {
-            if (statusNotification.status !== 'granted') {
-                Permissions.getAsync(Permissions.NOTIFICATIONS)
-                .then(statusNotificationAndroid => {
-                    if (statusNotificationAndroid.status === 'granted') {
-                        Notifications.getExpoPushTokenAsync()
-                        .then(token => {
-                            data['pushToken'] = token;
-                            return cb(data);
-                        })
-                        .catch(error => {
-                            data['pushToken'] = "";
-                            return cb(data);
-                        });
-                    }else{
-                        data['pushToken'] = "";
-                    return cb(data);
-                    }
-                });
-            }else{
-                Notifications.getExpoPushTokenAsync()
-                .then(token =>{
-                    console.log(token);
-                    data['pushToken'] = token;
-                    return cb(data);
-                })
-                .catch(error => {
-                    data['pushToken'] = "";
-                    return cb(data);
-                });
-            }
-        });
+        return cb(data);
     })
     .catch(error => {
         data['pushToken'] = "";

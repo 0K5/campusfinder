@@ -10,8 +10,9 @@ import Menu, { MenuItem } from 'react-native-material-menu';
 
 import Urls from '../constants/Urls';
 import { prevAuthCall, endpointCall } from '../services/Rest';
-import { sendTrackingRequest, NotificationReceiver } from '../services/Notification';
+import { Notification } from '../services/Notification';
 
+export let _notification = undefined;
 
 const styles= StyleSheet.create({
     map:{
@@ -112,6 +113,7 @@ export default class Map extends Component {
     componentWillMount(){
         console.log("MAP COMPONENT DID MOUNT");
         let cThis = this;
+        _notification = new Notification(this);
         let setFinalStates = (polygons) => {
             console.log("MAP BUILDINGPOLYS LOADED");
             cThis.setState({mapBuildingPolygones:polygons});
@@ -223,7 +225,7 @@ export default class Map extends Component {
 
     search = (event) => {
         mapWin = this
-        if(event.length <= 1){
+        if(event.length < 1){
             mapWin.setState({'searchBar':[]})
         }else{
             let searchResponse = function(response){
@@ -251,7 +253,7 @@ export default class Map extends Component {
     }
 
     zoomLocation = (cb, goalView) => {
-        let zoomTimeInMillis = 1000
+        let zoomTimeInMillis = 800
         let fac = zoomTimeInMillis/25
         let zLThis = this;
         let origRegion = this.state.region;
@@ -299,6 +301,8 @@ export default class Map extends Component {
 
     trackUser(receiver){
         let mapComp = this;
+        this.setState({trackedUser: receiver});
+        this.setState({isTracking : true});
         this.tracker = setInterval(() => {
             AsyncStorage.getItem(receiver)
             .then(locationString => {
@@ -315,8 +319,8 @@ export default class Map extends Component {
                     if(location.hasOwnProperty('latitude')){
                         markerLatLng = {
                             'markerLatLng' : {
-                                'latitude' : location.latitude,
-                                'longitude' : location.longitude
+                                'latitude' : parseFloat(location.latitude),
+                                'longitude' : parseFloat(location.longitude)
                             }
                         }
                         mapComp.setState({isTracking: true})
@@ -339,53 +343,35 @@ export default class Map extends Component {
 
     searchProfilePopup(receiver, isTracking) {
         let mapTh = this;
-        if(this.state.isTrackingAllowed && isTracking && !this.state.isTracking){
-            sendTrackingRequest(receiver);
-            mapTh.setState({isTracking : true});
-            AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}))
-            .then(rec => {
-                mapTh.setState({trackedUser: receiver});
-                mapTh.trackUser(receiver);
-            })
+        console.log("MAP SEARCH AFTER SELECT")
+        if(isTracking){
+            let sentTrackingRequest = (response, isTracking) => {
+                if(isTracking){
+                    AsyncStorage.setItem(receiver, JSON.stringify({longitude:0.000000,latitude:0.000000}));
+                }
+                mapTh.showInfoPopup(response);
+            }
+            _notification.sendTrackingRequest(sentTrackingRequest, receiver);
         }else{
             endpointCall(this.showInfoPopup,Urls.profileinfo,{email:receiver})
         }
     }
 
-    getBuildingOrRoom(cb, buildingRoomName){
-        AsyncStorage.getItem('buildings')
-        .then(buildingsString => {
-            let found = false;
-            buildings = JSON.parse(buildingsString);
-            for(key in buildings){
-                if(buildings[key].name == buildingRoomName){
-                    found = true;
-                    return cb(buildings[key])
-                }
+    getBuilding(cb, buildingName){
+        let buildings = this.state.buildings;
+        let found = false;
+        for(key in buildings){
+            if(key == buildingName){
+                found = true;
+                return cb(buildings[key])
             }
-            if(!found){
-                AsyncStorage.getItem('rooms')
-                .then(roomsString => {
-                    let res = undefined
-                    rooms = JSON.parse(roomsString);
-                    for(key in rooms){
-                        if(rooms[key].name == buildingRoomName){
-                            return cb(rooms[key])
-                        }
-                    }
-                }).catch(error => console.log(error));
-            }
-        }).catch(error => console.log(error));
+        }
     }
 
-    searchBuildingRoomPopup(buildingRoomName, isTracking){
+    searchBuildingRoomPopup(buildingName, isTracking){
         let sbrpThis = this;
         if(isTracking){
-            let trackBuildingOrRoom = function(buildingOrRoom){
-                let building = buildingOrRoom;
-                if(buildingOrRoom.hasOwnProperty("building")){
-                    building = buildingOrRoom.building;
-                }
+            let trackBuilding = function(building){
                 sbrpThis.setState({
                     'markerLatLng':{
                         'latitude':parseFloat(building.location.latitude),
@@ -393,39 +379,27 @@ export default class Map extends Component {
                     }});
                 sbrpThis.setState({'isTracking' : true});
             };
-            sbrpThis.getBuildingOrRoom(trackBuildingOrRoom, buildingRoomName);
+            sbrpThis.getBuilding(trackBuilding, buildingName);
         }else{
-            let createInfo = function(buildingOrRoom){
-                console.log(buildingOrRoom)
+            let createInfo = function(building){
                 res = {}
-                if(buildingOrRoom.hasOwnProperty("building")){
-                    res['Room'] = buildingOrRoom.name;
-                    res['In building'] = buildingOrRoom.building.name;
-                    if(buildingOrRoom.building.hasOwnProperty('faculty')){
-                        res['Faculty'] = buildingOrRoom.building.faculty.name;
-                    }
-                    if(buildingOrRoom.building.hasOwnProperty('department')){
-                        res['Department'] = buildingOrRoom.building.department.name;
-                    }
-                }else{
-                    res['Building'] = buildingOrRoom['name'];
-                    if(buildingOrRoom.hasOwnProperty('faculty')){
-                        res['Faculty'] = buildingOrRoom.faculty.name;
-                    }
-                    if(buildingOrRoom.hasOwnProperty('department')){
-                        res['Department'] = buildingOrRoom.department.name;
-                    }
+                res['Building'] = building['name'];
+                if(building.hasOwnProperty('faculty')){
+                    res['Faculty'] = building.faculty.name;
+                }
+                if(building.hasOwnProperty('department')){
+                    res['Department'] = building.department.name;
                 }
                 sbrpThis.showInfoPopup(res);
             }
-            sbrpThis.getBuildingOrRoom(createInfo, buildingRoomName);
+            sbrpThis.getBuildingOrRoom(createInfo, buildingName);
         }
 
     }
 
     getSearchItemAndDoAction = (item, isTracking) => {
         let mapTh = this;
-        let search = this.state.search;
+        let search = this.state.searchResults;
         let receiver = undefined;
         let name = undefined;
         for(category in search){
@@ -488,7 +462,6 @@ export default class Map extends Component {
         let receiver = this.state.trackedUser;
         endpointCall(cancelledTracking, Urls.trackingAbort, {'receiver':receiver});
     }
-// =============================== OLI END ==================================================
 
     render(){
         if(!this.state.isLoaded){
@@ -537,6 +510,11 @@ export default class Map extends Component {
                             showsUserLocation={true}
                             onLayout={this.onMapLayout}
                             >
+                                { this.state.isTracking &&
+                                    <Marker
+                                        coordinate={this.state.markerLatLng}
+                                    />
+                                }
                                 <Polygon
                                     coordinates={this.state.mapBuildingPolygones['building1']}
                                     strokeColor={"rgba(0,0,0,0.01)"}
