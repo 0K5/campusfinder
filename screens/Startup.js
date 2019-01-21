@@ -15,11 +15,8 @@ export default class AppContainer extends Component {
     restLoad(){
         let comp = this;
         let redirect = function(keyValid){
-            comp.setState({
-                keyValid: keyValid,
-                isLoaded: true
-            });
-            comp.render();
+            let next = keyValid ? 'map' : 'signin';
+            comp.props.navigation.navigate(next,{props:comp.props});
         };
         loadFromRest(redirect);
     }
@@ -28,33 +25,11 @@ export default class AppContainer extends Component {
         this.restLoad();
     }
 
-    navToNext(next){
-        return this.props.navigation.navigate(next,{props:this.props});
-    }
-
     render() {
-        if (!this.state.isLoaded) {
-            return (
-                <Image
-                    source={require('../assets/images/splash.png')}
-                ></Image>
-            );
-        }else{
-            if(!this.state.keyValid){
-                return(
-                    <Image
-                        onLoad={() => this.navToNext('signin')}
-                        source={require('../assets/images/splash.png')}
-                    ></Image>
-                );
-            }else{
-                return(
-                    <Image
-                        onLoad={() => this.navToNext('map')}
-                        source={require('../assets/images/splash.png')}
-                    ></Image>
-                );
-            }
-        }
+        return (
+            <Image
+                source={require('../assets/images/splash.png')}
+            ></Image>
+        );
     }
 }
