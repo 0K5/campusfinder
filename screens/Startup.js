@@ -19,6 +19,7 @@ export default class AppContainer extends Component {
                 keyValid: keyValid,
                 isLoaded: true
             });
+            comp.render();
         };
         loadFromRest(redirect);
     }
