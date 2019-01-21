@@ -251,15 +251,17 @@ export default class Map extends Component {
     }
 
     zoomLocation = (cb, goalView) => {
+        let zoomTimeInMillis = 1000
+        let fac = zoomTimeInMillis/25
         let zLThis = this;
         let origRegion = this.state.region;
-        let gLat = parseFloat(goalView.latitude) > origRegion.latitude ? (parseFloat(goalView.latitude)-origRegion.latitude)/80 : (origRegion.latitude-parseFloat(goalView.latitude))/80;
-        let gLon = parseFloat(goalView.longitude) > origRegion.longitude ? (parseFloat(goalView.longitude)-origRegion.longitude)/80 : (origRegion.longitude-parseFloat(goalView.longitude))/80;
-        let gLatD = parseFloat(goalView.latitudeDelta) > origRegion.latitudeDelta ? (parseFloat(goalView.latitudeDelta)-origRegion.latitudeDelta)/80 : (origRegion.latitudeDelta-parseFloat(goalView.latitudeDelta))/80;
-        let gLonD = parseFloat(goalView.longitudeDelta) > origRegion.longitudeDelta ? (parseFloat(goalView.longitudeDelta)-origRegion.longitudeDelta)/80 : (origRegion.longitudeDelta-parseFloat(goalView.longitudeDelta))/80;
+        let gLat = parseFloat(goalView.latitude) > origRegion.latitude ? (parseFloat(goalView.latitude)-origRegion.latitude)/fac : (origRegion.latitude-parseFloat(goalView.latitude))/fac;
+        let gLon = parseFloat(goalView.longitude) > origRegion.longitude ? (parseFloat(goalView.longitude)-origRegion.longitude)/fac : (origRegion.longitude-parseFloat(goalView.longitude))/fac;
+        let gLatD = parseFloat(goalView.latitudeDelta) > origRegion.latitudeDelta ? (parseFloat(goalView.latitudeDelta)-origRegion.latitudeDelta)/fac : (origRegion.latitudeDelta-parseFloat(goalView.latitudeDelta))/fac;
+        let gLonD = parseFloat(goalView.longitudeDelta) > origRegion.longitudeDelta ? (parseFloat(goalView.longitudeDelta)-origRegion.longitudeDelta)/fac : (origRegion.longitudeDelta-parseFloat(goalView.longitudeDelta))/fac;
         let cnt = 0;
         let zoom = setInterval(() => {
-            if(cnt < 80){
+            if(cnt < fac){
                 let tmpRegion = this.state.region;
                 zLThis.setState({region: {
                     latitude : goalView.latitude <= origRegion.latitude ? tmpRegion.latitude - gLat : tmpRegion.latitude + gLat,
