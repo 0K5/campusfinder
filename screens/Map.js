@@ -473,10 +473,11 @@ export default class Map extends Component {
         }else{
             return (
                 <View style={styles.contentView} key={this.state.uniqueValue}>
+                    
                     <SearchableDropdown
                         onTextChange={text => this.search(text)}
                         onItemSelect={item => this.selectedSearchItem(item)}
-                        containerStyle={{ padding: 5 }}
+                        containerStyle={{ padding: 5 , marginTop: 80}}
                         textInputStyle={{
                             padding: 12,
                             borderWidth: 1,

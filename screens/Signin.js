@@ -77,6 +77,12 @@ export default class SignIn extends Component {
         }
     }
 
+    static navigationOptions = ({navigation})=>  {
+        return{
+            headerLeft: <Text> </Text>
+        }
+    }
+
  handleEmail = (text) => {
     this.setState({ email: text })
  }
