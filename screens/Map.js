@@ -392,7 +392,7 @@ export default class Map extends Component {
                 }
                 sbrpThis.showInfoPopup(res);
             }
-            sbrpThis.getBuildingOrRoom(createInfo, buildingName);
+            sbrpThis.getBuilding(createInfo, buildingName);
         }
 
     }

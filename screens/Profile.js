@@ -6,15 +6,15 @@ import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
 import { styles } from '../constants/Styles';
 import { saveData } from '../services/RestSaver';
-import {SignIn} from '../screens/Signin';
-import {SignUp} from '../screens/Signup';
+import { SignIn } from '../screens/Signin';
+import { SignUp } from '../screens/Signup';
 
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
+        console.log(JSON.stringify(props))
         this.state = {
-            navigation: props.navigation,
             email: '',
             firstname: '',
             lastname: '',
@@ -39,10 +39,6 @@ export default class Profile extends Component {
         });
     }
 
-    componendDidUpdate(){
-        this.render();
-    }
-
     componentWillUnmount(){
         let savedProfile = (response, data) => {
             console.log(JSON.stringify(response));
@@ -58,19 +54,18 @@ export default class Profile extends Component {
     }
 
     logout(){
-        let lThis = this;
+
         let confirmedLogout = function(response, data){
-            lThis.isLogout = true;
+            alert("Logout confirmed");
         };
         endpointCall(confirmedLogout, Urls.logout, {});
         this.props.navigation.navigate("signin");
     };
 
     deleteAccount(isDeleteConfirmed){
-        let lThis = this;
         if(isDeleteConfirmed){
             let confirmedLogout = function(response, data){
-                lThis.isAccountDeleted = true;
+                alert("Account deletion confirmed");
             };
             endpointCall(confirmedLogout, Urls.deleteAccount, {});
         }
@@ -89,26 +84,21 @@ export default class Profile extends Component {
     }
 
     render(){
-        if(this.isLogout){
-            return(
-                <View>
-                    <SignIn {...this.props} />
+        return (
+            <ScrollView>
+                <View style= {styles.container}>
+                    <Text style={styles.heading}>
+                        Profile
+                    </Text>
                 </View>
-            )
-        }
-        if(this.isAccountDeleted){
-            return(
-                <View>
-                    <SignUp {...this.props} />
+                <View style={styles.row}>
+                    <View style={{ flex: 1, paddingTop: 10}}>
+                        <Text style={styles.text}>Email: {this.state.email}</Text>
+                    </View>
                 </View>
-            )
-        }else{
-            return (
-                <ScrollView>
-                    <View style= {styles.container}>
-                        <Text style={styles.heading}>
-                            Profile
-                        </Text>
+                <View style={styles.row}>
+                    <View style={{ flex: 1, paddingTop: 10}}>
+                        <Text style={styles.text}>Username: {this.state.username}</Text>
                     </View>
                 </View>
                 <View style={styles.row}>
