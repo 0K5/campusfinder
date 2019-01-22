@@ -1,0 +1,70 @@
+@startuml
+(*) --> "Start App"
+--> "./services/Startup.js - check Rest Token"
+if "" then
+    --> [invalid] "SigninView"
+    if "" then
+        --> [loggedIn] "MapView"
+    else
+        --> [notRegistered] "SignupView"
+        if "" then
+            --> [registered] "SigninView"
+        else
+            --> [notRegistered] "SignupView"
+        endif
+    endif
+else
+    --> [valid] "MapView"
+    if "" then
+        --> [search] "Map - searchbar"
+        if "" then
+            --> [building] "Track or Info about building"
+            if "" then
+                --> [Track] "Shows marker on building"
+            else
+                --> [Info] "Popup info about building"
+            endif
+        --> [clickOnUser] "Track or Get Info about user"
+        if "" then
+            --> [Track] "Request tracking from other user"
+            if "" then
+                --> [accepted] "Show Marker on map"
+                if "" then
+                    --> [out of campus] "Marker off. Popup: Out of campus"
+                else
+                    --> [reached target] "Marker off. Popup: Reached target"
+                endif
+            else
+                --> [declined] "Popup: Tracking declined"
+            endif
+        else
+            --> [Get Info] "Zoom in. Popup: Show info about user"
+        endif
+    else
+        if "" then
+            --> [clickOnBuilding] "Popup: Cancel or Go In"
+            if "" then
+                --> [Go In] "BuildingView"
+                if "" then
+                    --> [Click on Room] "Popup info about room"
+                else
+                    --> [back] "MapView"
+                endif
+            else
+                --> [Cancel] "Zoom out"
+            endif
+        else
+            if "" then
+                --> [settings] "SettingsView"
+            else
+                --> [profile] "ProfilView"
+                if "" then
+                    --> [logout] "SigninView"
+                else
+                    --> [Delete Account] "SignupView"
+                endif
+            endif
+        endif
+    endif
+endif
+@enduml
