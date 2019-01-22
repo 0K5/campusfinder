@@ -1,0 +1,89 @@
+@startuml
+(*) --> "Start App"
+--> "./services/Startup.js - check Rest Token"
+if "" then
+    --> [invalid] "./screens/Signin.js"
+    if "" then
+        --> [loggedIn] "./screens/Map.js"
+    else
+        --> [notRegistered] "./screens/Signup.js"
+        if "" then
+            --> [registered] "./screens/Signin.js"
+        else
+            --> [notRegistered] "./screens/Signup.js"
+        endif
+    endif
+else
+    --> [valid] "RestAPI load all data"
+    --> [valid] "./screens/Map.js"
+    if "" then
+        --> [search] "Types in searchbar"
+        --> "RestAPI: /endpoints/search/"
+        --> "Results shown in searchdropdown"
+        if "" then
+            --> [clickOnBuilding] "Popup: Track or Get Info about building"
+            if "" then
+                --> [Track] "Shows marker on building"
+            else
+                --> [Get Info] "Popup info about building"
+            endif
+        else
+        --> [clickOnUser] "Popup: Track or Get Info about user"
+        if "" then
+            --> [Track] "RestAPI: /endpoints/notification/trackingrequest/"
+            if "" then
+                --> [accepted] "RestAPI: /endpoints/location/tracking/"
+                --> "Show Marker on Map"
+                if "" then
+                    --> [out of campus] "Popup: Out of campus"
+                    --> "Marker off"
+                else
+                    --> [reached target] "Popup: Reached target"
+                    --> "Marker off"
+                endif
+            else
+                --> [declined] "RestAPI: /endpoints/notification/trackingaborted/"
+                --> "Popup: Tracking declined"
+            endif
+        else
+            --> [Get Info] "RestAPI: Popup /endpoints/profile/info"
+            --> "Popup: Show user information"
+        endif
+    else
+        if "" then
+            --> [clickOnBuilding] "Zoom in"
+            --> "Popup: Cancel of Show Info"
+            if "" then
+                --> [Go In] "./screens/building.js"
+                if "" then
+                    --> [Click on Room] "Popup info about room"
+                else
+                    --> [back] "./screens/Map.js"
+                endif
+            else
+                --> [Cancel] "Zoom out"
+            endif
+        else
+            if "" then
+                --> [settings] "./screens/Settings.js"
+                --> RestAPI: /endpoints/profile/settings/"
+                --> [back] "./screens/Map.js"
+            else
+                --> [profile] "./screens/Profil.js"
+                --> "RestAPI: /endpoints/profile/"
+                if "" then
+                    --> [logout] "RestAPI: /rest-auth/logout/"
+                    --> "./screens/Signin.js"
+                else
+                    if "" then
+                        --> [Delete Account] "RestAPI: /endpoints/profile/delete/"
+                        --> "./screens/Signup.js"
+                    else
+                        --> [back] "./screens/Map.js"
+                    endif
+                endif
+            endif
+        endif
+    endif
+endif
+@enduml

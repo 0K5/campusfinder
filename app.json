@@ -26,9 +26,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.fhrt.campusfinder",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.fhrt.campusfinder",
       "googleServicesFile": "./google-services.json"
     }
   }
