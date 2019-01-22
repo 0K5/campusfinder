@@ -53,8 +53,9 @@ const styles = StyleSheet.create({
   text2:{
     fontSize:20,
     fontWeight:'200',
-    marginTop: 25,
-    marginLeft: '10%',
+    marginTop:10,
+    marginBottom: 26,
+    textAlign:'center',
   },
   dropdown:{
     marginLeft: '10%',
@@ -66,11 +67,11 @@ const styles = StyleSheet.create({
     marginBottom: 70,
   },
   buttonV:{
-    marginTop:202,
-    marginLeft: 230,
+    marginTop:'47%',
+    marginLeft: '53%',
     borderColor: 'grey',
-    height:48,
-    width:48,
+    height:'6%',
+    width:'11%',
     backgroundColor: "rgba(230,230,230, 0.3)",
   }
 });
@@ -103,6 +104,8 @@ export default class Building9a extends Component {
     )}
   render() {
     let screenWidth = Dimensions.get("window").width;
+    //let screenHeight = Dimensions.get("window").height;
+
     return (
 
   
@@ -156,12 +159,13 @@ export default class Building9a extends Component {
         justifyContent: 'center',
         alignItems: 'center',
         }}>
-         <Text style={styles.text}>
+         <Text style={styles.text2}>
           Building 9 - 1st Floor
         </Text>
         <ImageBackground 
         
               style={styles.floorimage}
+              style={{width:'95%', height:'95%',marginLeft:'5%'}}
               source={require('../img/building9b.png')}
 
         >
