@@ -1,6 +1,6 @@
 //init settings
 import React, { Component } from 'react';
-import { Alert, StyleSheet,Text,TextInput,Button,View,ScrollView,AsyncStorage } from 'react-native';
+import { Alert, StyleSheet,Text,TextInput,TouchableOpacity ,View,ScrollView,AsyncStorage } from 'react-native';
 import { loadFromRest } from '../services/RestLoader';
 import {prevAuthCall, endpointCall} from '../services/Rest'
 import Urls from '../constants/Urls';
@@ -51,8 +51,8 @@ export default class Profile extends Component {
             }
         };
         data = {
-            firstname : this.state.firstname,
-            lastname : this.state.lastname
+            firstname :this.state.firstname,
+            lastname :  this.state.lastname
         }
         saveData(savedProfile, 'profile', data);
     }
@@ -63,6 +63,7 @@ export default class Profile extends Component {
             lThis.isLogout = true;
         };
         endpointCall(confirmedLogout, Urls.logout, {});
+        this.props.navigation.navigate("signin");
     };
 
     deleteAccount(isDeleteConfirmed){
@@ -109,46 +110,45 @@ export default class Profile extends Component {
                             Profile
                         </Text>
                     </View>
-                    <View style={styles.row}>
-                        <View style={{ flex: 1, paddingTop: 10}}>
-                            <Text style={styles.text}>Email: {this.state.email}</Text>
-                        </View>
+                </View>
+                <View style={styles.row}>
+                    <View style={{ flex: 1, paddingTop: 10}}>
+                        <TextInput style = {styles.input}
+                               underlineColorAndroid = "transparent"
+                               placeholder = {"  " +this.state.initFirstname}
+                               placeholderTextColor = "grey"
+                               autoCapitalize = "none"
+                               onChangeText = {(text) => this.setState({firstname:text})}/>
                     </View>
-                    <View style={styles.row}>
-                        <View style={{ flex: 1, paddingTop: 10}}>
-                            <Text style={styles.text}>Username: {this.state.username}</Text>
-                        </View>
+                </View>
+                <View style={styles.row}>
+                    <View style={{ flex: 1, paddingTop: 10}}>
+                        <TextInput style = {styles.input}
+                               underlineColorAndroid = "transparent"
+                               placeholder = {"  " +this.state.initLastname}
+                               placeholderTextColor = "grey"
+                               autoCapitalize = "none"
+                               onChangeText = {(text) => this.setState({lastname:text})}/>
                     </View>
-                    <View style={styles.row}>
-                        <View style={{ flex: 1, paddingTop: 10}}>
-                            <TextInput style = {styles.input}
-                                   underlineColorAndroid = "transparent"
-                                   placeholder = {this.state.initFirstname}
-                                   placeholderTextColor = "grey"
-                                   autoCapitalize = "none"
-                                   onChangeText = {(text) => this.setState({firstname:text})}/>
-                        </View>
-                    </View>
-                    <View style={styles.row}>
-                        <View style={{ flex: 1, paddingTop: 10}}>
-                            <TextInput style = {styles.input}
-                                   underlineColorAndroid = "transparent"
-                                   placeholder = {this.state.initLastname}
-                                   placeholderTextColor = "grey"
-                                   autoCapitalize = "none"
-                                   onChangeText = {(text) => this.setState({lastname:text})}/>
-                        </View>
-                    </View>
-                    <Button
-                        onPress={this.logout}
-                        title="Logout"
-                    />
-                    <Button
-                        onPress={this.deleteAccountConfirm}
-                        title="Delete Account"
-                    />
-                </ScrollView>
-            )
-        }
+                </View>
+                <TouchableOpacity
+               style = {styles.Button}
+               onPress = {
+                 
+                  () => this.logout()
+               }>
+               <Text style = {styles.ButtonText}> Logout </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+               style = {styles.Button}
+               onPress = {
+                  () => this.deleteAccountConfirm()
+               }>
+               <Text style = {styles.ButtonText}> Delete Account </Text>
+            </TouchableOpacity>
+
+            </ScrollView>
+        )
     }
 }

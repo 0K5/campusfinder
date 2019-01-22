@@ -48,8 +48,8 @@ export const styles = StyleSheet.create({
     input: {
         height: 40,
         width: '80%',
-        marginLeft: '10%',
-        marginTop: '10%',
+        //marginLeft: '10%',
+        //marginTop: '10%',
         borderColor: 'grey',
         borderWidth: 1
     },
