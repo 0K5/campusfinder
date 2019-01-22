@@ -4,10 +4,7 @@ import signin from './screens/Signin';
 import signup from './screens/Signup';
 import settings from './screens/Settings';
 import profile from './screens/Profile';
-import building9a from './screens/Building9a';
-import building9b from './screens/Building9b';
-import building9c from './screens/Building9c';
-import building9entrance from './screens/Building9entrance';
+import building9 from './screens/Building9entrance';
 import termsAndConditions from './screens/TermsAndContidions';
 import map from './screens/Map';
 import firebase from "firebase";
@@ -35,10 +32,7 @@ const App = createStackNavigator({
   signup: {screen: signup,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
   settings: {screen: settings,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   profile: {screen: profile,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
-  building9: {screen: building9entrance,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
-  building9a: {screen: building9a,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
-  building9b: {screen: building9b,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
-  building9c: {screen: building9c,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
+  building9: {screen: building9,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   termsAndConditions: {screen: termsAndConditions,navigationOptions: () => ({title:'Campusfinder', headerBackTitle:'Back'})},
   map: {screen: map,navigationOptions: () => ({title:'CampusFinder', headerBackTitle:'Back'})},
 });

@@ -1,12 +1,27 @@
 //init settings
 import React, { Component } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
-import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight } from 'react-native';
-import { Button } from 'react-native';
+import { StyleSheet,Text,View,ScrollView,Image, TouchableHighlight,Dimensions, ImageBackground, Alert } from 'react-native';
 
 
 
 const styles = StyleSheet.create({
+  carousel:{
+    flex: 1,
+    marginTop:20,
+    width:this.screenWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  floorimage:{
+    flex: 1,
+    alignSelf: 'stretch',
+    resizeMode: 'contain',
+    width: undefined,
+    height: undefined
+  },
+  
   heading:{
     fontSize: 35,
     marginTop: 30,
@@ -38,8 +53,9 @@ const styles = StyleSheet.create({
   text2:{
     fontSize:20,
     fontWeight:'200',
-    marginTop: 25,
-    marginLeft: '10%',
+    marginTop:10,
+    marginBottom: 26,
+    textAlign:'center',
   },
   dropdown:{
     marginLeft: '10%',
@@ -49,6 +65,14 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
     width:'75%',
     marginBottom: 70,
+  },
+  buttonV:{
+    marginTop:'47%',
+    marginLeft: '53%',
+    borderColor: 'grey',
+    height:'6%',
+    width:'11%',
+    backgroundColor: "rgba(230,230,230, 0.3)",
   }
 });
 
@@ -59,11 +83,9 @@ export default class Building9a extends Component {
     switchOn1: true,
     switchOn2: false,
   }
-  // <Text style={styles.heading}>
-  //     Building
-  //    </Text>
-
   }
+
+ 
   
   static navigationOptions = ({navigation})=>  {
     return(
@@ -81,27 +103,113 @@ export default class Building9a extends Component {
     
     )}
   render() {
+    let screenWidth = Dimensions.get("window").width;
+    //let screenHeight = Dimensions.get("window").height;
+
     return (
-    <View style={{
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'stretch',
-    }}>
+
+  
+      <ScrollView 
+        horizontal={true}
+        showsHorizontalScrollIndicator={true}
+        indicatorStyle='black'
+        pagingEnabled={true}
+      >
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+        <Text style={styles.text}>
+          Building 9 - UG
+        </Text>
+         <Image
+              style={styles.floorimage} 
+              source={require('../img/building9a.png')}
+              >
+        </Image>
+        </View>
+
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+         <Text style={styles.text}>
+          Building 9 - EG
+        </Text>
+        <Image
+              style={styles.floorimage}
+              source={require('../img/building9entrance.png')}
+              >
+        </Image>
+        </View>
+
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+         <Text style={styles.text2}>
+          Building 9 - 1st Floor
+        </Text>
+        <ImageBackground 
+        
+              style={styles.floorimage}
+              style={{width:'95%', height:'95%',marginLeft:'5%'}}
+              source={require('../img/building9b.png')}
+
+        >
+        <TouchableHighlight
+               style = {styles.buttonV}
+               onPress = {
+                  () =>  Alert.alert(
+          
+                    "Room: 124 - Professor \n Prof. Dr. Natividad Martínez ",
+                    "E-Mail: natividad.martinez@reutlingen-university.de \n Appointment: Wed. 9:45-13:00 ",
+                    [
+                        {text: 'Cancel', onPress:() => console.log("Cancel")},
+                    
+                    ]
+                  )
+               }>
+               <Text style={styles.text2} >  </Text>
+            </TouchableHighlight>
+        
+        </ImageBackground>
+        
     
-    <Text style={styles.heading}>
-       Faculty of Informatiks
-      </Text>
+        </View>
+
+        <View style={{
+        flex: 1,
+        marginTop:20,
+        marginBottom:20,
+        width:screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+         <Text style={styles.text}>
+          Building 9 - 2nd Floor
+        </Text>
+        <Image
+              style={styles.floorimage}
+              source={require('../img/building9c.png')}
+              >
+        </Image>
+        </View>
+
+      </ScrollView>
      
-      <Text style={styles.text}>
-       Building 9 - hall (floor 1)
-      </Text>
-      <Image style={{flex: 1,
-              alignSelf: 'stretch',
-              resizeMode: 'contain',
-              width: undefined,
-              height: undefined}} source={require('../img/building9entrance.png')} />
-    </View>
     );
     
    }
